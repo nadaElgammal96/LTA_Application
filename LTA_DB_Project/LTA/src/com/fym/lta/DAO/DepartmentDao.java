@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract interface DepartmentDao {
     
-    public abstract List<DepartmentDto> searchFor(String c);
+    public abstract List<DepartmentDto> searchFor(DepartmentDto d);
 
     public abstract boolean delete(DepartmentDto d);
 

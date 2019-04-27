@@ -1,16 +1,98 @@
 
 package com.fym.lta.UI;
 
+import com.fym.lta.BAO.BaoFactory;
+import com.fym.lta.BAO.BuildingBao;
+import com.fym.lta.BAO.DepartmentBao;
+import com.fym.lta.DTO.BuildingDto;
+import com.fym.lta.DTO.DepartmentDto;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author Mai-AbdEltwab
  */
+
+
 public class DepartmentPanel extends java.awt.Panel {
+    @SuppressWarnings("compatibility:-5743342370269248875")
+    private static final long serialVersionUID = 1L;
+
 
     /** Creates new form DepartmentPanel */
+ 
+
     public DepartmentPanel() {
-        initComponents();
+        
+        try {
+
+            DepartmentBao bao;
+            bao= new  BaoFactory().createDepartmentBao();
+            BuildingBao Bbao= new BaoFactory().createBuildingBao();
+
+            initComponents();
+  
+           // get department data using view all method in bao
+            
+            List<DepartmentDto> departs= new ArrayList<DepartmentDto>();
+            if(!bao.viewAll().isEmpty() && bao.viewAll()!=null)
+                departs = bao.viewAll();
+            
+            // repaint department table for the result data
+                setTableModel(departs);
+            
+        }
+           catch (Exception e) {
+            // TODO: Add catch code
+            e.printStackTrace();
+                               }
+       
     }
+
+//For adding combobox
+    
+
+        private void setTableModel(List<DepartmentDto> departs){
+            
+           Object [][] departArr = new Object [departs.size()][4];
+            
+            for(int i =0;i<departs.size();i++){
+                
+                departArr[i][0] = departs.get(i).getId();
+                departArr[i][1] = departs.get(i).getCode();
+                departArr[i][2] = departs.get(i).getName();
+
+            DefaultComboBoxModel<String> BuildingComboBox =
+                new DefaultComboBoxModel<>();
+                
+                if(departs.get(i).getBuildings()!=null && !departs.get(i).getBuildings().isEmpty()){
+                    for(int j=0 ; j<departs.get(i).getBuildings().size() ; j++)
+                      BuildingComboBox.addElement(departs.get(i).getBuildings().get(j).getCode());
+               }
+                        depTable.setValueAt(BuildingComboBox,i,3); 
+                }
+
+                
+            depTable.setModel(new javax.swing.table.DefaultTableModel(departArr,
+                new String [] {
+                    "Id", "Name","Department","Building"
+                }
+            )); 
+            
+            
+        }
+
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -19,8 +101,7 @@ public class DepartmentPanel extends java.awt.Panel {
      */
     private void initComponents() {//GEN-BEGIN:initComponents
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        DepartTable = new javax.swing.JTable();
+        BuildingComboBox = new javax.swing.JComboBox<>();
         IdLabel = new javax.swing.JLabel();
         CodeLabel = new javax.swing.JLabel();
         NameLabel = new javax.swing.JLabel();
@@ -30,144 +111,346 @@ public class DepartmentPanel extends java.awt.Panel {
         Nwe = new javax.swing.JButton();
         Delete = new javax.swing.JButton();
         Refresh = new javax.swing.JButton();
-        Save = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Update = new javax.swing.JButton();
+        search = new javax.swing.JButton();
+        SearchText = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        depTable = new javax.swing.JTable();
+        clear = new javax.swing.JButton();
+        BuildingLabel = new javax.swing.JLabel();
 
-        DepartTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        BuildingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-            },
-            new String [] {
-                "Id", "Code", "Name"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
+        IdLabel.setText("Id:");
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(DepartTable);
-        if (DepartTable.getColumnModel().getColumnCount() > 0) {
-            DepartTable.getColumnModel().getColumn(0).setHeaderValue("Id");
-            DepartTable.getColumnModel().getColumn(1).setHeaderValue("Code");
-            DepartTable.getColumnModel().getColumn(2).setHeaderValue("Name");
-        }
+        CodeLabel.setText("Code:");
 
-        IdLabel.setText("Id");
-
-        CodeLabel.setText("Code");
-
-        NameLabel.setText("Name");
+        NameLabel.setText("Name:");
 
         IdText.setText("Enter department ID");
 
         CodeText.setText("Enter department code");
 
         NameText.setText("Enter department name ");
+        NameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NameTextActionPerformed(evt);
+            }
+        });
 
         Nwe.setText("New");
+        Nwe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NweActionPerformed(evt);
+            }
+        });
 
         Delete.setText("Delete ");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
 
         Refresh.setText("Refresh");
+        Refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefreshActionPerformed(evt);
+            }
+        });
 
-        Save.setText("Save");
+        Update.setText("Update");
+        Update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setText("Enter Id/Name");
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Search");
+        SearchText.setText("Enter what do you want to search for");
+
+        depTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Id", "Code", "Name", "Building"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(depTable);
+        if (depTable.getColumnModel().getColumnCount() > 0) {
+            depTable.getColumnModel().getColumn(0).setHeaderValue("Id");
+            depTable.getColumnModel().getColumn(1).setHeaderValue("Code");
+            depTable.getColumnModel().getColumn(2).setHeaderValue("Name");
+            depTable.getColumnModel().getColumn(2).setCellEditor(null);
+            depTable.getColumnModel().getColumn(3).setHeaderValue("Building");
+            depTable.getColumnModel().getColumn(3).setCellEditor(null);
+        }
+
+        clear.setText("Clear");
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearActionPerformed(evt);
+            }
+        });
+
+        BuildingLabel.setText("Building:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Nwe, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Save, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(NameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(NameText))
+                        .addGap(86, 86, 86)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CodeLabel)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(IdLabel)
-                                    .addComponent(CodeLabel))
-                                .addGap(16, 16, 16)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(NameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(IdLabel)
+                                            .addGap(15, 15, 15)))
+                                    .addComponent(BuildingLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(CodeText)
-                                    .addComponent(IdText, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Nwe, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Update, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(IdText, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(CodeText, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(NameText)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(IdLabel)
-                            .addComponent(IdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
-                        .addComponent(CodeLabel))
-                    .addComponent(CodeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(search))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Refresh)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(IdText, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IdLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NameLabel)
-                    .addComponent(NameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                    .addComponent(CodeText, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CodeLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Save)
-                    .addComponent(Refresh)
+                    .addComponent(NameText)
+                    .addComponent(NameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BuildingLabel)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Nwe)
+                    .addComponent(Update)
                     .addComponent(Delete)
-                    .addComponent(Nwe))
+                    .addComponent(clear))
                 .addContainerGap())
         );
     }//GEN-END:initComponents
 
+    private void NweActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NweActionPerformed
+
+      try
+      {
+          DepartmentDto dto = new DepartmentDto();
+          BuildingDto Bdto = new BuildingDto();
+          DepartmentBao bao = new BaoFactory().createDepartmentBao();
+          
+          dto.setId(Integer.parseInt(IdText.getText()));
+          dto.setCode(CodeText.getText());
+          dto.setName(NameText.getText());
+          
+          // check and pick up which buildings have be selected
+
+          
+          
+          //go to business layer
+          boolean flag = bao.create(dto);
+          
+          if (flag==true)
+              JOptionPane.showMessageDialog(null, "Department has inserted successfully!","Done",1);
+               
+      }
+         catch (Exception e) {
+            // TODO: Add catch code
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Some Thing went wrong!/nPlease check your entered data. ","Invalid Input",1);
+
+        }
+    }//GEN-LAST:event_NweActionPerformed
+
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        // TODO add your handling code here:
+        
+        try
+        {
+             DepartmentDto dto = new DepartmentDto();   
+             DepartmentBao bao = new BaoFactory().createDepartmentBao();
+            
+            dto.setId(Integer.parseInt(IdText.getText()));
+            
+            //go to business layer
+            boolean flag = bao.delete(dto);
+            
+            if (flag==true)
+                JOptionPane.showMessageDialog(null, "Department has deleted successfully!","Done",1);
+                    
+        }
+        catch (Exception e) {
+              // TODO: Add catch code
+              e.printStackTrace();
+              JOptionPane.showMessageDialog(null, "Some Thing went wrong!/nPlease check your entered data. ","Invalid Input",1);
+
+          }
+    }//GEN-LAST:event_DeleteActionPerformed
+
+    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
+       
+     
+      DepartmentBao bao = new BaoFactory().createDepartmentBao();
+        List<DepartmentDto> departs = bao.viewAll();
+        setTableModel(departs);
+    }//GEN-LAST:event_RefreshActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        
+        try{
+            
+            
+        DepartmentDto dto = new DepartmentDto();   
+        DepartmentBao bao = new BaoFactory().createDepartmentBao();
+        dto=new DepartmentDto();
+        dto.setSearch(SearchText.getText());
+        List<DepartmentDto> result = bao.searchFor(dto);
+        if(result.size()==0)
+            JOptionPane.showMessageDialog(null, "There is no search result for: "+SearchText.getText(),"Invalid search",1);
+
+        else
+        setTableModel(result);}
+        
+        catch(Exception e){
+            // TODO: Add catch code
+            e.printStackTrace();
+            
+        }
+        
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+        // TODO add your handling code here:
+        
+        try
+        {
+            DepartmentDto dto = new DepartmentDto();   
+            DepartmentBao bao = new BaoFactory().createDepartmentBao();
+            BuildingDto Bdto = new BuildingDto();
+            
+            dto.setId(Integer.parseInt(IdText.getText()));
+            dto.setCode(CodeText.getText());
+            dto.setName(NameText.getText());
+            
+            // check and pick up which buildings have be selected
+            
+            
+            //go to business layer
+            boolean flag = bao.update(dto);
+            
+            if (flag==true)
+                JOptionPane.showMessageDialog(null, "Department has updated successfully!","Done",1);
+                    
+        }
+           catch (Exception e) {
+              // TODO: Add catch code
+              e.printStackTrace();
+              JOptionPane.showMessageDialog(null, "Some Thing went wrong!/nPlease check your entered data. ","Invalid Input",1);
+
+          }
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        // TODO add your handling code here:
+        IdText.setText("Enter department ID");
+        CodeText.setText("Enter department code");
+        NameText.setText("Enter department name");
+        
+        //clear selection Buildings
+       
+        
+    }//GEN-LAST:event_clearActionPerformed
+
+    private void NameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NameTextActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> BuildingComboBox;
+    private javax.swing.JLabel BuildingLabel;
     private javax.swing.JLabel CodeLabel;
     private javax.swing.JTextField CodeText;
     private javax.swing.JButton Delete;
-    private javax.swing.JTable DepartTable;
     private javax.swing.JLabel IdLabel;
     private javax.swing.JTextField IdText;
     private javax.swing.JLabel NameLabel;
     private javax.swing.JTextField NameText;
     private javax.swing.JButton Nwe;
     private javax.swing.JButton Refresh;
-    private javax.swing.JButton Save;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField SearchText;
+    private javax.swing.JButton Update;
+    private javax.swing.JButton clear;
+    private javax.swing.JTable depTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton search;
     // End of variables declaration//GEN-END:variables
 
 }

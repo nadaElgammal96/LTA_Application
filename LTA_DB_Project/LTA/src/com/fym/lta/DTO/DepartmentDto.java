@@ -1,20 +1,61 @@
 package com.fym.lta.DTO;
 
 import java.util.List;
-import java.util.Set;
 
 public class DepartmentDto {
     
     private String code;
     private String name;
     private int id;
-    private String faculty_name;
-    
-    //For Relations in Class diagram
+    private String search;
+    private List<BuildingDto> buildings;
+
+
+    public void setFaculty(FacultyDto faculty) {
+        this.faculty = faculty;
+    }
+
+    public FacultyDto getFaculty() {
+        return faculty;
+    }
+
+    public void setBuilding(DepartBuildingDto building) {
+        this.building = building;
+    }
+
+    public DepartBuildingDto getBuilding() {
+        return building;
+    }
+
+    public void setDepart_staff(List<StaffDto> depart_staff) {
+        this.depart_staff = depart_staff;
+    }
+
+    public List<StaffDto> getDepart_staff() {
+        return depart_staff;
+    }
+
+    public void setStages(List<StageDto> Stages) {
+        this.Stages = Stages;
+    }
+
+    public List<StageDto> getStages() {
+        return Stages;
+    }
+
+    public void setCourses(CourseDepartDto courses) {
+        this.courses = courses;
+    }
+
+    public CourseDepartDto getCourses() {
+        return courses;
+    }
+
+    private FacultyDto faculty;
     private DepartBuildingDto building;
     private List<StaffDto> depart_staff;
     private List<StageDto> Stages;
-    private  CourseDepartDto courses;
+    private CourseDepartDto courses;
 
     public DepartmentDto(){
         super();
@@ -50,11 +91,20 @@ public class DepartmentDto {
         return id;
     }
 
-    public void setFaculty_name(String faculty_name) {
-        this.faculty_name = faculty_name;
+    public void setSearch(String search) {
+        this.search = search;
     }
 
-    public String getFaculty_name() {
-        return faculty_name;
+    public String getSearch() {
+        return search;
+    }
+
+
+    public void setBuildings(List<BuildingDto> buildings) {
+        this.buildings = buildings;
+    }
+
+    public List<BuildingDto> getBuildings() {
+        return buildings;
     }
 }
