@@ -12,7 +12,7 @@ import com.fym.lta.DTO.BuildingDto;
 import java.util.List;
 
 
-public class BuildingBaoImpl implements BuildinBao {
+public class BuildingBaoImpl implements BuildingBao {
     
     private  BuildingDao dao = new DaoFactory().createBuildingDao();
 

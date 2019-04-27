@@ -5,6 +5,7 @@ import com.fym.lta.DTO.DepartmentDto;
 import java.util.List;
 
 public abstract interface DepartmentBao {
+    
     public abstract boolean delete(DepartmentDto d);
 
     public abstract List<DepartmentDto> viewAll();

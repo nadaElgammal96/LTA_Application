@@ -2,7 +2,7 @@
 package com.fym.lta.UI;
 
 import com.fym.lta.BAO.BaoFactory;
-import com.fym.lta.BAO.BuildinBao;
+import com.fym.lta.BAO.BuildingBao;
 import com.fym.lta.DAO.BuildingDao;
 import com.fym.lta.DAO.DaoFactory;
 import com.fym.lta.DTO.BuildingDto;
@@ -285,7 +285,7 @@ public class BuildingPanel extends javax.swing.JPanel {
         try{
             if(checkValidity()){
             BuildingDto b = new BuildingDto();
-            BuildinBao build = new BaoFactory().createBuildingBao();
+            BuildingBao build = new BaoFactory().createBuildingBao();
             BuildingDao bdao = new DaoFactory().createBuildingDao();
             b.setCode(CodeText.getText());
             b.setId(Integer.parseInt(IdText.getText()));
@@ -316,7 +316,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 BuildingDto b = new BuildingDto();
                 BuildingDao bdao;
                 bdao = new DaoFactory().createBuildingDao();
-                BuildinBao build = new BaoFactory().createBuildingBao();
+                BuildingBao build = new BaoFactory().createBuildingBao();
                 String s = (String) BuildTable.getValueAt(BuildTable.getSelectedRow(), 1);
                 b.setCode(s);
                 if(build.delete(b))
@@ -339,7 +339,7 @@ public class BuildingPanel extends javax.swing.JPanel {
         try{
             if(checkValidity()){
             BuildingDto b = new BuildingDto();
-            BuildinBao build = new BaoFactory().createBuildingBao();
+            BuildingBao build = new BaoFactory().createBuildingBao();
             BuildingDao bdao = new DaoFactory().createBuildingDao();
             b.setCode(CodeText.getText());
             b.setId(Integer.parseInt(IdText.getText()));
@@ -390,7 +390,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             BuildingDto b = new BuildingDto();
             List<BuildingDto> buildss = null;
             BuildingDao bdao = new DaoFactory().createBuildingDao();
-            BuildinBao build = new BaoFactory().createBuildingBao();
+            BuildingBao build = new BaoFactory().createBuildingBao();
             b.setSearch(SearchText.getText());
             buildss = build.searchFor(b);
 
