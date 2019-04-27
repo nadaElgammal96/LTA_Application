@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BuildingDto {
     
-    
+
     private int id;
     private String code;
     private String description;
