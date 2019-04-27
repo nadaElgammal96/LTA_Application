@@ -69,4 +69,8 @@ public class BaoFactory {
     public FacultyBao createFacultyBao() {
         return new FacultyBaoImpl();
     }
+    
+    public EmployeeBao createEmployeeBao() {
+        return new EmployeeBaoImpl();
+    }
 }

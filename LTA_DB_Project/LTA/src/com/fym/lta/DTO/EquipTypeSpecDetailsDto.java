@@ -8,7 +8,12 @@ public class EquipTypeSpecDetailsDto {
 
     private int specification_id;
 
-    
+
+    public EquipTypeSpecDetailsDto(int type_id, int specification_id) {
+        this.type_id = type_id;
+        this.specification_id = specification_id;
+    }
+
     public EquipTypeSpecDetailsDto(){
         super();
         }

@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Mustafa Zalat
  */
-public class EmployeeJPanel extends javax.swing.JPanel {
+public class EmployeePanel extends javax.swing.JPanel {
 
     /** Creates new form EmployeeJPanel */
 
@@ -41,7 +41,7 @@ public class EmployeeJPanel extends javax.swing.JPanel {
         
         
     }
-    public EmployeeJPanel() {
+    public EmployeePanel() {
         try{
         initComponents();
         EmployeeDao employee;

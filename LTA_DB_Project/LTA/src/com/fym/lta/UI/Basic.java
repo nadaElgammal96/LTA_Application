@@ -80,7 +80,7 @@ public class Basic extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGap(0, 593, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,7 +268,7 @@ public class Basic extends javax.swing.JFrame {
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(646, 646, 646))
+                .addGap(814, 814, 814))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,8 +281,7 @@ public class Basic extends javax.swing.JFrame {
                         .addGap(400, 400, 400))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -338,7 +337,7 @@ public class Basic extends javax.swing.JFrame {
 
     private void AddNewBuildingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewBuildingActionPerformed
         try {
-            BuildingJPanel x = new BuildingJPanel();
+            BuildingPanel x = new BuildingPanel();
             x.setBounds(jPanel1.getBounds());
             this.setContentPane(x);
             this.validate();
@@ -352,7 +351,7 @@ public class Basic extends javax.swing.JFrame {
 
     private void LocationTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LocationTypeActionPerformed
         try {
-            BuildingJPanel x = new BuildingJPanel();
+            BuildingPanel x = new BuildingPanel();
             x.setBounds(jPanel1.getBounds());
             this.setContentPane(x);
             this.validate();
@@ -366,7 +365,7 @@ public class Basic extends javax.swing.JFrame {
     private void AddNewEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewEmployeeActionPerformed
         
         try {
-            EmployeeJPanel x = new EmployeeJPanel();
+            EmployeePanel x = new EmployeePanel();
             x.setBounds(jPanel1.getBounds());
             this.setContentPane(x);
             this.validate();

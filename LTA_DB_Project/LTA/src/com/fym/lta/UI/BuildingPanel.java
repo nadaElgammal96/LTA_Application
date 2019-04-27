@@ -15,10 +15,10 @@ import javax.swing.JOptionPane;
  *
  * @author Islam
  */
-public class BuildingJPanel extends javax.swing.JPanel {
+public class BuildingPanel extends javax.swing.JPanel {
 
     /** Creates new form BuildingJPanel */
-    public BuildingJPanel() {
+    public BuildingPanel() {
         try{
         initComponents();
             BuildingDao build;
