@@ -10,7 +10,7 @@ import java.util.List;
 public abstract interface BuildingBao {
     public abstract void ListEmptyLocations(BuildingDto build);
 
-    public abstract void ListAll();
+    public abstract List<BuildingDto> ListAll();
 
     public abstract void ListAllLocations(BuildingDto build);
 

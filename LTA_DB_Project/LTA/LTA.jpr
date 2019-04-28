@@ -96,6 +96,10 @@
             <value n="id" v="Ojdbc6.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="AbsoluteLayout"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
       <hash n="internalDefinitions">
          <list n="libraryDefinitions">
@@ -113,6 +117,10 @@
       <list n="libraryReferences">
          <hash>
             <value n="id" v="Ojdbc6.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="AbsoluteLayout"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>

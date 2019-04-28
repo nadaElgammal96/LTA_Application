@@ -96,12 +96,15 @@ public class LocationTypePanel extends java.awt.Panel {
         DesText = new javax.swing.JTextField();
         ChangeColor = new javax.swing.JButton();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         Refresh.setText("Refresh");
         Refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RefreshActionPerformed(evt);
             }
         });
+        add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(454, 370, 84, -1));
 
         Update.setText("Update");
         Update.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +112,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 UpdateActionPerformed(evt);
             }
         });
+        add(Update, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 593, 82, -1));
 
         search.setText("Search");
         search.addActionListener(new java.awt.event.ActionListener() {
@@ -116,8 +120,10 @@ public class LocationTypePanel extends java.awt.Panel {
                 searchActionPerformed(evt);
             }
         });
+        add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 19, 93, -1));
 
         IdLabel.setText("Id:");
+        add(IdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 423, -1, -1));
 
         SearchText.setText("Enter what do you want to search for");
         SearchText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -133,8 +139,10 @@ public class LocationTypePanel extends java.awt.Panel {
                 SearchTextKeyPressed(evt);
             }
         });
+        add(SearchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 490, -1));
 
         CodeLabel.setText("Code:");
+        add(CodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 449, -1, -1));
 
         jScrollPane1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -182,7 +190,10 @@ public class LocationTypePanel extends java.awt.Panel {
         });
         jScrollPane1.setViewportView(LTTable);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 51, 589, 307));
+
         NameLabel.setText("Color");
+        add(NameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 496, -1, -1));
 
         IdText.setText("Enter Location type ID");
         IdText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -203,6 +214,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 IdTextActionPerformed(evt);
             }
         });
+        add(IdText, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 409, 397, 34));
 
         clear.setText("Clear");
         clear.addActionListener(new java.awt.event.ActionListener() {
@@ -210,6 +222,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 clearActionPerformed(evt);
             }
         });
+        add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 593, 83, -1));
 
         CodeText.setText("Enter Location type code");
         CodeText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -220,8 +233,10 @@ public class LocationTypePanel extends java.awt.Panel {
                 CodeTextFocusLost(evt);
             }
         });
+        add(CodeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 449, 397, 28));
 
         BuildingLabel.setText("Description:");
+        add(BuildingLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 537, -1, -1));
 
         ColorText.setText("Enter Location type color (Hex)");
         ColorText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -237,6 +252,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 ColorTextActionPerformed(evt);
             }
         });
+        add(ColorText, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 489, 318, 30));
 
         Nwe.setText("New");
         Nwe.addActionListener(new java.awt.event.ActionListener() {
@@ -244,6 +260,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 NweActionPerformed(evt);
             }
         });
+        add(Nwe, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 593, 77, -1));
 
         Delete.setText("Delete ");
         Delete.addActionListener(new java.awt.event.ActionListener() {
@@ -251,6 +268,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 DeleteActionPerformed(evt);
             }
         });
+        add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 593, 77, -1));
 
         DesText.setText("Enter Location type Description");
         DesText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -266,6 +284,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 DesTextActionPerformed(evt);
             }
         });
+        add(DesText, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 537, 397, 28));
 
         ChangeColor.setText("Change");
         ChangeColor.addActionListener(new java.awt.event.ActionListener() {
@@ -273,96 +292,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 ChangeColorActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(454, 454, 454)
-                        .addComponent(Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CodeLabel)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(IdLabel)
-                                            .addComponent(NameLabel))
-                                        .addGap(50, 50, 50))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(BuildingLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Nwe, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(Update, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(IdText, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(ColorText)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(ChangeColor, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(CodeText, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(DesText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Refresh)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(IdLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(IdText, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CodeLabel)
-                    .addComponent(CodeText, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NameLabel)
-                    .addComponent(ChangeColor)
-                    .addComponent(ColorText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BuildingLabel)
-                    .addComponent(DesText, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Nwe)
-                    .addComponent(Update)
-                    .addComponent(Delete)
-                    .addComponent(clear))
-                .addContainerGap(42, Short.MAX_VALUE))
-        );
+        add(ChangeColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 493, 73, -1));
     }//GEN-END:initComponents
 
     private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed

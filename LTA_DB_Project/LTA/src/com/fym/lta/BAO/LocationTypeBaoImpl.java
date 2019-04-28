@@ -10,10 +10,19 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author Mai-AbdEltwab
+ */
+
 
 public class LocationTypeBaoImpl implements LocationTypeBao {
-    
-    
+
+
+    /**
+     * @param dto object for selected location type which would be updated
+     * @return ture if success - false if not
+     */
     public boolean update(LocationTypeDto lt) {
         
         LocationTypeDaoImpl dao= new  LocationTypeDaoImpl();
@@ -37,6 +46,10 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
         return saveFlage;
     }
 
+    /**
+     * @param - dto location type object which would be inserted 
+     * @return ture if success - false if not
+     */
     public boolean add(LocationTypeDto lt) {
         
         LocationTypeDaoImpl dao=null;
@@ -55,10 +68,10 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
         }
     }
 
-    public void viewLocationsOfType(String type_code) {
-    }
-
-    public  List<LocationTypeDto> viewAll() {
+    /**
+     * @return all location types in data base
+     */
+    public List<LocationTypeDto> viewAll() {
         
         LocationTypeDaoImpl dao= new LocationTypeDaoImpl();
         
@@ -74,7 +87,10 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
         }
         return types;
     }
-    
+
+    /**
+     * @return location types have id/code/des/color inserted in search
+     */
     public List<LocationTypeDto> searchFor(LocationTypeDto lt) {
         
         LocationTypeDaoImpl dao=new LocationTypeDaoImpl();
@@ -88,6 +104,10 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
         return types;
     }
 
+    /**
+     * @param dto location type object which would be deleted
+     * @return ture if success - false if not
+     */
     public boolean delete(LocationTypeDto lt) {
         
         LocationTypeDaoImpl dao=new LocationTypeDaoImpl();

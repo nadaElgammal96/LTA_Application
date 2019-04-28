@@ -4,11 +4,10 @@ package com.fym.lta.BAO;
  * @author Islam
  */
 import com.fym.lta.DAO.BuildingDao;
-import com.fym.lta.DAO.BuildingDaoImpl;
 import com.fym.lta.DAO.DaoFactory;
-import com.fym.lta.DAO.DepartmnetDaoImpl;
 import com.fym.lta.DTO.BuildingDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,13 +19,18 @@ public class BuildingBaoImpl implements BuildingBao {
     {
     }
 
-    public void ListAll() 
+    public List<BuildingDto> ListAll() 
     {
+        BuildingDao dao = new DaoFactory().createBuildingDao();
+
+        List<BuildingDto> builds = new ArrayList<BuildingDto>(); 
         try{
-            dao.viewAll();
+            builds = dao.viewAll();
         }catch(Exception e){
             e.printStackTrace();
         }
+        
+        return builds;
     }
 
     public void ListAllLocations(BuildingDto build) 
