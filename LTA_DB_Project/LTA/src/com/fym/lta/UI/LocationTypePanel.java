@@ -112,7 +112,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 UpdateActionPerformed(evt);
             }
         });
-        add(Update, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 593, 82, -1));
+        add(Update, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 590, 82, -1));
 
         search.setText("Search");
         search.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +222,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 clearActionPerformed(evt);
             }
         });
-        add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 593, 83, -1));
+        add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 590, 83, -1));
 
         CodeText.setText("Enter Location type code");
         CodeText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -260,7 +260,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 NweActionPerformed(evt);
             }
         });
-        add(Nwe, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 593, 77, -1));
+        add(Nwe, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 590, 77, -1));
 
         Delete.setText("Delete ");
         Delete.addActionListener(new java.awt.event.ActionListener() {
@@ -268,7 +268,7 @@ public class LocationTypePanel extends java.awt.Panel {
                 DeleteActionPerformed(evt);
             }
         });
-        add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 593, 77, -1));
+        add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 590, 77, -1));
 
         DesText.setText("Enter Location type Description");
         DesText.addFocusListener(new java.awt.event.FocusAdapter() {

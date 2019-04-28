@@ -7,6 +7,8 @@ import com.fym.lta.DAO.BuildingDao;
 import com.fym.lta.DAO.DaoFactory;
 import com.fym.lta.DTO.BuildingDto;
 
+import java.awt.event.KeyEvent;
+
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -61,7 +63,7 @@ public class BuildingPanel extends javax.swing.JPanel {
         NameLabel = new javax.swing.JLabel();
         IdText = new javax.swing.JTextField();
         CodeText = new javax.swing.JTextField();
-        NameText = new javax.swing.JTextField();
+        DesText = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         BuildTable = new javax.swing.JTable();
         Nwe = new javax.swing.JButton();
@@ -76,7 +78,7 @@ public class BuildingPanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         NameLabel.setText("Description");
-        add(NameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 432, -1, -1));
+        add(NameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
 
         IdText.setText("Enter The ID");
         IdText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -87,7 +89,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 IdTextFocusLost(evt);
             }
         });
-        add(IdText, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 368, 466, -1));
+        add(IdText, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 380, 466, -1));
 
         CodeText.setText("Enter The Code");
         CodeText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -98,18 +100,18 @@ public class BuildingPanel extends javax.swing.JPanel {
                 CodeTextFocusLost(evt);
             }
         });
-        add(CodeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 399, 466, -1));
+        add(CodeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 466, -1));
 
-        NameText.setText("Enter The Description");
-        NameText.addFocusListener(new java.awt.event.FocusAdapter() {
+        DesText.setText("Enter The Description");
+        DesText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                NameTextFocusGained(evt);
+                DesTextFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                NameTextFocusLost(evt);
+                DesTextFocusLost(evt);
             }
         });
-        add(NameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 430, 466, -1));
+        add(DesText, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, 466, -1));
 
         BuildTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,7 +129,17 @@ public class BuildingPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        BuildTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BuildTableKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(BuildTable);
+        if (BuildTable.getColumnModel().getColumnCount() > 0) {
+            BuildTable.getColumnModel().getColumn(0).setHeaderValue("Id");
+            BuildTable.getColumnModel().getColumn(1).setHeaderValue("Code");
+            BuildTable.getColumnModel().getColumn(2).setHeaderValue("Description");
+        }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 55, 539, 274));
 
@@ -137,7 +149,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 NweActionPerformed(evt);
             }
         });
-        add(Nwe, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, 77, -1));
+        add(Nwe, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 480, 77, -1));
 
         Delete.setText("Delete ");
         Delete.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +157,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 DeleteActionPerformed(evt);
             }
         });
-        add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 460, 78, -1));
+        add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 480, 78, -1));
 
         Save.setText("Update");
         Save.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +165,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 SaveActionPerformed(evt);
             }
         });
-        add(Save, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 460, 81, -1));
+        add(Save, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 480, 81, -1));
 
         Refresh.setText("Refresh");
         Refresh.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +173,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 RefreshActionPerformed(evt);
             }
         });
-        add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 340, 75, -1));
+        add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 75, -1));
 
         SearchText.setText("What do you want to search ?");
         SearchText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -175,7 +187,7 @@ public class BuildingPanel extends javax.swing.JPanel {
         add(SearchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 24, 448, -1));
 
         IdLabel.setText("Id");
-        add(IdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 370, -1, -1));
+        add(IdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 10, -1));
 
         jButton1.setText("Search");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +198,7 @@ public class BuildingPanel extends javax.swing.JPanel {
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 23, 75, -1));
 
         CodeLabel.setText("Code");
-        add(CodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 401, -1, -1));
+        add(CodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
     }//GEN-END:initComponents
 
     private void IdTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IdTextFocusGained
@@ -215,17 +227,17 @@ public class BuildingPanel extends javax.swing.JPanel {
             CodeText.setText("Enter The Code");}
     }//GEN-LAST:event_CodeTextFocusLost
 
-    private void NameTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTextFocusGained
+    private void DesTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesTextFocusGained
         // TODO add your handling code here:
-        if(NameText.getText().equalsIgnoreCase("Enter The Description")){
-            NameText.setText("");}
-    }//GEN-LAST:event_NameTextFocusGained
+        if(DesText.getText().equalsIgnoreCase("Enter The Description")){
+            DesText.setText("");}
+    }//GEN-LAST:event_DesTextFocusGained
 
-    private void NameTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTextFocusLost
+    private void DesTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesTextFocusLost
         // TODO add your handling code here:
-        if(NameText.getText().trim().equalsIgnoreCase("")){
-            NameText.setText("Enter The Description");   }                                                                   
-    }//GEN-LAST:event_NameTextFocusLost
+        if(DesText.getText().trim().equalsIgnoreCase("")){
+            DesText.setText("Enter The Description");   }                                                                   
+    }//GEN-LAST:event_DesTextFocusLost
 
     private void NweActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NweActionPerformed
         // TODO add your handling code here:
@@ -236,7 +248,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             BuildingDao bdao = new DaoFactory().createBuildingDao();
             b.setCode(CodeText.getText());
             b.setId(Integer.parseInt(IdText.getText()));
-            b.setDescription(NameText.getText());
+            b.setDescription(DesText.getText());
             
             if(build.insert(b)){
                 JOptionPane.showMessageDialog(this, "Building Saved Successfully");
@@ -249,7 +261,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             }}
                 IdText.setText("Enter The ID");
                 CodeText.setText("Enter The Code");
-                NameText.setText("Enter The Description");
+                DesText.setText("Enter The Description");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -290,7 +302,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             BuildingDao bdao = new DaoFactory().createBuildingDao();
             b.setCode(CodeText.getText());
             b.setId(Integer.parseInt(IdText.getText()));
-            b.setDescription(NameText.getText());
+            b.setDescription(DesText.getText());
             if(build.update(b)){
                 JOptionPane.showMessageDialog(this, "Building updated Successfully");
                 setTableModel(bdao.viewAll());
@@ -301,7 +313,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             }}
             IdText.setText("Enter The ID");
             CodeText.setText("Enter The Code");
-            NameText.setText("Enter The Description");
+            DesText.setText("Enter The Description");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -355,6 +367,12 @@ public class BuildingPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BuildTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuildTableKeyPressed
+        
+
+        
+    }//GEN-LAST:event_BuildTableKeyPressed
     
     
     private boolean checkValidity(){
@@ -384,11 +402,11 @@ public class BuildingPanel extends javax.swing.JPanel {
                          // own implemented dialog
                 
         try{
-            if(NameText.getText().equalsIgnoreCase("Enter The Description")){
+            if(DesText.getText().equalsIgnoreCase("Enter The Description")){
                 JOptionPane.showMessageDialog(this, "Please, enter description");
                 return false;
             }
-                Integer.parseInt(NameText.getText());
+                Integer.parseInt(DesText.getText());
                 JOptionPane.showMessageDialog(this, "Description is invalid! \n (please enter a string)");
                 return false;
             }catch (NumberFormatException es){
@@ -403,10 +421,10 @@ public class BuildingPanel extends javax.swing.JPanel {
     private javax.swing.JLabel CodeLabel;
     private javax.swing.JTextField CodeText;
     private javax.swing.JButton Delete;
+    private javax.swing.JTextField DesText;
     private javax.swing.JLabel IdLabel;
     private javax.swing.JTextField IdText;
     private javax.swing.JLabel NameLabel;
-    private javax.swing.JTextField NameText;
     private javax.swing.JButton Nwe;
     private javax.swing.JButton Refresh;
     private javax.swing.JButton Save;
