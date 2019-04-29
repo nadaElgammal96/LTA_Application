@@ -6,6 +6,20 @@ public class DepartmentDto {
     
     private String code;
     private String name;
+    private FacultyDto faculty;
+    private DepartBuildingDto building;
+    private List<StaffDto> depart_staff;
+    private List<StageDto> Stages;
+    private CourseDepartDto courses;
+    
+    
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getSearch() {
+        return search;
+    }
     private int id;
     private String search;
     private List<BuildingDto> buildings;
@@ -51,11 +65,7 @@ public class DepartmentDto {
         return courses;
     }
 
-    private FacultyDto faculty;
-    private DepartBuildingDto building;
-    private List<StaffDto> depart_staff;
-    private List<StageDto> Stages;
-    private CourseDepartDto courses;
+    
 
     public DepartmentDto(){
         super();
@@ -91,14 +101,7 @@ public class DepartmentDto {
         return id;
     }
 
-    public void setSearch(String search) {
-        this.search = search;
-    }
-
-    public String getSearch() {
-        return search;
-    }
-
+ 
 
     public void setBuildings(List<BuildingDto> buildings) {
         this.buildings = buildings;

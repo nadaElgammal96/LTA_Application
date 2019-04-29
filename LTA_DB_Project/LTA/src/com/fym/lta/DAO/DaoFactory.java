@@ -46,7 +46,7 @@ public class DaoFactory {
     }
 
     public DepartmentDao createDepartmentDao() {
-        return new DepartmnetDaoImpl();
+        return new DepartmentDaoImpl();
     }
 
     public FacultyDao createFacultyDao() {

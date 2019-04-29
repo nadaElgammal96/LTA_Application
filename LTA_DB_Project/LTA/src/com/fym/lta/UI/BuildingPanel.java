@@ -7,6 +7,8 @@ import com.fym.lta.DAO.BuildingDao;
 import com.fym.lta.DAO.DaoFactory;
 import com.fym.lta.DTO.BuildingDto;
 
+import java.awt.event.KeyEvent;
+
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -21,11 +23,10 @@ public class BuildingPanel extends javax.swing.JPanel {
     public BuildingPanel() {
         try{
         initComponents();
-            BuildingDao build;
-            build = new DaoFactory().createBuildingDao();
-            setTableModel(build.viewAll());  
+            BuildinBao build;
+            build = new BaoFactory().createBuildingBao();
+            setTableModel(build.ListAll());  
         }catch (Exception e) {
-                    // TODO: Add catch code
                     e.printStackTrace();
                 }
 
@@ -62,7 +63,7 @@ public class BuildingPanel extends javax.swing.JPanel {
         NameLabel = new javax.swing.JLabel();
         IdText = new javax.swing.JTextField();
         CodeText = new javax.swing.JTextField();
-        NameText = new javax.swing.JTextField();
+        DesText = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         BuildTable = new javax.swing.JTable();
         Nwe = new javax.swing.JButton();
@@ -74,7 +75,10 @@ public class BuildingPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         CodeLabel = new javax.swing.JLabel();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         NameLabel.setText("Description");
+        add(NameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
 
         IdText.setText("Enter The ID");
         IdText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -85,6 +89,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 IdTextFocusLost(evt);
             }
         });
+        add(IdText, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 380, 466, -1));
 
         CodeText.setText("Enter The Code");
         CodeText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -95,16 +100,18 @@ public class BuildingPanel extends javax.swing.JPanel {
                 CodeTextFocusLost(evt);
             }
         });
+        add(CodeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 466, -1));
 
-        NameText.setText("Enter The Description");
-        NameText.addFocusListener(new java.awt.event.FocusAdapter() {
+        DesText.setText("Enter The Description");
+        DesText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                NameTextFocusGained(evt);
+                DesTextFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                NameTextFocusLost(evt);
+                DesTextFocusLost(evt);
             }
         });
+        add(DesText, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, 466, -1));
 
         BuildTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,7 +129,19 @@ public class BuildingPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        BuildTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BuildTableKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(BuildTable);
+        if (BuildTable.getColumnModel().getColumnCount() > 0) {
+            BuildTable.getColumnModel().getColumn(0).setHeaderValue("Id");
+            BuildTable.getColumnModel().getColumn(1).setHeaderValue("Code");
+            BuildTable.getColumnModel().getColumn(2).setHeaderValue("Description");
+        }
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 55, 539, 274));
 
         Nwe.setText("New");
         Nwe.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +149,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 NweActionPerformed(evt);
             }
         });
+        add(Nwe, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 480, 77, -1));
 
         Delete.setText("Delete ");
         Delete.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +157,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 DeleteActionPerformed(evt);
             }
         });
+        add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 480, 78, -1));
 
         Save.setText("Update");
         Save.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +165,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 SaveActionPerformed(evt);
             }
         });
+        add(Save, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 480, 81, -1));
 
         Refresh.setText("Refresh");
         Refresh.addActionListener(new java.awt.event.ActionListener() {
@@ -151,6 +173,7 @@ public class BuildingPanel extends javax.swing.JPanel {
                 RefreshActionPerformed(evt);
             }
         });
+        add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 75, -1));
 
         SearchText.setText("What do you want to search ?");
         SearchText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -161,8 +184,10 @@ public class BuildingPanel extends javax.swing.JPanel {
                 SearchTextFocusLost(evt);
             }
         });
+        add(SearchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 24, 448, -1));
 
         IdLabel.setText("Id");
+        add(IdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 10, -1));
 
         jButton1.setText("Search");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -170,76 +195,10 @@ public class BuildingPanel extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 23, 75, -1));
 
         CodeLabel.setText("Code");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CodeLabel)
-                            .addComponent(IdLabel))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(IdText)
-                            .addComponent(CodeText)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(NameLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(NameText)))
-                .addGap(12, 12, 12))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Nwe, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Save, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(162, 162, 162))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(IdLabel)
-                    .addComponent(IdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CodeLabel)
-                    .addComponent(CodeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NameLabel)
-                    .addComponent(NameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Save)
-                    .addComponent(Refresh)
-                    .addComponent(Delete)
-                    .addComponent(Nwe))
-                .addContainerGap())
-        );
+        add(CodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
     }//GEN-END:initComponents
 
     private void IdTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IdTextFocusGained
@@ -268,17 +227,17 @@ public class BuildingPanel extends javax.swing.JPanel {
             CodeText.setText("Enter The Code");}
     }//GEN-LAST:event_CodeTextFocusLost
 
-    private void NameTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTextFocusGained
+    private void DesTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesTextFocusGained
         // TODO add your handling code here:
-        if(NameText.getText().equalsIgnoreCase("Enter The Description")){
-            NameText.setText("");}
-    }//GEN-LAST:event_NameTextFocusGained
+        if(DesText.getText().equalsIgnoreCase("Enter The Description")){
+            DesText.setText("");}
+    }//GEN-LAST:event_DesTextFocusGained
 
-    private void NameTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTextFocusLost
+    private void DesTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesTextFocusLost
         // TODO add your handling code here:
-        if(NameText.getText().trim().equalsIgnoreCase("")){
-            NameText.setText("Enter The Description");   }                                                                   
-    }//GEN-LAST:event_NameTextFocusLost
+        if(DesText.getText().trim().equalsIgnoreCase("")){
+            DesText.setText("Enter The Description");   }                                                                   
+    }//GEN-LAST:event_DesTextFocusLost
 
     private void NweActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NweActionPerformed
         // TODO add your handling code here:
@@ -289,7 +248,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             BuildingDao bdao = new DaoFactory().createBuildingDao();
             b.setCode(CodeText.getText());
             b.setId(Integer.parseInt(IdText.getText()));
-            b.setDescription(NameText.getText());
+            b.setDescription(DesText.getText());
             
             if(build.insert(b)){
                 JOptionPane.showMessageDialog(this, "Building Saved Successfully");
@@ -302,7 +261,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             }}
                 IdText.setText("Enter The ID");
                 CodeText.setText("Enter The Code");
-                NameText.setText("Enter The Description");
+                DesText.setText("Enter The Description");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -343,7 +302,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             BuildingDao bdao = new DaoFactory().createBuildingDao();
             b.setCode(CodeText.getText());
             b.setId(Integer.parseInt(IdText.getText()));
-            b.setDescription(NameText.getText());
+            b.setDescription(DesText.getText());
             if(build.update(b)){
                 JOptionPane.showMessageDialog(this, "Building updated Successfully");
                 setTableModel(bdao.viewAll());
@@ -354,7 +313,7 @@ public class BuildingPanel extends javax.swing.JPanel {
             }}
             IdText.setText("Enter The ID");
             CodeText.setText("Enter The Code");
-            NameText.setText("Enter The Description");
+            DesText.setText("Enter The Description");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -408,6 +367,12 @@ public class BuildingPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BuildTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuildTableKeyPressed
+        
+
+        
+    }//GEN-LAST:event_BuildTableKeyPressed
     
     
     private boolean checkValidity(){
@@ -437,11 +402,11 @@ public class BuildingPanel extends javax.swing.JPanel {
                          // own implemented dialog
                 
         try{
-            if(NameText.getText().equalsIgnoreCase("Enter The Description")){
+            if(DesText.getText().equalsIgnoreCase("Enter The Description")){
                 JOptionPane.showMessageDialog(this, "Please, enter description");
                 return false;
             }
-                Integer.parseInt(NameText.getText());
+                Integer.parseInt(DesText.getText());
                 JOptionPane.showMessageDialog(this, "Description is invalid! \n (please enter a string)");
                 return false;
             }catch (NumberFormatException es){
@@ -456,10 +421,10 @@ public class BuildingPanel extends javax.swing.JPanel {
     private javax.swing.JLabel CodeLabel;
     private javax.swing.JTextField CodeText;
     private javax.swing.JButton Delete;
+    private javax.swing.JTextField DesText;
     private javax.swing.JLabel IdLabel;
     private javax.swing.JTextField IdText;
     private javax.swing.JLabel NameLabel;
-    private javax.swing.JTextField NameText;
     private javax.swing.JButton Nwe;
     private javax.swing.JButton Refresh;
     private javax.swing.JButton Save;

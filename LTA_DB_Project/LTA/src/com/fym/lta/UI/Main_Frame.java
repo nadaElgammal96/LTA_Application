@@ -76,7 +76,7 @@ public class Main_Frame extends javax.swing.JFrame {
         );
         BasicPanelLayout.setVerticalGroup(
             BasicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 654, Short.MAX_VALUE)
         );
 
         File.setText("File");
@@ -271,8 +271,8 @@ public class Main_Frame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BasicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BasicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -467,7 +467,7 @@ public class Main_Frame extends javax.swing.JFrame {
     private javax.swing.JMenuItem AddNewStage;
     private javax.swing.JMenuItem AddNewUser;
     private javax.swing.JMenu Auto;
-    private javax.swing.JPanel BasicPanel;
+    public javax.swing.JPanel BasicPanel;
     private javax.swing.JMenu Course;
     private javax.swing.JMenuItem Delete;
     private javax.swing.JMenuItem Edit;

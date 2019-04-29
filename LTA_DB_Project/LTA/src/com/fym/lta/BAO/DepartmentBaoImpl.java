@@ -1,9 +1,8 @@
 package com.fym.lta.BAO;
 
-import com.fym.lta.DAO.DepartmnetDaoImpl;
+import com.fym.lta.DAO.DaoFactory;
+import com.fym.lta.DAO.DepartmentDao;
 import com.fym.lta.DTO.DepartmentDto;
-
-import java.beans.ExceptionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class DepartmentBaoImpl implements DepartmentBao {
     
     public boolean delete(DepartmentDto d) {
         
-        DepartmnetDaoImpl dao=null;
+        DepartmentDao dao= new DaoFactory().createDepartmentDao();
                 boolean deleteFlage = true;
                 try{
                     if(dao.isExist(d))
@@ -25,8 +24,6 @@ public class DepartmentBaoImpl implements DepartmentBao {
                     else
                     {
                         deleteFlage = false;
-                        JOptionPane.showMessageDialog(null, "This Department doesn't exist!","Invalid Input",1);
-
                     }
                 }catch(Exception e){
                     e.printStackTrace();
@@ -39,9 +36,9 @@ public class DepartmentBaoImpl implements DepartmentBao {
      * no parameters
      * return list of departmentdto objects */
     public List<DepartmentDto> viewAll() {
-        
-        DepartmnetDaoImpl dao= new DepartmnetDaoImpl();
-   
+
+        DepartmentDao dao = new DaoFactory().createDepartmentDao();
+
         List<DepartmentDto> departs = new ArrayList<DepartmentDto>();
         
         try{
@@ -61,14 +58,13 @@ public class DepartmentBaoImpl implements DepartmentBao {
      * Returm true for if it success, False if not */
     
     public boolean create(DepartmentDto d) {
-                
-        DepartmnetDaoImpl dao=new DepartmnetDaoImpl() ;
+
+        DepartmentDao dao = new DaoFactory().createDepartmentDao();
         boolean saveFlage = true;
         try{
             
             if(dao.isExist(d))
                {saveFlage = false;
-                JOptionPane.showMessageDialog(null, "This Department is already exist!","Invalid Input",1);
                }
             else
                 saveFlage = dao.createNew(d);
@@ -85,20 +81,14 @@ public class DepartmentBaoImpl implements DepartmentBao {
      * Returm true for if it success, False if not */
     
     public boolean update(DepartmentDto d) {
-                
-        DepartmnetDaoImpl dao= new DepartmnetDaoImpl();
-        boolean saveFlage = true;
+
+        DepartmentDao dao = new DaoFactory().createDepartmentDao();
+        boolean saveFlage = false;
         try{
-            
             
             if(dao.isExist(d))
                 saveFlage = dao.update(d);
-            else
-            {  
-                saveFlage = false;
-                JOptionPane.showMessageDialog(null, "This Department doesn't exist in your DataBase.","Not Found!",1);
-
-            }
+           
         }catch(Exception e){
             e.printStackTrace();
             return false;
@@ -110,8 +100,8 @@ public class DepartmentBaoImpl implements DepartmentBao {
      * This method takes department object and return list of department if exist.
     */
     public List<DepartmentDto> searchFor(DepartmentDto d) {
-        
-        DepartmnetDaoImpl dao=new DepartmnetDaoImpl();
+
+        DepartmentDao dao = new DaoFactory().createDepartmentDao();
         List<DepartmentDto> departs = null;
         
         try{
