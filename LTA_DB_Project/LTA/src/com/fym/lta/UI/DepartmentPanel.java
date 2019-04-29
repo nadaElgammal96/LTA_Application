@@ -629,13 +629,8 @@ public class DepartmentPanel extends java.awt.Panel {
     }//GEN-LAST:event_SearchTextKeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LocationTypePanel x = new LocationTypePanel();
-        Main_Frame frame = new Main_Frame();
-        x.setBounds(frame.BasicPanel.getBounds());
-        frame.setTitle("Location Type");
-        frame.setContentPane(x);
-        frame.validate();
-        frame.repaint();
+       
+    
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
