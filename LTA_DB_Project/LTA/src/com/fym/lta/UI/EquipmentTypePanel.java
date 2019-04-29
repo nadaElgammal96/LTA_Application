@@ -17,6 +17,7 @@ import com.fym.lta.DTO.EquipmentDto;
 
 import com.fym.lta.DTO.EquipmentTypeDto;
 
+import java.awt.CardLayout;
 import java.awt.event.KeyEvent;
 
 import java.util.List;
@@ -603,6 +604,7 @@ public class EquipmentTypePanel extends java.awt.Panel {
     private void setSpecButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSpecButtonActionPerformed
     try {
         EqTypeSpecJPanel x = new EqTypeSpecJPanel();
+        //CardLayout(x);
         add(x);
        // x.setBounds(BasicPanelUI.getBounds());
         //this.setTitle("Equipment types");

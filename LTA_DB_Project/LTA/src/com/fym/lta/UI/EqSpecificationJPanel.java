@@ -73,8 +73,6 @@ private EquipSpecificationBao business ;
         refreshButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         EqSpecificationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -118,8 +116,6 @@ private EquipSpecificationBao business ;
             EqSpecificationTable.getColumnModel().getColumn(2).setHeaderValue("Value");
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 66, 553, 191));
-
         idText.setText("Enter ID");
         idText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -134,7 +130,6 @@ private EquipSpecificationBao business ;
                 idTextActionPerformed(evt);
             }
         });
-        add(idText, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 286, 400, -1));
 
         nameText.setText("Enter Specification Name");
         nameText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -150,7 +145,6 @@ private EquipSpecificationBao business ;
                 nameTextActionPerformed(evt);
             }
         });
-        add(nameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 323, 400, -1));
 
         searchText.setText("Enter Text to Search");
         searchText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -166,7 +160,6 @@ private EquipSpecificationBao business ;
                 searchTextActionPerformed(evt);
             }
         });
-        add(searchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 12, 360, 27));
 
         valueText.setText("Enter Specification Value");
         valueText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -177,7 +170,6 @@ private EquipSpecificationBao business ;
                 valueTextFocusLost(evt);
             }
         });
-        add(valueText, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 360, 400, -1));
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -185,16 +177,12 @@ private EquipSpecificationBao business ;
                 searchButtonActionPerformed(evt);
             }
         });
-        add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(458, 15, 76, -1));
 
         jLabel1.setText("ID:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 288, -1, -1));
 
         jLabel2.setText("Name:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 325, -1, -1));
 
         jLabel3.setText("Value:");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 362, -1, -1));
 
         newButton.setText("New");
         newButton.addActionListener(new java.awt.event.ActionListener() {
@@ -202,7 +190,6 @@ private EquipSpecificationBao business ;
                 newButtonActionPerformed(evt);
             }
         });
-        add(newButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 416, 97, -1));
 
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +197,6 @@ private EquipSpecificationBao business ;
                 deleteButtonActionPerformed(evt);
             }
         });
-        add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(267, 416, 95, -1));
 
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(new java.awt.event.ActionListener() {
@@ -218,7 +204,6 @@ private EquipSpecificationBao business ;
                 refreshButtonActionPerformed(evt);
             }
         });
-        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 416, 94, -1));
 
         updateButton.setText("Update");
         updateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -226,7 +211,80 @@ private EquipSpecificationBao business ;
                 updateButtonActionPerformed(evt);
             }
         });
-        add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 416, 99, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel1)
+                .addGap(63, 63, 63)
+                .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel2)
+                .addGap(47, 47, 47)
+                .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel3)
+                .addGap(48, 48, 48)
+                .addComponent(valueText, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(152, 152, 152)
+                .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(searchButton)))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel1))
+                    .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel2))
+                    .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel3))
+                    .addComponent(valueText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(newButton)
+                    .addComponent(deleteButton)
+                    .addComponent(refreshButton)
+                    .addComponent(updateButton)))
+        );
     }//GEN-END:initComponents
 
         EquipSpecificationDto eq_spec = new EquipSpecificationDto();

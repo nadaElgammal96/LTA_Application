@@ -43,10 +43,8 @@ public class DepartmentPanel extends java.awt.Panel {
 
             DepartmentBao bao;
             bao= new  BaoFactory().createDepartmentBao();
-//<<<<<<< HEAD
+
             BuildinBao Bbao= new BaoFactory().createBuildingBao();
-//=======
-//>>>>>>> f0834271ee08a15cd2106593c33fd466fdca0b12
 
             initComponents();
   
@@ -641,10 +639,12 @@ public class DepartmentPanel extends java.awt.Panel {
         LocationTypePanel x = new LocationTypePanel();
         Main_Frame frame = new Main_Frame();
         x.setBounds(frame.BasicPanel.getBounds());
+        
         frame.setTitle("Location Type");
         frame.setContentPane(x);
         frame.validate();
         frame.repaint();
+       frame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BuildComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuildComboBoxActionPerformed
