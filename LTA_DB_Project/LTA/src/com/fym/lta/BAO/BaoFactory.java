@@ -1,7 +1,7 @@
 package com.fym.lta.BAO;
 
 public class BaoFactory {
-    public BuildinBao createBuildingBao() {
+    public BuildingBao createBuildingBao() {
         return new BuildingBaoImpl();
     }
 

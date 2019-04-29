@@ -7,7 +7,7 @@ import com.fym.lta.DTO.BuildingDto;
 
 import java.util.List;
 
-public abstract interface BuildinBao {
+public abstract interface BuildingBao {
     public abstract void ListEmptyLocations(BuildingDto build);
 
     public abstract List<BuildingDto> ListAll();
