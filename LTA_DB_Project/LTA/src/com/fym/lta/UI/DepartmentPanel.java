@@ -2,7 +2,7 @@
 package com.fym.lta.UI;
 
 import com.fym.lta.BAO.BaoFactory;
-import com.fym.lta.BAO.BuildingBao;
+import com.fym.lta.BAO.BuildinBao;
 import com.fym.lta.BAO.DepartmentBao;
 import com.fym.lta.DTO.BuildingDto;
 import com.fym.lta.DTO.DepartmentDto;
@@ -37,7 +37,7 @@ public class DepartmentPanel extends java.awt.Panel {
 
             DepartmentBao bao;
             bao= new  BaoFactory().createDepartmentBao();
-            BuildingBao Bbao= new BaoFactory().createBuildingBao();
+            BuildinBao Bbao= new BaoFactory().createBuildingBao();
 
             initComponents();
   

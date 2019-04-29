@@ -68,4 +68,8 @@ public class DaoFactory {
     public EquipmentSpecificationDao createEquipmentSpecificationDao() {
         return new EquipmentSpecificationDaoImpl();
     }
+    
+    public EqTypeSpecDao createEqTypeSpecDao(){
+        return new EqTypeSpecDaoImpl();
+    }
 }

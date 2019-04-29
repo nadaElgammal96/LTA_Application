@@ -11,7 +11,9 @@ import java.util.List;
 
 
 public abstract interface EquipSpecificationBao {
-    public abstract boolean save(EquipSpecificationDto eq_spec);
+    public abstract boolean insert(EquipSpecificationDto eq_spec);
+    
+    public abstract boolean update(EquipSpecificationDto eq_spec);
 
     public abstract boolean delete(EquipSpecificationDto eq_spec);
     

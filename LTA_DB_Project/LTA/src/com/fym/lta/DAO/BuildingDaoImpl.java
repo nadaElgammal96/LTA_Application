@@ -173,9 +173,9 @@ public class BuildingDaoImpl implements BuildingDao {
                         "SET ID_BUILD = ? , DESCRIPTION_BUILD = ? " +
                         "WHERE CODE_BUILD = ?");
           
-             jdbc.setInt(1,b.getId());
+             jdbc.setInt(3,b.getId());
              jdbc.setString(2,b.getDescription());
-             jdbc.setString(3,b.getCode());
+             jdbc.setString(1,b.getCode());
              jdbc.execute();
             
              return true;

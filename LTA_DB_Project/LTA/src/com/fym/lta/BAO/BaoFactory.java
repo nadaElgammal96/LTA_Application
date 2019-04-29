@@ -73,4 +73,7 @@ public class BaoFactory {
     public EmployeeBao createEmployeeBao() {
         return new EmployeeBaoImpl();
     }
+    public EqTypeSpecBao createEqTypeSpecBao(){
+        return new EqTypeSpecBaoImpl();
+    }
 }

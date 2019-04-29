@@ -39,6 +39,7 @@ public class Main_Frame extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         AddNewEquip = new javax.swing.JMenuItem();
         AddNewEquipType = new javax.swing.JMenuItem();
+        EquipmentSpecificationItem = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         AddNewUser = new javax.swing.JMenuItem();
         AddNewRole = new javax.swing.JMenuItem();
@@ -161,6 +162,14 @@ public class Main_Frame extends javax.swing.JFrame {
             }
         });
         New.add(AddNewEquipType);
+
+        EquipmentSpecificationItem.setText("Equipment Specification");
+        EquipmentSpecificationItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EquipmentSpecificationItemActionPerformed(evt);
+            }
+        });
+        New.add(EquipmentSpecificationItem);
         New.add(jSeparator3);
 
         AddNewUser.setText("User");
@@ -387,6 +396,19 @@ public class Main_Frame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ExitActionPerformed
 
+    private void EquipmentSpecificationItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EquipmentSpecificationItemActionPerformed
+    try {
+        EqSpecificationJPanel x = new EqSpecificationJPanel();
+        x.setBounds(BasicPanel.getBounds());
+        this.setTitle("Equipment Specifications");
+        this.setContentPane(x);
+        this.validate();
+        this.repaint();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_EquipmentSpecificationItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -449,6 +471,7 @@ public class Main_Frame extends javax.swing.JFrame {
     private javax.swing.JMenu Course;
     private javax.swing.JMenuItem Delete;
     private javax.swing.JMenuItem Edit;
+    private javax.swing.JMenuItem EquipmentSpecificationItem;
     private javax.swing.JMenuItem Exit;
     private javax.swing.JMenu File;
     private javax.swing.JMenu Help;
