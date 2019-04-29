@@ -7,15 +7,17 @@ package com.fym.lta.UI;
 
 
 import com.fym.lta.BAO.BaoFactory;
-import com.fym.lta.BAO.EquipmentBao;
 import com.fym.lta.BAO.EquipmentTypeBao;
 import com.fym.lta.DAO.DaoFactory;
+import com.fym.lta.DAO.EqTypeSpecDao;
 import com.fym.lta.DAO.EquipmentDao;
 import com.fym.lta.DAO.EquipmentTypeDao;
+import com.fym.lta.DTO.EquipSpecificationDto;
 import com.fym.lta.DTO.EquipmentDto;
 
 import com.fym.lta.DTO.EquipmentTypeDto;
 
+import java.awt.CardLayout;
 import java.awt.event.KeyEvent;
 
 import java.util.List;
@@ -27,6 +29,9 @@ import javax.swing.JOptionPane;
  * @author Nada El-Gammal
  */
 public class EquipmentTypePanel extends java.awt.Panel {
+    
+    private static final long serialVersionUID = 1L;
+
     private EquipmentTypeBao business;
 
     /** Creates new form EquipmentTypePanel */
@@ -85,6 +90,10 @@ public class EquipmentTypePanel extends java.awt.Panel {
         DeleteButton = new javax.swing.JButton();
         NewButton = new javax.swing.JButton();
         listEquipmentsButton1 = new javax.swing.JButton();
+        viewSpecButton = new javax.swing.JButton();
+        setSpecButton = new javax.swing.JButton();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         searchTextField.setText("Enter text to search");
         searchTextField.setPreferredSize(new java.awt.Dimension(74, 19));
@@ -101,6 +110,7 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 searchTextFieldActionPerformed(evt);
             }
         });
+        add(searchTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 12, 453, 26));
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +118,7 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 searchButtonActionPerformed(evt);
             }
         });
+        add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(529, 14, 71, -1));
 
         EqTypeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -154,7 +165,10 @@ public class EquipmentTypePanel extends java.awt.Panel {
             EqTypeTable.getColumnModel().getColumn(3).setHeaderValue("No. Of Equips");
         }
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 53, 620, 163));
+
         codeLabel.setText("ID:");
+        add(codeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 248, -1, -1));
 
         codeTextField.setText("Enter Code");
         codeTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -170,8 +184,10 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 codeTextFieldActionPerformed(evt);
             }
         });
+        add(codeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 277, 472, -1));
 
         idLabel.setText("No. Of Equipments:");
+        add(idLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 330, -1, 20));
 
         IDTextField.setText("Enter ID");
         IDTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -187,8 +203,10 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 IDTextFieldActionPerformed(evt);
             }
         });
+        add(IDTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 246, 472, -1));
 
         codeLabel1.setText("Code:");
+        add(codeLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 279, -1, -1));
 
         noOfEquipTextField1.setText("Enter Number of Equipments");
         noOfEquipTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -204,8 +222,10 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 noOfEquipTextField1ActionPerformed(evt);
             }
         });
+        add(noOfEquipTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 331, 472, -1));
 
         codeLabel2.setText("Name:");
+        add(codeLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 307, -1, -1));
 
         nameTextField.setText("Enter Name");
         nameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -221,13 +241,15 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 nameTextFieldActionPerformed(evt);
             }
         });
+        add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 305, 472, -1));
 
-        saveButton.setText("Save");
+        saveButton.setText("Update");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
             }
         });
+        add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 77, -1));
 
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(new java.awt.event.ActionListener() {
@@ -235,6 +257,7 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 refreshButtonActionPerformed(evt);
             }
         });
+        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 450, 72, -1));
 
         DeleteButton.setText("Delete");
         DeleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -242,6 +265,7 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 DeleteButtonActionPerformed(evt);
             }
         });
+        add(DeleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 380, 70, -1));
 
         NewButton.setText("New");
         NewButton.addActionListener(new java.awt.event.ActionListener() {
@@ -249,6 +273,7 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 NewButtonActionPerformed(evt);
             }
         });
+        add(NewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, 71, -1));
 
         listEquipmentsButton1.setText("List Equipments ");
         listEquipmentsButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -256,79 +281,23 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 listEquipmentsButton1ActionPerformed(evt);
             }
         });
+        add(listEquipmentsButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 141, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(codeLabel1)
-                    .addComponent(codeLabel2)
-                    .addComponent(codeLabel)
-                    .addComponent(idLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(codeTextField)
-                    .addComponent(IDTextField)
-                    .addComponent(nameTextField)
-                    .addComponent(noOfEquipTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(listEquipmentsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(NewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchButton)
-                    .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
-                .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codeLabel)
-                    .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codeLabel1)
-                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codeLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(noOfEquipTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(refreshButton)
-                    .addComponent(saveButton)
-                    .addComponent(DeleteButton)
-                    .addComponent(NewButton)
-                    .addComponent(listEquipmentsButton1))
-                .addContainerGap())
-        );
+        viewSpecButton.setText("View Specifications");
+        viewSpecButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSpecButtonActionPerformed(evt);
+            }
+        });
+        add(viewSpecButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 140, -1));
+
+        setSpecButton.setText("Set Specifications");
+        setSpecButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setSpecButtonActionPerformed(evt);
+            }
+        });
+        add(setSpecButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 450, 130, -1));
     }//GEN-END:initComponents
 
   EquipmentTypeDto et = new EquipmentTypeDto();
@@ -351,6 +320,8 @@ public class EquipmentTypePanel extends java.awt.Panel {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         try{
+            String s = searchTextField.getText();
+            if(!(s.equals("Enter text to search"))){
             EquipmentDao e = new DaoFactory().createEquipmentDao();
             List<EquipmentTypeDto> search_list = null;
             //et.setSearch(searchTextField.getText());
@@ -358,14 +329,17 @@ public class EquipmentTypePanel extends java.awt.Panel {
             search_list = business.searchFor(equipt);
             if( search_list !=null )
             {
-                JOptionPane.showMessageDialog(this, "Equipmnet Type Found");
                 setTableModel(search_list);
                 EqTypeTable.repaint();
             }
             else
             {
+                JOptionPane.showMessageDialog(this, "Equipmnet Type Not Found");
                 setTableModel(search_list);
                 EqTypeTable.repaint();
+            }}
+            else{
+                JOptionPane.showMessageDialog(this, "Please Enter Text to Search For");
             }
             searchTextField.setText("Enter text to search");
         }
@@ -454,7 +428,6 @@ public class EquipmentTypePanel extends java.awt.Panel {
         }
         catch(Exception e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error!");
         }
 
     }//GEN-LAST:event_saveButtonActionPerformed
@@ -483,7 +456,6 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 setTableModel(e.viewAll());
                 EqTypeTable.repaint();
             }else{
-                JOptionPane.showMessageDialog(this, "Please select a Type to delete");
                 EqTypeTable.repaint();
             }
             }
@@ -541,9 +513,30 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 }
             ));    
         }
+    
+    private void setSpecTable(List<EquipSpecificationDto> eq_spec){
+            int size = 0;
+            if(eq_spec != null && !eq_spec.isEmpty())
+                size = eq_spec.size();
+            
+            Object [][] eqArr = new Object [size][3];
+            for(int i =0;i<size;i++){
+                eqArr[i][0] = eq_spec.get(i).getId();
+                eqArr[i][1] = eq_spec.get(i).getName();
+                eqArr[i][2] = eq_spec.get(i).getValue();
+
+
+            }
+            EqTypeTable.setModel(new javax.swing.table.DefaultTableModel(eqArr,
+                new String [] {
+                    "Id", "Name", "Value"
+                }
+            ));    
+        }
 
     private void listEquipmentsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listEquipmentsButton1ActionPerformed
-        try{ List<EquipmentDto> eq = null;        
+        try{ 
+            List<EquipmentDto> eq = null;        
             int row = EqTypeTable.getSelectedRow();
             et.setId(Integer.parseInt(EqTypeTable.getModel().getValueAt(row,0).toString()));
             et.setCode(EqTypeTable.getModel().getValueAt(row,1).toString());
@@ -554,7 +547,8 @@ public class EquipmentTypePanel extends java.awt.Panel {
                 setNewTable(eq);
                 EqTypeTable.repaint();                
             }
-        }
+            }
+        
         catch(java.lang.ArrayIndexOutOfBoundsException e){
             JOptionPane.showMessageDialog(this, "Please select type from table to show its equipments");
             }
@@ -582,6 +576,45 @@ public class EquipmentTypePanel extends java.awt.Panel {
             noOfEquipTextField1.setText(EqTypeTable.getValueAt(row, 3).toString());
         }
     }//GEN-LAST:event_EqTypeTableKeyPressed
+
+    private void viewSpecButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSpecButtonActionPerformed
+        try{
+            EqTypeSpecDao dao = new DaoFactory().createEqTypeSpecDao();
+            List<EquipSpecificationDto> eq_sp = null;
+            int row = EqTypeTable.getSelectedRow();
+           // EquipmentTypeDto eq_type = new EquipmentTypeDto(Integer.parseInt(EqTypeTable.getModel().getValueAt(row,0).toString()));
+            et.setId(Integer.parseInt(EqTypeTable.getModel().getValueAt(row,0).toString()));
+            et.setCode(EqTypeTable.getModel().getValueAt(row,1).toString());
+            et.setName(EqTypeTable.getModel().getValueAt(row,2).toString());
+            et.setNo_of_equip(Integer.parseInt(EqTypeTable.getModel().getValueAt(row,3).toString()));
+            eq_sp = dao.loadAllSpecif(et);
+            if (eq_sp != null){
+                setSpecTable(eq_sp);
+                EqTypeTable.repaint();
+            }   
+        }
+    catch(java.lang.ArrayIndexOutOfBoundsException e){
+        JOptionPane.showMessageDialog(this, "Please select type from table to show its equipments");
+        }
+    catch(Exception e){
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_viewSpecButtonActionPerformed
+
+    private void setSpecButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSpecButtonActionPerformed
+    try {
+        EqTypeSpecJPanel x = new EqTypeSpecJPanel();
+        //CardLayout(x);
+        add(x);
+       // x.setBounds(BasicPanelUI.getBounds());
+        //this.setTitle("Equipment types");
+        //this.setContentPane(x);
+        //this.validate();
+        //this.repaint();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_setSpecButtonActionPerformed
 
     private boolean checkValidity(){
             try{
@@ -655,6 +688,8 @@ public class EquipmentTypePanel extends java.awt.Panel {
     private javax.swing.JButton saveButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchTextField;
+    private javax.swing.JButton setSpecButton;
+    private javax.swing.JButton viewSpecButton;
     // End of variables declaration//GEN-END:variables
 
 }

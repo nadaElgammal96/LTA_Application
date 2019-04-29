@@ -2,7 +2,7 @@
 package com.fym.lta.UI;
 
 import com.fym.lta.BAO.BaoFactory;
-import com.fym.lta.BAO.BuildingBao;
+import com.fym.lta.BAO.BuildinBao;
 import com.fym.lta.BAO.RoleBao;
 import com.fym.lta.DAO.BuildingDao;
 import com.fym.lta.DAO.DaoFactory;

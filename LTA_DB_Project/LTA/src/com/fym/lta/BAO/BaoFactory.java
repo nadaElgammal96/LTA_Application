@@ -1,7 +1,7 @@
 package com.fym.lta.BAO;
 
 public class BaoFactory {
-    public BuildingBao createBuildingBao() {
+    public BuildinBao createBuildingBao() {
         return new BuildingBaoImpl();
     }
 
@@ -72,5 +72,8 @@ public class BaoFactory {
     
     public EmployeeBao createEmployeeBao() {
         return new EmployeeBaoImpl();
+    }
+    public EqTypeSpecBao createEqTypeSpecBao(){
+        return new EqTypeSpecBaoImpl();
     }
 }

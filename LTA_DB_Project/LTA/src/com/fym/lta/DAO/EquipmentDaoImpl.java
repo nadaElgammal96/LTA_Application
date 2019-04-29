@@ -194,7 +194,7 @@ public class EquipmentDaoImpl implements EquipmentDao {
                 e= new EquipmentDto();
                 e.setId(jdbc.getInt("ID_EQ"));
                 e.setCode(jdbc.getString("CODE_EQ"));
-                e.setType(new EquipmentTypeDto("",0,"",jdbc.getInt("ID_EQ_TYPE"),"",new EquipTypeSpecDetailsDto(0,0)));
+                e.setType(new EquipmentTypeDto(jdbc.getInt("ID_EQ_TYPE")));
                 e.setCountry(jdbc.getString("COUNTRY_EQ"));
                 equip.add(e);
                 e= null;

@@ -22,18 +22,11 @@ public class EquipmentBaoImpl implements EquipmentBao {
     public boolean insert(EquipmentDto equip) {
         boolean insertFlag = true;
         try{
-                   //Check the data validity
-         if( equip.getId()<0 || equip.getType().getId()<0)
-         { JOptionPane.showMessageDialog(null,"invalid input");
-           return false;
-             }
-         else{//data is valid
              if(db.isExist(equip)){
                     JOptionPane.showMessageDialog(null, "Record is already EXIST");
                     return false;}
                 else
                        insertFlag = db.createNew(equip);
-               }
             return insertFlag;
         }
             catch(Exception e){

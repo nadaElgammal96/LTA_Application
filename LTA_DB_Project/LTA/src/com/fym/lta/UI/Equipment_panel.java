@@ -5,41 +5,30 @@ import com.fym.lta.BAO.BaoFactory;
 import com.fym.lta.BAO.EquipmentBao;
 import com.fym.lta.DAO.DaoFactory;
 import com.fym.lta.DAO.EquipmentDao;
-import com.fym.lta.DAO.EquipmentDaoImpl;
 import com.fym.lta.DAO.EquipmentTypeDao;
-import com.fym.lta.DTO.EquipTypeSpecDetailsDto;
 import com.fym.lta.DTO.EquipmentDto;
 import com.fym.lta.DTO.EquipmentTypeDto;
-
-import java.awt.EventQueue;
-
 import java.awt.event.KeyEvent;
-
 import java.util.List;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author Nada El-Gammal
  */
+
 public class Equipment_panel extends java.awt.Panel {
+    private static final long serialVersionUID = 1L;
+
+    
     private EquipmentBao business;
 
     /** Creates new form Equipment_panel */    
     public Equipment_panel() {
         try {
                    business = new BaoFactory().createEquipmnetBao();
-                   EquipmentDao dao = new DaoFactory().createEquipmentDao();
 
                    initComponents();
-                   setTableModel(dao.viewAll());            
+                   setTableModel(business.listAll());            
                    
                } catch (Exception e) {
                    e.printStackTrace();
@@ -90,6 +79,8 @@ public class Equipment_panel extends java.awt.Panel {
         countryLabel = new javax.swing.JLabel();
         countryTextField = new javax.swing.JTextField();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         searchTextField.setText("Enter text to search");
         searchTextField.setPreferredSize(new java.awt.Dimension(74, 19));
         searchTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -105,6 +96,7 @@ public class Equipment_panel extends java.awt.Panel {
                 searchTextFieldActionPerformed(evt);
             }
         });
+        add(searchTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 12, 453, 28));
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +104,7 @@ public class Equipment_panel extends java.awt.Panel {
                 searchButtonActionPerformed(evt);
             }
         });
+        add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 12, 71, -1));
 
         EquipmentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,12 +151,15 @@ public class Equipment_panel extends java.awt.Panel {
             EquipmentTable.getColumnModel().getColumn(3).setHeaderValue("Country");
         }
 
-        saveButton.setText("Save");
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 58, 620, 211));
+
+        saveButton.setText("Update");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
             }
         });
+        add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(522, 456, 77, -1));
 
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +167,7 @@ public class Equipment_panel extends java.awt.Panel {
                 refreshButtonActionPerformed(evt);
             }
         });
+        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 456, 72, -1));
 
         DeleteButton.setText("Delete");
         DeleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -178,6 +175,7 @@ public class Equipment_panel extends java.awt.Panel {
                 DeleteButtonActionPerformed(evt);
             }
         });
+        add(DeleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(358, 456, 70, -1));
 
         NewButton.setText("New");
         NewButton.addActionListener(new java.awt.event.ActionListener() {
@@ -185,8 +183,10 @@ public class Equipment_panel extends java.awt.Panel {
                 NewButtonActionPerformed(evt);
             }
         });
+        add(NewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 456, 71, -1));
 
         idLabel.setText("ID:");
+        add(idLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 296, -1, 20));
 
         IDTextField.setText("Enter ID");
         IDTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -202,8 +202,10 @@ public class Equipment_panel extends java.awt.Panel {
                 IDTextFieldActionPerformed(evt);
             }
         });
+        add(IDTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 297, 411, -1));
 
         codeLabel.setText("Code:");
+        add(codeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 336, -1, -1));
 
         codeTextField.setText("Enter Code");
         codeTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -219,8 +221,10 @@ public class Equipment_panel extends java.awt.Panel {
                 codeTextFieldActionPerformed(evt);
             }
         });
+        add(codeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 334, 411, -1));
 
         typeIdLabel.setText("Type ID:");
+        add(typeIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 373, -1, -1));
 
         typeIdTextField.setText("Enter ID of the equipment type");
         typeIdTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -236,8 +240,10 @@ public class Equipment_panel extends java.awt.Panel {
                 typeIdTextFieldActionPerformed(evt);
             }
         });
+        add(typeIdTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 371, 411, -1));
 
         countryLabel.setText("Country:");
+        add(countryLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
 
         countryTextField.setText("Enter made country of the equipment");
         countryTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -253,77 +259,7 @@ public class Equipment_panel extends java.awt.Panel {
                 countryTextFieldActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(NewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(idLabel)
-                            .addComponent(codeLabel)
-                            .addComponent(typeIdLabel)
-                            .addComponent(countryLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(IDTextField)
-                            .addComponent(codeTextField)
-                            .addComponent(typeIdTextField)
-                            .addComponent(countryTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE))))
-                .addContainerGap(54, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchButton)
-                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codeLabel)
-                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typeIdLabel)
-                    .addComponent(typeIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(countryLabel)
-                    .addComponent(countryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(refreshButton)
-                    .addComponent(saveButton)
-                    .addComponent(DeleteButton)
-                    .addComponent(NewButton))
-                .addGap(15, 15, 15))
-        );
+        add(countryTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 408, 411, -1));
     }//GEN-END:initComponents
    
     EquipmentDto eq = new EquipmentDto();
@@ -336,20 +272,22 @@ public class Equipment_panel extends java.awt.Panel {
         try
         {
             if(checkValidity()){
-            EquipmentDao e = new DaoFactory().createEquipmentDao();
-            int row = EquipmentTable.getSelectedRow();
+            EquipmentTypeDao typedao = new DaoFactory().createEquipmentTypeDao();
+            EquipmentTypeDto et = new EquipmentTypeDto(Integer.parseInt(typeIdTextField.getText()));
             eq.setId(Integer.parseInt(IDTextField.getText()));
             eq.setCode(codeTextField.getText());
             eq.setType(new EquipmentTypeDto(Integer.parseInt(typeIdTextField.getText())));
             eq.setCountry(countryTextField.getText());
+            if(typedao.isExist(et)){
             if(business.update(eq)){
                        JOptionPane.showMessageDialog(this, "Equipment Updated Successfully");
-                       setTableModel(e.viewAll());            
+                       setTableModel(business.listAll());            
                        EquipmentTable.repaint();
-            }else{
+            }else
                    EquipmentTable.repaint();
-               }
             }
+                else
+                    JOptionPane.showMessageDialog(this,"Type of this Equipment does not Exist\n Please create the Type First"); }
             codeTextField.setText("Enter Code");
             typeIdTextField.setText("Enter ID of the equipment type");
             countryTextField.setText("Enter made country of the equipment");
@@ -363,7 +301,6 @@ public class Equipment_panel extends java.awt.Panel {
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         try{
-             EquipmentDao e = new DaoFactory().createEquipmentDao();
              int row = EquipmentTable.getSelectedRow();
              eq.setId(Integer.parseInt(EquipmentTable.getModel().getValueAt(row,0).toString()));
              eq.setCode(EquipmentTable.getModel().getValueAt(row,1).toString());
@@ -371,11 +308,14 @@ public class Equipment_panel extends java.awt.Panel {
              eq.setCountry(EquipmentTable.getModel().getValueAt(row,3).toString());
              if(business.delete(eq)){
                         JOptionPane.showMessageDialog(this, "Equipment Deleted Successfully");
-                        setTableModel(e.viewAll());            
+                        setTableModel(business.listAll());            
                         EquipmentTable.repaint();
              }else{
                     EquipmentTable.repaint();
                 }
+            }
+        catch(java.lang.ArrayIndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(this, "Please select row from table to delete");
             }
         catch(Exception e){
                 e.printStackTrace();
@@ -396,7 +336,12 @@ public class Equipment_panel extends java.awt.Panel {
                 EquipmentDao e = new DaoFactory().createEquipmentDao();
                 setTableModel(e.viewAll());            
                 EquipmentTable.repaint();
+                codeTextField.setText("Enter Code");
+                typeIdTextField.setText("Enter ID of the equipment type");
+                countryTextField.setText("Enter made country of the equipment");
+                IDTextField.setText("Enter ID");
             }
+        
         catch(Exception e)
         { e.printStackTrace();}
         
@@ -405,7 +350,6 @@ public class Equipment_panel extends java.awt.Panel {
     private void NewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewButtonActionPerformed
         try{ 
             if(checkValidity()){
-            EquipmentDao e = new DaoFactory().createEquipmentDao();
             EquipmentTypeDto et = new EquipmentTypeDto(Integer.parseInt(typeIdTextField.getText()));
             EquipmentTypeDao typedao = new DaoFactory().createEquipmentTypeDao();
         eq.setId(Integer.parseInt(IDTextField.getText()));
@@ -415,7 +359,7 @@ public class Equipment_panel extends java.awt.Panel {
         if (typedao.isExist(et)){
         if(business.insert(eq)){
                         JOptionPane.showMessageDialog(this, "Equipment Inserted Successfully");
-                        setTableModel(e.viewAll());            
+                        setTableModel(business.listAll());            
                         EquipmentTable.repaint();
                     }else 
             EquipmentTable.repaint(); 
@@ -491,21 +435,25 @@ public class Equipment_panel extends java.awt.Panel {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         try{
-            EquipmentDao e = new DaoFactory().createEquipmentDao();
+            String x = searchTextField.getText();
+            if(!(x.equals("Enter text to search"))){
             EquipmentBao equip = new BaoFactory().createEquipmnetBao();
                 List<EquipmentDto> search_list = null;
             eq.setSearch(searchTextField.getText());
                 search_list = equip.searchFor(eq);
             if( search_list !=null )
             {
-                JOptionPane.showMessageDialog(this, "Equipmnet Found");
                 setTableModel(search_list);  
                 EquipmentTable.repaint();
             }
             else 
-            {  
-                setTableModel(e.viewAll());  
+            {   JOptionPane.showMessageDialog(this, "Equipmnet Not Found");
+                setTableModel(search_list);  
                 EquipmentTable.repaint();
+            }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Please Enter Text To Search For");
             }
             searchTextField.setText("Enter text to search");  
         }

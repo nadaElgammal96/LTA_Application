@@ -93,7 +93,11 @@
    <hash n="oracle.jdevimpl.config.JProjectLibraries">
       <list n="exportedReferences">
          <hash>
-            <value n="id" v="Ojdbc6.jar"/>
+            <value n="id" v="Ojdbc5.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="AbsoluteLayout"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
@@ -105,18 +109,22 @@
          <list n="libraryDefinitions">
             <hash>
                <list n="classPath">
-                  <url path="../../ojdbc6.jar" jar-entry=""/>
+                  <url protocol="jar" path="file:/E:/ojdbc5.jar!/"/>
                </list>
                <value n="deployedByDefault" v="true"/>
-               <value n="description" v="Ojdbc6.jar"/>
-               <value n="id" v="Ojdbc6.jar"/>
+               <value n="description" v="Ojdbc5.jar"/>
+               <value n="id" v="Ojdbc5.jar"/>
                <value n="locked" v="true"/>
             </hash>
          </list>
       </hash>
       <list n="libraryReferences">
          <hash>
-            <value n="id" v="Ojdbc6.jar"/>
+            <value n="id" v="Ojdbc5.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="AbsoluteLayout"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>

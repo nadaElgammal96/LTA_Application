@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BuildingBaoImpl implements BuildingBao {
+public class BuildingBaoImpl implements BuildinBao {
     
     private  BuildingDao dao = new DaoFactory().createBuildingDao();
 

@@ -132,7 +132,10 @@ public class EquipmentTypeDaoImpl implements EquipmentTypeDao {
                     jdbc.setUsername("lta");
                     jdbc.setPassword("lta"); 
                     jdbc.setCommand("SELECT EQ_TYPE.ID_EQ_TYPE FROM EQ_TYPE where EQ_TYPE.ID_EQ_TYPE=?  ");
-                    jdbc.setInt(1,et.getId());
+                    try{jdbc.setInt(1,et.getId());}
+                    catch(NumberFormatException e){
+                        jdbc.setInt(1,-1);
+                    }
                     jdbc.execute();
                     while(jdbc.next()){
                         flag = true;
@@ -191,7 +194,7 @@ public class EquipmentTypeDaoImpl implements EquipmentTypeDao {
             return true;
         }
         catch(java.sql.SQLException e){
-            JOptionPane.showMessageDialog(null, "Error Updating Data");
+          JOptionPane.showMessageDialog(null, "There exist Equipments of this type\n Please Delete them first!");
             return false;
             }
         catch(Exception e){

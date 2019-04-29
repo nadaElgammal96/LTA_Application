@@ -76,12 +76,15 @@ public class EmployeePanel extends javax.swing.JPanel {
         jobtext = new javax.swing.JTextField();
         Nwe = new javax.swing.JButton();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         Delete.setText("Delete ");
         Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteActionPerformed(evt);
             }
         });
+        add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(363, 460, 65, -1));
 
         Refresh.setText("Refresh");
         Refresh.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +92,7 @@ public class EmployeePanel extends javax.swing.JPanel {
                 RefreshActionPerformed(evt);
             }
         });
+        add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 460, 75, -1));
 
         employeestable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -113,12 +117,15 @@ public class EmployeePanel extends javax.swing.JPanel {
             employeestable.getColumnModel().getColumn(2).setHeaderValue("Job");
         }
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 51, 645, 274));
+
         Save.setText("Save");
         Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveActionPerformed(evt);
             }
         });
+        add(Save, new org.netbeans.lib.awtextra.AbsoluteConstraints(525, 460, 74, -1));
 
         SearchText.setText("Enter text to search");
         SearchText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -134,8 +141,10 @@ public class EmployeePanel extends javax.swing.JPanel {
                 SearchTextActionPerformed(evt);
             }
         });
+        add(SearchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 13, 448, -1));
 
         IdLabel.setText("Ssn");
+        add(IdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 345, -1, -1));
 
         search.setText("Search");
         search.addActionListener(new java.awt.event.ActionListener() {
@@ -143,10 +152,13 @@ public class EmployeePanel extends javax.swing.JPanel {
                 searchActionPerformed(evt);
             }
         });
+        add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 12, 75, -1));
 
         CodeLabel.setText("Name");
+        add(CodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 376, -1, -1));
 
         NameLabel.setText("Job");
+        add(NameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 404, -1, -1));
 
         ssntext.setText("Enter Employee Ssn");
         ssntext.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -162,6 +174,7 @@ public class EmployeePanel extends javax.swing.JPanel {
                 ssntextActionPerformed(evt);
             }
         });
+        add(ssntext, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 343, 507, -1));
 
         nametext.setText("Enter Employee Name");
         nametext.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -177,6 +190,7 @@ public class EmployeePanel extends javax.swing.JPanel {
                 nametextActionPerformed(evt);
             }
         });
+        add(nametext, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 371, 507, -1));
 
         jobtext.setText("Enter Employee Job");
         jobtext.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -187,6 +201,7 @@ public class EmployeePanel extends javax.swing.JPanel {
                 jobtextFocusLost(evt);
             }
         });
+        add(jobtext, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 402, 507, -1));
 
         Nwe.setText("New");
         Nwe.addActionListener(new java.awt.event.ActionListener() {
@@ -194,76 +209,7 @@ public class EmployeePanel extends javax.swing.JPanel {
                 NweActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Nwe, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Save, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(NameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jobtext))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(IdLabel)
-                                    .addComponent(CodeLabel))
-                                .addGap(16, 16, 16)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nametext)
-                                    .addComponent(ssntext, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(IdLabel)
-                            .addComponent(ssntext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
-                        .addComponent(CodeLabel))
-                    .addComponent(nametext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NameLabel)
-                    .addComponent(jobtext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Save)
-                    .addComponent(Refresh)
-                    .addComponent(Delete)
-                    .addComponent(Nwe))
-                .addContainerGap())
-        );
+        add(Nwe, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 460, 60, -1));
     }//GEN-END:initComponents
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
