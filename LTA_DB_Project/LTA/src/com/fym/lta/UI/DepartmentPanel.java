@@ -22,7 +22,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicPanelUI;
 
-
 /**
  *
  * @author Mai-AbdEltwab
