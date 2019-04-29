@@ -4,17 +4,23 @@ package com.fym.lta.UI;
 import com.fym.lta.BAO.BaoFactory;
 import com.fym.lta.BAO.BuildingBao;
 import com.fym.lta.BAO.DepartmentBao;
+
+
 import com.fym.lta.DTO.BuildingDto;
 import com.fym.lta.DTO.DepartmentDto;
+
+import java.awt.event.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
+
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicPanelUI;
 
 
 /**
@@ -37,7 +43,6 @@ public class DepartmentPanel extends java.awt.Panel {
 
             DepartmentBao bao;
             bao= new  BaoFactory().createDepartmentBao();
-            BuildingBao Bbao= new BaoFactory().createBuildingBao();
 
             initComponents();
   
@@ -50,6 +55,23 @@ public class DepartmentPanel extends java.awt.Panel {
             // repaint department table for the result data
                 setTableModel(departs);
             
+            //set all existing Building in combobox
+             BuildingBao bBao = new BaoFactory().createBuildingBao();
+             List<BuildingDto> builds = new ArrayList<BuildingDto>();
+            
+             builds = bBao.ListAll();
+             
+            Vector <JCheckBox> items = new Vector<JCheckBox>();
+            JCheckBox item = new JCheckBox();
+            
+            for(int i=0 ; i<builds.size() ; i++)
+            {
+                item.setText(builds.get(i).getCode());
+                items.add(item);
+                
+            }
+
+            BuildComboBox = new JComboBox(items);
         }
            catch (Exception e) {
             // TODO: Add catch code
@@ -71,18 +93,20 @@ public class DepartmentPanel extends java.awt.Panel {
                 departArr[i][1] = departs.get(i).getCode();
                 departArr[i][2] = departs.get(i).getName();
 
-            DefaultComboBoxModel<String> BuildingComboBox =
-                new DefaultComboBoxModel<>();
+                
+                  JComboBox<String> BuildingComboBox = new JComboBox<>();
                 
                 if(departs.get(i).getBuildings()!=null && !departs.get(i).getBuildings().isEmpty()){
                     for(int j=0 ; j<departs.get(i).getBuildings().size() ; j++)
-                      BuildingComboBox.addElement(departs.get(i).getBuildings().get(j).getCode());
+                      BuildingComboBox.addItem(departs.get(i).getBuildings().get(j).getCode());
                }
-                        depTable.setValueAt(BuildingComboBox,i,3); 
+                    
+                    departTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(c));
+                    
                 }
 
                 
-            depTable.setModel(new javax.swing.table.DefaultTableModel(departArr,
+            departTable.setModel(new javax.swing.table.DefaultTableModel(departArr,
                 new String [] {
                     "Id", "Name","Department","Building"
                 }
@@ -101,49 +125,87 @@ public class DepartmentPanel extends java.awt.Panel {
      */
     private void initComponents() {//GEN-BEGIN:initComponents
 
-        BuildingComboBox = new javax.swing.JComboBox<>();
+        c = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         IdLabel = new javax.swing.JLabel();
         CodeLabel = new javax.swing.JLabel();
         NameLabel = new javax.swing.JLabel();
         IdText = new javax.swing.JTextField();
         CodeText = new javax.swing.JTextField();
         NameText = new javax.swing.JTextField();
-        Nwe = new javax.swing.JButton();
+        New = new javax.swing.JButton();
         Delete = new javax.swing.JButton();
         Refresh = new javax.swing.JButton();
         Update = new javax.swing.JButton();
         search = new javax.swing.JButton();
         SearchText = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        depTable = new javax.swing.JTable();
+        departTable = new javax.swing.JTable();
         clear = new javax.swing.JButton();
         BuildingLabel = new javax.swing.JLabel();
+        BuildComboBox = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
-        BuildingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        c.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         IdLabel.setText("Id:");
+        add(IdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 441, -1, -1));
 
         CodeLabel.setText("Code:");
+        add(CodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 473, -1, -1));
 
         NameLabel.setText("Name:");
+        add(NameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 507, -1, -1));
 
         IdText.setText("Enter department ID");
+        IdText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                IdTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                IdTextFocusLost(evt);
+            }
+        });
+        add(IdText, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 436, 346, 31));
 
         CodeText.setText("Enter department code");
+        CodeText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                CodeTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                CodeTextFocusLost(evt);
+            }
+        });
+        add(CodeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 473, 346, 28));
 
         NameText.setText("Enter department name ");
+        NameText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                NameTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                NameTextFocusLost(evt);
+            }
+        });
         NameText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NameTextActionPerformed(evt);
             }
         });
+        add(NameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 507, 346, 25));
 
-        Nwe.setText("New");
-        Nwe.addActionListener(new java.awt.event.ActionListener() {
+        New.setText("New");
+        New.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NweActionPerformed(evt);
+                NewActionPerformed(evt);
             }
         });
+        add(New, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 590, 77, -1));
 
         Delete.setText("Delete ");
         Delete.addActionListener(new java.awt.event.ActionListener() {
@@ -151,6 +213,7 @@ public class DepartmentPanel extends java.awt.Panel {
                 DeleteActionPerformed(evt);
             }
         });
+        add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 590, 77, -1));
 
         Refresh.setText("Refresh");
         Refresh.addActionListener(new java.awt.event.ActionListener() {
@@ -158,6 +221,7 @@ public class DepartmentPanel extends java.awt.Panel {
                 RefreshActionPerformed(evt);
             }
         });
+        add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 388, 84, -1));
 
         Update.setText("Update");
         Update.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +229,7 @@ public class DepartmentPanel extends java.awt.Panel {
                 UpdateActionPerformed(evt);
             }
         });
+        add(Update, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 590, 82, -1));
 
         search.setText("Search");
         search.addActionListener(new java.awt.event.ActionListener() {
@@ -172,10 +237,25 @@ public class DepartmentPanel extends java.awt.Panel {
                 searchActionPerformed(evt);
             }
         });
+        add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 19, 93, -1));
 
         SearchText.setText("Enter what do you want to search for");
+        SearchText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                SearchTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                SearchTextFocusLost(evt);
+            }
+        });
+        SearchText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                SearchTextKeyPressed(evt);
+            }
+        });
+        add(SearchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 490, -1));
 
-        depTable.setModel(new javax.swing.table.DefaultTableModel(
+        departTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -187,7 +267,7 @@ public class DepartmentPanel extends java.awt.Panel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -201,15 +281,27 @@ public class DepartmentPanel extends java.awt.Panel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(depTable);
-        if (depTable.getColumnModel().getColumnCount() > 0) {
-            depTable.getColumnModel().getColumn(0).setHeaderValue("Id");
-            depTable.getColumnModel().getColumn(1).setHeaderValue("Code");
-            depTable.getColumnModel().getColumn(2).setHeaderValue("Name");
-            depTable.getColumnModel().getColumn(2).setCellEditor(null);
-            depTable.getColumnModel().getColumn(3).setHeaderValue("Building");
-            depTable.getColumnModel().getColumn(3).setCellEditor(null);
+        departTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        departTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                departTableMouseClicked(evt);
+            }
+        });
+        departTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                departTableKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(departTable);
+        if (departTable.getColumnModel().getColumnCount() > 0) {
+            departTable.getColumnModel().getColumn(0).setHeaderValue("Id");
+            departTable.getColumnModel().getColumn(1).setHeaderValue("Code");
+            departTable.getColumnModel().getColumn(2).setHeaderValue("Name");
+            departTable.getColumnModel().getColumn(3).setHeaderValue("Building");
+            departTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(c));
         }
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 51, 589, 319));
 
         clear.setText("Clear");
         clear.addActionListener(new java.awt.event.ActionListener() {
@@ -217,95 +309,62 @@ public class DepartmentPanel extends java.awt.Panel {
                 clearActionPerformed(evt);
             }
         });
+        add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(407, 590, 83, -1));
 
         BuildingLabel.setText("Building:");
+        add(BuildingLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 550, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CodeLabel)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(NameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(IdLabel)
-                                            .addGap(15, 15, 15)))
-                                    .addComponent(BuildingLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Nwe, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(Update, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(IdText, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(CodeText, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(NameText)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Refresh)
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(IdText, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(IdLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CodeText, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CodeLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NameText)
-                    .addComponent(NameLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BuildingLabel)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Nwe)
-                    .addComponent(Update)
-                    .addComponent(Delete)
-                    .addComponent(clear))
-                .addContainerGap())
-        );
+        BuildComboBox.setToolTipText("");
+        BuildComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        add(BuildComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 538, 346, 34));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 510, -1, -1));
     }//GEN-END:initComponents
 
-    private void NweActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NweActionPerformed
+    private void NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewActionPerformed
 
       try
       {
+            //check for empty entered data
+            if (IdText.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                                              "Please enter department id",
+                                              "Done", 1);
+                throw new IllegalArgumentException("id text is empry");
+            } else if (CodeText.getText().isEmpty())
+
+            {
+                JOptionPane.showMessageDialog(null,
+                                              "Please enter department code",
+                                              "Done", 1);
+                throw new IllegalArgumentException("code text is empty");
+            } else if (NameText.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                                              "Please enter department name",
+                                              "Done", 1);
+                throw new IllegalArgumentException("name text is empty");
+            }
+
+            //Check for the entered id is a positive number
+            int id = Integer.parseInt(IdText.getText());
+            if (id < 1) {
+                JOptionPane.showMessageDialog(null,
+                                              "ID is only Positive Numbers",
+                                              "Invalid Input", 1);
+                throw new IllegalArgumentException("ID is only Positive Numbers");
+            }
+          
           DepartmentDto dto = new DepartmentDto();
           BuildingDto Bdto = new BuildingDto();
           DepartmentBao bao = new BaoFactory().createDepartmentBao();
           
+          //set attributes values for department object
           dto.setId(Integer.parseInt(IdText.getText()));
           dto.setCode(CodeText.getText());
           dto.setName(NameText.getText());
@@ -319,15 +378,34 @@ public class DepartmentPanel extends java.awt.Panel {
           
           if (flag==true)
               JOptionPane.showMessageDialog(null, "Department has inserted successfully!","Done",1);
+              
+              
+          else{
+          JOptionPane.showMessageDialog(null, "This department is already exist!","Invalid Input",1);
+          setTableModel(bao.viewAll());
+             departTable.repaint(); }
                
       }
+
+        catch (java.lang.NumberFormatException e2) {
+            e2.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Please enter number for ID",
+                                          "Invalid Input", 1);
+
+        }
+      
+        catch (IllegalArgumentException e1) {
+
+            e1.printStackTrace();
+        }
+      
          catch (Exception e) {
             // TODO: Add catch code
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Some Thing went wrong!/nPlease check your entered data. ","Invalid Input",1);
+            JOptionPane.showMessageDialog(null, "Some Thing went wrong!\nPlease check your entered data. ","Invalid Input",1);
 
         }
-    }//GEN-LAST:event_NweActionPerformed
+    }//GEN-LAST:event_NewActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
@@ -343,21 +421,38 @@ public class DepartmentPanel extends java.awt.Panel {
             boolean flag = bao.delete(dto);
             
             if (flag==true)
+            {
                 JOptionPane.showMessageDialog(null, "Department has deleted successfully!","Done",1);
+                setTableModel(bao.viewAll());
+                departTable.repaint();
+            } else
+                JOptionPane.showMessageDialog(null,
+                                              "Department doesn't exist!",
+                                              "Not Found", 1);
                     
         }
         catch (Exception e) {
               // TODO: Add catch code
               e.printStackTrace();
-              JOptionPane.showMessageDialog(null, "Some Thing went wrong!/nPlease check your entered data. ","Invalid Input",1);
+              JOptionPane.showMessageDialog(null, "Some Thing went wrong!\nPlease check your entered data. ","Invalid Input",1);
 
           }
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
-       
-     
+
+        
+        //enable id text box again
+        IdText.setEnabled(true);
+
+        //set default text for text boxes
+        IdText.setText("Enter department ID");
+        CodeText.setText("Enter department code");
+        NameText.setText("Enter department name");
+        
+        
       DepartmentBao bao = new BaoFactory().createDepartmentBao();
+        // view all data again
         List<DepartmentDto> departs = bao.viewAll();
         setTableModel(departs);
     }//GEN-LAST:event_RefreshActionPerformed
@@ -366,17 +461,19 @@ public class DepartmentPanel extends java.awt.Panel {
         
         try{
             
-            
         DepartmentDto dto = new DepartmentDto();   
         DepartmentBao bao = new BaoFactory().createDepartmentBao();
         dto=new DepartmentDto();
+            
         dto.setSearch(SearchText.getText());
         List<DepartmentDto> result = bao.searchFor(dto);
-        if(result.size()==0)
+            
+        if(result != null && !result.isEmpty())
+            setTableModel(result);
+        else
             JOptionPane.showMessageDialog(null, "There is no search result for: "+SearchText.getText(),"Invalid search",1);
 
-        else
-        setTableModel(result);}
+        }
         
         catch(Exception e){
             // TODO: Add catch code
@@ -387,14 +484,13 @@ public class DepartmentPanel extends java.awt.Panel {
     }//GEN-LAST:event_searchActionPerformed
 
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
-        // TODO add your handling code here:
         
         try
         {
             DepartmentDto dto = new DepartmentDto();   
             DepartmentBao bao = new BaoFactory().createDepartmentBao();
             BuildingDto Bdto = new BuildingDto();
-            
+
             dto.setId(Integer.parseInt(IdText.getText()));
             dto.setCode(CodeText.getText());
             dto.setName(NameText.getText());
@@ -406,8 +502,16 @@ public class DepartmentPanel extends java.awt.Panel {
             boolean flag = bao.update(dto);
             
             if (flag==true)
+            {
                 JOptionPane.showMessageDialog(null, "Department has updated successfully!","Done",1);
-                    
+                setTableModel(bao.viewAll());
+                departTable.repaint();
+            }
+            
+            else
+                JOptionPane.showMessageDialog(null,
+                                              "Department doesn't exist!",
+                                              "Not Found", 1);
         }
            catch (Exception e) {
               // TODO: Add catch code
@@ -418,7 +522,9 @@ public class DepartmentPanel extends java.awt.Panel {
     }//GEN-LAST:event_UpdateActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-        // TODO add your handling code here:
+       
+        IdText.setEnabled(true);
+        
         IdText.setText("Enter department ID");
         CodeText.setText("Enter department code");
         NameText.setText("Enter department name");
@@ -432,9 +538,109 @@ public class DepartmentPanel extends java.awt.Panel {
         // TODO add your handling code here:
     }//GEN-LAST:event_NameTextActionPerformed
 
+    private void departTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departTableMouseClicked
+        int i = departTable.getSelectedRow();
+        //unable to edit code and id for selected item
+        IdText.setEnabled(false);
+
+        //get values from table to text boxes
+        IdText.setText(departTable.getValueAt(i, 0).toString());
+        CodeText.setText(departTable.getValueAt(i, 1).toString());
+        NameText.setText(departTable.getValueAt(i, 2).toString());
+ 
+    }//GEN-LAST:event_departTableMouseClicked
+
+    private void departTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_departTableKeyPressed
+       
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_UP ||
+            evt.getExtendedKeyCode() == KeyEvent.VK_DOWN) {
+            int i = departTable.getSelectedRow();
+            IdText.setText(departTable.getValueAt(i, 0).toString());
+            CodeText.setText(departTable.getValueAt(i, 1).toString());
+            NameText.setText(departTable.getValueAt(i, 2).toString());
+        }
+    }//GEN-LAST:event_departTableKeyPressed
+
+    private void IdTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IdTextFocusGained
+        if (IdText.getText().equalsIgnoreCase("Enter department ID"))
+            IdText.setText("");
+    }//GEN-LAST:event_IdTextFocusGained
+
+    private void IdTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IdTextFocusLost
+        if (IdText.getText().trim().equalsIgnoreCase(""))
+            IdText.setText("Enter department ID");
+    }//GEN-LAST:event_IdTextFocusLost
+
+    private void CodeTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CodeTextFocusGained
+        if (CodeText.getText().equalsIgnoreCase("Enter department code"))
+            CodeText.setText("");
+    }//GEN-LAST:event_CodeTextFocusGained
+
+    private void CodeTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CodeTextFocusLost
+        if (CodeText.getText().trim().equalsIgnoreCase(""))
+            CodeText.setText("Enter department code");
+    }//GEN-LAST:event_CodeTextFocusLost
+
+    private void NameTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTextFocusGained
+        if (NameText.getText().equalsIgnoreCase("Enter department name "))
+            NameText.setText("");
+    }//GEN-LAST:event_NameTextFocusGained
+
+    private void NameTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTextFocusLost
+        if (NameText.getText().trim().equalsIgnoreCase(""))
+            NameText.setText("Enter department name ");
+    }//GEN-LAST:event_NameTextFocusLost
+
+    private void SearchTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_SearchTextFocusGained
+        if (SearchText.getText().equalsIgnoreCase("Enter what do you want to search for"))
+            SearchText.setText("");
+    }//GEN-LAST:event_SearchTextFocusGained
+
+    private void SearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_SearchTextFocusLost
+        if (SearchText.getText().equalsIgnoreCase(""))
+            SearchText.setText("Enter what do you want to search for");
+    }//GEN-LAST:event_SearchTextFocusLost
+
+    private void SearchTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchTextKeyPressed
+    
+    if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+
+        try{
+            
+        DepartmentDto dto = new DepartmentDto();   
+        DepartmentBao bao = new BaoFactory().createDepartmentBao();
+        dto=new DepartmentDto();
+            
+        dto.setSearch(SearchText.getText());
+        List<DepartmentDto> result = bao.searchFor(dto);
+            
+        if(result != null && !result.isEmpty())
+            setTableModel(result);
+        else
+            JOptionPane.showMessageDialog(null, "There is no search result for: "+SearchText.getText(),"Invalid search",1);
+
+        }
+
+        catch (Exception e) {
+            // TODO: Add catch code
+            e.printStackTrace();
+
+        }}
+    }//GEN-LAST:event_SearchTextKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LocationTypePanel x = new LocationTypePanel();
+        Main_Frame frame = new Main_Frame();
+        x.setBounds(frame.BasicPanel.getBounds());
+        frame.setTitle("Location Type");
+        frame.setContentPane(x);
+        frame.validate();
+        frame.repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> BuildingComboBox;
+    private javax.swing.JComboBox<String> BuildComboBox;
     private javax.swing.JLabel BuildingLabel;
     private javax.swing.JLabel CodeLabel;
     private javax.swing.JTextField CodeText;
@@ -443,12 +649,15 @@ public class DepartmentPanel extends java.awt.Panel {
     private javax.swing.JTextField IdText;
     private javax.swing.JLabel NameLabel;
     private javax.swing.JTextField NameText;
-    private javax.swing.JButton Nwe;
+    private javax.swing.JButton New;
     private javax.swing.JButton Refresh;
     private javax.swing.JTextField SearchText;
     private javax.swing.JButton Update;
+    private javax.swing.JComboBox<String> c;
     private javax.swing.JButton clear;
-    private javax.swing.JTable depTable;
+    private javax.swing.JTable departTable;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton search;
     // End of variables declaration//GEN-END:variables

@@ -30,12 +30,7 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
         try{
             if(dao.isExist(lt))
                 saveFlage = dao.update(lt);
-            else
-            {  
-                saveFlage = false;
-                JOptionPane.showMessageDialog(null, "This Location Type doesn't exist.","Not Found!",1);
-
-            }
+  
         }catch(Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,

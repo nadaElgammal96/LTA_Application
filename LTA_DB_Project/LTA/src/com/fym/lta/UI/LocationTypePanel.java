@@ -355,7 +355,12 @@ public class LocationTypePanel extends java.awt.Panel {
                 setTableModel(bao.viewAll());
                 LTTable.repaint();
             }
-
+            
+            else
+                JOptionPane.showMessageDialog(null,
+                                              "Location Type doesn't exist!",
+                                              "Not Found", 1);
+            
         } catch (IllegalArgumentException e1) {
             e1.printStackTrace();
         }
@@ -416,7 +421,7 @@ public class LocationTypePanel extends java.awt.Panel {
     }//GEN-LAST:event_ColorTextActionPerformed
 
     private void NweActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NweActionPerformed
-
+    
         try
         {
             

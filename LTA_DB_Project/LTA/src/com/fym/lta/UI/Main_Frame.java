@@ -75,7 +75,7 @@ public class Main_Frame extends javax.swing.JFrame {
         );
         BasicPanelLayout.setVerticalGroup(
             BasicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addGap(0, 654, Short.MAX_VALUE)
         );
 
         File.setText("File");
@@ -445,7 +445,7 @@ public class Main_Frame extends javax.swing.JFrame {
     private javax.swing.JMenuItem AddNewStage;
     private javax.swing.JMenuItem AddNewUser;
     private javax.swing.JMenu Auto;
-    private javax.swing.JPanel BasicPanel;
+    public javax.swing.JPanel BasicPanel;
     private javax.swing.JMenu Course;
     private javax.swing.JMenuItem Delete;
     private javax.swing.JMenuItem Edit;

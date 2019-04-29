@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DepartmnetDaoImpl implements DepartmentDao {
+public class DepartmentDaoImpl implements DepartmentDao {
     
     
     /* Search For Drparmtment with any attributes of it(id,name,code,...)
@@ -30,12 +30,15 @@ public class DepartmnetDaoImpl implements DepartmentDao {
             jdbc.setPassword("lta");
             
             // Select all columns from department table which its id/name/code Compatible with search text
-            jdbc.setCommand("select* from Employee where DEPARTMENT.ID_DEPARTMENT=? or DEPARTMENT.CODE_DEPARTMENT=? or DEPARTMENT.NAME_DEPARTMENT=?");
+            jdbc.setCommand("select ID_DEPARTMENT,CODE_DEPARTMENT,NAME_DEPARTMENT " +
+                "from DEPARTMENT " +
+                "where ID_DEPARTMENT=? or CODE_DEPARTMENT=? or NAME_DEPARTMENT=? ");
                        
                        
             try{ jdbc.setInt(1,Integer.parseInt(d.getSearch()));}
             catch(Exception e){
             e.printStackTrace();
+            jdbc.setInt(1, -1);
             }
                         jdbc.setString(2,d.getSearch());
                         jdbc.setString(3,d.getSearch());
@@ -57,36 +60,40 @@ public class DepartmnetDaoImpl implements DepartmentDao {
                 depart= null;
             }
             
-            //get Buildings for each department 
-            for (DepartmentDto de:departs) {
+             //get Buildings for each department 
+            for (int i=0 ; i<departs.size() ; i++) {
             
-                jdbc.setCommand("select ID_BUILD" + 
-                "from DEPARTMENT_BUILDING" +
-                "where ID_DEPARTMENT = ?");
-                jdbc.setInt(1,de.getId());
+                jdbc.setCommand("select ID_BUILD " + 
+                "FROM DEPARTMENT_BUILDING " +
+                "WHERE ID_DEPARTMENT = ? ");
+                jdbc.setInt(1,departs.get(i).getId());
                 jdbc.execute();
                 
-                List<BuildingDto> builds=null;
-                BuildingDto b=null;
+                List<BuildingDto> builds= null;
+                BuildingDto b= new BuildingDto();
+                
                 while(jdbc.next()){
                     
                     if(builds == null){
                         builds = new ArrayList<>();
                     }
-                    b.setId(jdbc.getInt("ID_DUILD"));
+                   
+                    b.setId(jdbc.getInt("ID_BUILD"));
                     
-                    //get building name for each of them
-                    jdbc.setCommand("select CODE_BUILD" + 
-                    "from BUILDING" +
-                    "where ID_BUILD = ?");
+                    //get building code for each of them
+                    jdbc.setCommand("select CODE_BUILD " + 
+                    "from BUILDING " +
+                    "where ID_BUILD = ? ");
                     jdbc.setInt(1,b.getId());
                     jdbc.execute();
-                    b.setCode(jdbc.getString("CODE_DUILD"));
-                    builds.add(b);
                     
+                    while (jdbc.next())
+                           b.setCode(jdbc.getString("CODE_BUILD"));
+                    
+                    builds.add(b);
                     b= null;
                 }
-                de.setBuildings(builds);
+                   departs.get(i).setBuildings(builds);
             }
             
             
@@ -156,15 +163,6 @@ public class DepartmnetDaoImpl implements DepartmentDao {
             jdbc.setString(3,depart.getName());
             jdbc.execute();
             
-            //Insert department in buildings through thier relationship
-            for(BuildingDto b:depart.getBuildings())
-            {
-                jdbc.setCommand("insert into DEPARTMENT_BUILDING" +
-                    "(ID_DEPARTMENT,ID_BUILD) values(?,?)");
-                jdbc.setInt(1,depart.getId());
-                jdbc.setInt(2,b.getId());
-
-            }
             return true;
             
         }catch(java.sql.SQLException e){
@@ -183,8 +181,8 @@ public class DepartmnetDaoImpl implements DepartmentDao {
  */
     public List<DepartmentDto> viewAll() {
 
-        @SuppressWarnings("unchecked")
-        List<DepartmentDto> departs = new ArrayList();
+        
+        List<DepartmentDto> departs = new ArrayList<DepartmentDto>();
         
         try{
             // Start DataBase connection
@@ -214,12 +212,12 @@ public class DepartmnetDaoImpl implements DepartmentDao {
             }
             
             //get Buildings for each department 
-            for (DepartmentDto d:departs) {
+            for (int i=0 ; i<departs.size() ; i++) {
             
                 jdbc.setCommand("select ID_BUILD " + 
                 "FROM DEPARTMENT_BUILDING " +
                 "WHERE ID_DEPARTMENT = ? ");
-                jdbc.setInt(1,d.getId());
+                jdbc.setInt(1,departs.get(i).getId());
                 jdbc.execute();
                 
                 List<BuildingDto> builds= null;
@@ -246,7 +244,7 @@ public class DepartmnetDaoImpl implements DepartmentDao {
                     builds.add(b);
                     b= null;
                 }
-                   d.setBuildings(builds);
+                   departs.get(i).setBuildings(builds);
             }
                         
         }
@@ -274,24 +272,14 @@ public class DepartmnetDaoImpl implements DepartmentDao {
            
            
            // update name & code for deparment which its id can't be updated 
-            jdbc.setCommand("UPDATE DEPARTMENT" + 
-                         "(" +
-                         "SET CODE_DEPARTMENT = ?,NAME_DEPARTMENT = ?" + 
-                         "WHERE ID_DEPARTMENT = ?");
+            jdbc.setCommand("UPDATE DEPARTMENT " + 
+                         "SET CODE_DEPARTMENT = ?,NAME_DEPARTMENT = ? " + 
+                         "WHERE ID_DEPARTMENT = ? ");
             
                          jdbc.setString(1,d.getCode());
-                         jdbc.setString(3,d.getName());
+                         jdbc.setString(2,d.getName());
                          jdbc.setInt(3,d.getId()); 
                          jdbc.execute();
-           
-            for(BuildingDto b:d.getBuildings())
-            {
-                jdbc.setCommand("insert into DEPARTMENT_BUILDING" +
-                    "(ID_DEPARTMENT,ID_BUILD) values(?,?)");
-                jdbc.setInt(1,d.getId());
-                jdbc.setInt(2,b.getId());
-
-            }
                          return true;
         }catch(java.sql.SQLException e){
             return false;
@@ -318,15 +306,19 @@ public class DepartmnetDaoImpl implements DepartmentDao {
         
         // select from table department which its id = object id 
          jdbc.setCommand("SELECT * " + 
-         "FROM DEPARTMENT" +
-          "WHERE ID_DEPARTMENT = ?" );
+         "FROM DEPARTMENT " +
+          "WHERE ID_DEPARTMENT = ? " );
          jdbc.setInt(1,d.getId());
          jdbc.execute();
-            if (d.getId()==0) {
-                return false;
-            } else {
-                return true;
+        
+            boolean flage = false;
+
+            while (jdbc.next()) {
+                flage = true;
+                break;
             }
+            return flage;
+        
         }catch(java.sql.SQLException e){
          return false;
      }
