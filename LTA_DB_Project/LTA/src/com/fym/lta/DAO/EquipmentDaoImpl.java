@@ -209,4 +209,33 @@ public class EquipmentDaoImpl implements EquipmentDao {
             }
         return equip;
     }
+    
+    public boolean countEquipments(EquipmentTypeDto et){
+            try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();) {
+                jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
+                jdbc.setUsername("lta");
+                jdbc.setPassword("lta");
+                jdbc.setCommand("select ID_EQ from EQUIPMENT where EQUIPMENT.ID_EQ_TYPE = ? ");
+                jdbc.setInt(1,et.getId());
+                jdbc.execute();
+                int num = 0;
+                while(jdbc.next()){
+                    num++;
+                }
+                jdbc.setCommand("update EQ_TYPE set NO_OF_EQ =? where ID_EQ_TYPE = ? ");
+            jdbc.setInt(1,num);
+                jdbc.setInt(2,et.getId());
+            jdbc.execute();
+                return true;
+                
+        }
+            catch(java.sql.SQLException e){
+                JOptionPane.showMessageDialog(null, "Error Counting Equipments");
+                return false;
+            }
+            catch(Exception e){
+                e.printStackTrace();
+                return false;
+            }
+    }
 }

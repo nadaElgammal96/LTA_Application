@@ -24,4 +24,5 @@ public abstract interface EquipmentTypeDao {
     public abstract Boolean delete(EquipmentTypeDto et);
     
     public abstract List<EquipmentDto> loadAllEquipments(EquipmentTypeDto et);
+    
 }

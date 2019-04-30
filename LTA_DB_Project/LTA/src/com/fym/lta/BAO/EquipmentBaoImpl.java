@@ -7,7 +7,9 @@ package com.fym.lta.BAO;
 
 import com.fym.lta.DAO.DaoFactory;
 import com.fym.lta.DAO.EquipmentDao;
+import com.fym.lta.DAO.EquipmentTypeDao;
 import com.fym.lta.DTO.EquipmentDto;
+import com.fym.lta.DTO.EquipmentTypeDto;
 import com.fym.lta.DTO.LocationDto;
 
 import java.util.Collections;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 public class EquipmentBaoImpl implements EquipmentBao {
     
     private  EquipmentDao db = new DaoFactory().createEquipmentDao();
+    private EquipmentTypeDao typedao = new DaoFactory().createEquipmentTypeDao();
     
     public boolean insert(EquipmentDto equip) {
         boolean insertFlag = true;
@@ -89,4 +92,16 @@ public class EquipmentBaoImpl implements EquipmentBao {
                return false;
            }
 }
+    
+    public boolean countEquips(EquipmentTypeDto et){
+        boolean flag = false;
+        try{
+            if(typedao.isExist(et))
+                 flag = db.countEquipments(et);
+        }
+        catch(Exception e){
+         e.printStackTrace();   
+        }
+        return flag;
+    }
 }

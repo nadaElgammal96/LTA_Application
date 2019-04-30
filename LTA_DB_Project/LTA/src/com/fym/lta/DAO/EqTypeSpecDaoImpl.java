@@ -49,7 +49,6 @@ public class EqTypeSpecDaoImpl implements EqTypeSpecDao {
             return true;
         }
         catch(java.sql.SQLException e){
-            JOptionPane.showMessageDialog(null,"Error Inserting Data");
             return false;
         }
         catch(Exception e){

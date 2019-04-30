@@ -281,6 +281,7 @@ public class Equipment_panel extends java.awt.Panel {
             if(typedao.isExist(et)){
             if(business.update(eq)){
                        JOptionPane.showMessageDialog(this, "Equipment Updated Successfully");
+                business.countEquips(new EquipmentTypeDto(Integer.parseInt(typeIdTextField.getText())));
                        setTableModel(business.listAll());            
                        EquipmentTable.repaint();
             }else
@@ -304,10 +305,11 @@ public class Equipment_panel extends java.awt.Panel {
              int row = EquipmentTable.getSelectedRow();
              eq.setId(Integer.parseInt(EquipmentTable.getModel().getValueAt(row,0).toString()));
              eq.setCode(EquipmentTable.getModel().getValueAt(row,1).toString());
-             eq.setType(new EquipmentTypeDto(null,0,null,Integer.parseInt(EquipmentTable.getModel().getValueAt(row,2).toString()),null,null));
+             eq.setType(new EquipmentTypeDto(Integer.parseInt(EquipmentTable.getModel().getValueAt(row,2).toString())));
              eq.setCountry(EquipmentTable.getModel().getValueAt(row,3).toString());
              if(business.delete(eq)){
                         JOptionPane.showMessageDialog(this, "Equipment Deleted Successfully");
+                 business.countEquips(new EquipmentTypeDto(Integer.parseInt(typeIdTextField.getText())));
                         setTableModel(business.listAll());            
                         EquipmentTable.repaint();
              }else{
@@ -359,6 +361,7 @@ public class Equipment_panel extends java.awt.Panel {
         if (typedao.isExist(et)){
         if(business.insert(eq)){
                         JOptionPane.showMessageDialog(this, "Equipment Inserted Successfully");
+                        business.countEquips(new EquipmentTypeDto(Integer.parseInt(typeIdTextField.getText())));
                         setTableModel(business.listAll());            
                         EquipmentTable.repaint();
                     }else 
@@ -516,8 +519,8 @@ public class Equipment_panel extends java.awt.Panel {
                     JOptionPane.showMessageDialog(this, "Please, enter code");
                     return false;
                 }
-                    Integer.parseInt(codeTextField.getText());
-                    JOptionPane.showMessageDialog(this, "Code is invalid! \n (please enter a string)");
+                    Integer.parseInt(codeTextField.getText().substring(0,1));
+                    JOptionPane.showMessageDialog(this, "Code is invalid! \n It should begin with character");
                     return false;
                 }catch (NumberFormatException e){
                              // own implemented dialog

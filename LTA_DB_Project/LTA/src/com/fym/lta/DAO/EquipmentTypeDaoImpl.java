@@ -85,7 +85,7 @@ public class EquipmentTypeDaoImpl implements EquipmentTypeDao {
             }
         }
             catch(java.sql.SQLException e){
-                JOptionPane.showMessageDialog(null, "Error Equipment Types");
+                JOptionPane.showMessageDialog(null, "Error Listing Equipment Types");
                 }
         catch(Exception e){
                 e.printStackTrace();
@@ -100,17 +100,13 @@ public class EquipmentTypeDaoImpl implements EquipmentTypeDao {
             jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
             jdbc.setUsername("lta");
             jdbc.setPassword("lta"); 
-            jdbc.setCommand("insert into EQ_TYPE( ID_EQ_TYPE , CODE_EQ_TYPE , NAME_EQ_TYPE , NO_OF_EQ) values(?,?,?,?) ");
+            jdbc.setCommand("insert into EQ_TYPE( ID_EQ_TYPE , CODE_EQ_TYPE , NAME_EQ_TYPE ) values(?,?,?) ");
             try{jdbc.setInt(1,et.getId());}
             catch(NumberFormatException e){                 
                             jdbc.setInt(1,-1);
                         }
             jdbc.setString(2,et.getCode());
             jdbc.setString(3,et.getName());
-            try{jdbc.setInt(4,et.getNo_of_equip());}
-            catch(NumberFormatException e){                 
-                            jdbc.setInt(4,-1);
-                        }
             jdbc.execute();
         return true;   
         }
@@ -144,7 +140,7 @@ public class EquipmentTypeDaoImpl implements EquipmentTypeDao {
                     return flag;
                 }
         catch(java.sql.SQLException e){
-            JOptionPane.showMessageDialog(null, "Equipment Type Does Not Exist");
+            JOptionPane.showMessageDialog(null, "Error Finding Equipment!");
             return false;
             }
                 catch(Exception e){
@@ -237,5 +233,6 @@ public class EquipmentTypeDaoImpl implements EquipmentTypeDao {
         return eq;
         
     }
+
     
 }
