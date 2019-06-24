@@ -6,17 +6,44 @@ import com.fym.lta.DTO.*;
 import java.util.List;
 
 public abstract interface FloorDao {
-    
-    
-    public abstract Boolean createNew(FloorDto f1);
 
+  /**
+   * @param - dto floor object which would be inserted
+   * @return true if success - false if not
+   */
+    public abstract Boolean createNew(FloorDto f1,UserDto user);
+
+  /**
+   * @param dto floor object which would be deleted
+   * @return true if success - false if not
+   */
     public abstract Boolean delete(FloorDto  f2);
 
-    public abstract Boolean update(FloorDto  f);
+  /**
+   * @param dto object for selected floor which would be updated
+   * @return true if success - false if not
+   */
+    public abstract Boolean update(FloorDto  f,UserDto user);
 
-    public abstract List<BuildingDto> viewAll();
+  /**
+   * @return all floors in data base
+   */
+    public abstract List<FloorDto> viewAll();
 
-    public abstract FloorDto  searchFor(String c);
+  /**
+   * @return floor have attribute value inserted in search
+   */
+    public abstract List<FloorDto>  searchFor(FloorDto f);
 
+  /**search for is floor exist or not
+   * @param floor
+   * @return boolean value
+   */
     public abstract Boolean isExist(FloorDto  f);
+
+  /**Search for floors for a building
+   * @param floor that has building id
+   * @return floors in this building
+   * */
+    public abstract List<FloorDto> viewBuildingFloors(FloorDto f);
 }

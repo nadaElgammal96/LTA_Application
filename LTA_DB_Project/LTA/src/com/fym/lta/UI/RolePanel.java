@@ -8,33 +8,50 @@ import com.fym.lta.DAO.BuildingDao;
 import com.fym.lta.DAO.DaoFactory;
 import com.fym.lta.DAO.EquipmentTypeDao;
 import com.fym.lta.DAO.RoleDao;
+import com.fym.lta.DAO.RoleScreenDao;
 import com.fym.lta.DAO.UserDao;
 import com.fym.lta.DTO.BuildingDto;
 import com.fym.lta.DTO.RoleDto;
+import com.fym.lta.DTO.StaffDto;
 import com.fym.lta.DTO.UserDto;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.TextField;
+
+import java.awt.event.KeyEvent;
 
 import java.util.List;
 
 import javax.management.relation.Role;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author Hala Nagm Eldin
  */
 public class RolePanel extends javax.swing.JPanel {
+  @SuppressWarnings({ "compatibility:-5714093387957838752",
+      "oracle.jdeveloper.java.serialversionuid-stale" })
+  private static final long serialVersionUID = 1L;
+
+  private  static UserDto user_data;
+    private static RoleBao business;
     
-    private RoleBao business;
-    
-    public  RolePanel() {
+    public  RolePanel(UserDto user) {
           try{
-             
+               user_data=user;
+            
+              viewonly(user_data);
+            
               business = new BaoFactory().createRoleBao();
               RoleDao dao = new DaoFactory().createRoleDao() ;
-             initComponents();
+              initComponents();
               setTableModel(dao.viewAll());  
       }
           catch (Exception e) {
@@ -43,6 +60,20 @@ public class RolePanel extends javax.swing.JPanel {
                   }
 
       }
+
+  /**For view only user access */
+  private void viewonly(UserDto u)
+  {
+
+    u.setScreen_name("Role");
+
+    RoleScreenDao dao = new DaoFactory().createRoleScreenDao();
+    if(dao.viewonly(u))
+      {
+        EditPanel.setVisible(false);
+        System.out.println(" \n done panel");
+      }
+  }
         
             private void setTableModel (List<RoleDto> roles){
                 
@@ -58,8 +89,34 @@ public class RolePanel extends javax.swing.JPanel {
                 roleTable.setModel(new javax.swing.table.DefaultTableModel( roleTableArr, new String[]{
                     "Id", "Name", "Description"
                 }
-             ));                                                                                        
-                                                                           
+                                     
+             ));
+
+    //change header color
+    roleTable.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer()
+    {
+
+      @Override
+      public Component getTableCellRendererComponent(JTable table,
+        Object value, boolean isSelected, boolean hasFocus, int row,
+        int column)
+      {
+
+        JLabel l =
+          (JLabel) super.getTableCellRendererComponent(table, value,
+          isSelected, hasFocus, row, column);
+        l.setBackground(Color.decode("#0081D3"));
+        // l.setBorder(new EtchedBorder());
+
+        l.setForeground(Color.white);
+
+        return l;
+      }
+    });
+
+         //label under tabel show types count viewed in table
+         no_of_rows.setText("Table result: "+
+         Integer.toString(roleTable.getRowCount())+"  Roles");                                                      
             }
          
     /** Creates new form RolePanel */
@@ -73,251 +130,502 @@ public class RolePanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
    
     
-    private void initComponents() {//GEN-BEGIN:initComponents
+  private void initComponents()//GEN-BEGIN:initComponents
+  {
 
-        search = new javax.swing.JTextField();
-        SearchButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        id = new javax.swing.JTextField();
-        name = new javax.swing.JTextField();
-        descrip = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        roleTable = new javax.swing.JTable();
-        NewButton = new javax.swing.JButton();
-        DeleteButton = new javax.swing.JButton();
-        RefreshButton = new javax.swing.JButton();
-        SaveButton = new javax.swing.JButton();
+    search = new javax.swing.JTextField();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    roleTable = new javax.swing.JTable();
+    no_of_rows = new java.awt.Label();
+    EditPanel = new javax.swing.JPanel();
+    jLabel1 = new javax.swing.JLabel();
+    jLabel2 = new javax.swing.JLabel();
+    jLabel3 = new javax.swing.JLabel();
+    IdText = new javax.swing.JTextField();
+    NameText = new javax.swing.JTextField();
+    DesText = new javax.swing.JTextField();
+    jLabel15 = new javax.swing.JLabel();
+    savePanel = new javax.swing.JPanel();
+    Save = new javax.swing.JButton();
+    deletePanel = new javax.swing.JPanel();
+    DeleteButton = new javax.swing.JButton();
+    clearPanel = new javax.swing.JPanel();
+    clear = new javax.swing.JButton();
+    jLabel8 = new javax.swing.JLabel();
+    jSeparator2 = new javax.swing.JSeparator();
+    refreshPanel = new javax.swing.JPanel();
+    RefreshButton = new javax.swing.JButton();
+    searchPanel = new javax.swing.JPanel();
+    SearchButton = new javax.swing.JButton();
 
-        search.setText("Enter Text To Search For");
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
-            }
-        });
+    setBackground(new java.awt.Color(245, 245, 245));
+    setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        SearchButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        SearchButton.setText("SEARCH");
-        SearchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchButtonActionPerformed(evt);
-            }
-        });
+    search.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+    search.setText("Enter Text To Search For");
+    search.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 2, true));
+    search.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        searchFocusGained(evt);
+      }
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
+        searchFocusLost(evt);
+      }
+    });
+    search.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        searchActionPerformed(evt);
+      }
+    });
+    add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 620, 50));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("ID");
+    roleTable.setAutoCreateRowSorter(true);
+    roleTable.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+    roleTable.setModel(new javax.swing.table.DefaultTableModel(
+      new Object [][]
+      {
+        {null, null, null},
+        {null, null, null},
+        {null, null, null},
+        {null, null, null},
+        {null, null, null},
+        {null, null, null}
+      },
+      new String []
+      {
+        "ID", "NAME", "DESCRIPTION"
+      }
+    )
+    {
+      Class[] types = new Class []
+      {
+        java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+      };
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Name");
+      public Class getColumnClass(int columnIndex)
+      {
+        return types [columnIndex];
+      }
+    });
+    roleTable.setFillsViewportHeight(true);
+    roleTable.setRowHeight(25);
+    roleTable.setSelectionBackground(new java.awt.Color(0, 153, 204));
+    roleTable.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        roleTableMouseClicked(evt);
+      }
+    });
+    roleTable.addKeyListener(new java.awt.event.KeyAdapter()
+    {
+      public void keyPressed(java.awt.event.KeyEvent evt)
+      {
+        roleTableKeyPressed(evt);
+      }
+    });
+    jScrollPane1.setViewportView(roleTable);
+    if (roleTable.getColumnModel().getColumnCount() > 0)
+    {
+      roleTable.getColumnModel().getColumn(0).setHeaderValue("ID");
+      roleTable.getColumnModel().getColumn(1).setHeaderValue("NAME");
+      roleTable.getColumnModel().getColumn(2).setHeaderValue("DESCRIPTION");
+    }
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("Description");
+    add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 710, 780));
 
-        id.setText("Enter Role ID");
-        id.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                idFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                idFocusLost(evt);
-            }
-        });
-        id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idActionPerformed(evt);
-            }
-        });
+    no_of_rows.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+    no_of_rows.setForeground(new java.awt.Color(135, 135, 135));
+    no_of_rows.setText("no of rows");
+    add(no_of_rows, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 880, 170, 20));
 
-        name.setText("Enter Role Name");
-        name.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameActionPerformed(evt);
-            }
-        });
+    EditPanel.setBackground(new java.awt.Color(245, 245, 245));
+    EditPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        descrip.setText("Enter Role Description");
-        descrip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                descripActionPerformed(evt);
-            }
-        });
+    jLabel1.setFont(new java.awt.Font("VIP Rawy Regular", 0, 18)); // NOI18N
+    jLabel1.setForeground(new java.awt.Color(0, 51, 204));
+    jLabel1.setText("ID");
+    EditPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
-        roleTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "ID", "NAME", "DESCRIPTION"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-            };
+    jLabel2.setFont(new java.awt.Font("VIP Rawy Regular", 0, 18)); // NOI18N
+    jLabel2.setForeground(new java.awt.Color(0, 51, 204));
+    jLabel2.setText("Name");
+    EditPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, 40));
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(roleTable);
-        if (roleTable.getColumnModel().getColumnCount() > 0) {
-            roleTable.getColumnModel().getColumn(0).setHeaderValue("ID");
-            roleTable.getColumnModel().getColumn(1).setHeaderValue("NAME");
-            roleTable.getColumnModel().getColumn(2).setHeaderValue("DESCRIPTION");
-        }
+    jLabel3.setFont(new java.awt.Font("VIP Rawy Regular", 0, 18)); // NOI18N
+    jLabel3.setForeground(new java.awt.Color(0, 51, 204));
+    jLabel3.setText("Description");
+    EditPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, 40));
 
-        NewButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        NewButton.setText("New");
-        NewButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NewButtonActionPerformed(evt);
-            }
-        });
+    IdText.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+    IdText.setText("Enter Role ID");
+    IdText.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 2, true));
+    IdText.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        IdTextFocusGained(evt);
+      }
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
+        IdTextFocusLost(evt);
+      }
+    });
+    IdText.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        IdTextActionPerformed(evt);
+      }
+    });
+    EditPanel.add(IdText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 221, 530, 60));
 
-        DeleteButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        DeleteButton.setText("Delete");
-        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteButtonActionPerformed(evt);
-            }
-        });
+    NameText.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+    NameText.setText("Enter Role Name");
+    NameText.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 2, true));
+    NameText.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        NameTextFocusGained(evt);
+      }
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
+        NameTextFocusLost(evt);
+      }
+    });
+    NameText.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        NameTextActionPerformed(evt);
+      }
+    });
+    EditPanel.add(NameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 530, 60));
 
-        RefreshButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        RefreshButton.setText("Refresh");
-        RefreshButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RefreshButtonActionPerformed(evt);
-            }
-        });
+    DesText.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+    DesText.setText("Enter Role Description");
+    DesText.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 2, true));
+    DesText.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        DesTextFocusGained(evt);
+      }
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
+        DesTextFocusLost(evt);
+      }
+    });
+    DesText.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        DesTextActionPerformed(evt);
+      }
+    });
+    EditPanel.add(DesText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 530, 60));
 
-        SaveButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        SaveButton.setText("Save");
-        SaveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveButtonActionPerformed(evt);
-            }
-        });
+    jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/fym/lta/Images/icons8_user_group_man_woman_128px.png"))); // NOI18N
+    EditPanel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(name, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(id, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(descrip, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(NewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(RefreshButton)
-                        .addGap(41, 41, 41)
-                        .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SearchButton))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(descrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NewButton)
-                    .addComponent(DeleteButton)
-                    .addComponent(RefreshButton)
-                    .addComponent(SaveButton))
-                .addGap(20, 20, 20))
-        );
-    }//GEN-END:initComponents
+    savePanel.setBackground(new java.awt.Color(0, 129, 211));
+
+    Save.setFont(new java.awt.Font("VIP Rawy Regular", 0, 20)); // NOI18N
+    Save.setForeground(new java.awt.Color(255, 255, 255));
+    Save.setText("New");
+    Save.setBorderPainted(false);
+    Save.setContentAreaFilled(false);
+    Save.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+    {
+      public void mouseMoved(java.awt.event.MouseEvent evt)
+      {
+        SaveMouseMoved(evt);
+      }
+    });
+    Save.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseExited(java.awt.event.MouseEvent evt)
+      {
+        SaveMouseExited(evt);
+      }
+    });
+    Save.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        SaveActionPerformed(evt);
+      }
+    });
+
+    javax.swing.GroupLayout savePanelLayout = new javax.swing.GroupLayout(savePanel);
+    savePanel.setLayout(savePanelLayout);
+    savePanelLayout.setHorizontalGroup(
+      savePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(Save, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+    );
+    savePanelLayout.setVerticalGroup(
+      savePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(Save, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+    );
+
+    EditPanel.add(savePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 100, 50));
+
+    deletePanel.setBackground(new java.awt.Color(0, 129, 211));
+
+    DeleteButton.setFont(new java.awt.Font("VIP Rawy Regular", 0, 20)); // NOI18N
+    DeleteButton.setForeground(new java.awt.Color(255, 255, 255));
+    DeleteButton.setText("Delete");
+    DeleteButton.setBorderPainted(false);
+    DeleteButton.setContentAreaFilled(false);
+    DeleteButton.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+    {
+      public void mouseMoved(java.awt.event.MouseEvent evt)
+      {
+        DeleteButtonMouseMoved(evt);
+      }
+    });
+    DeleteButton.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseExited(java.awt.event.MouseEvent evt)
+      {
+        DeleteButtonMouseExited(evt);
+      }
+    });
+    DeleteButton.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        DeleteButtonActionPerformed(evt);
+      }
+    });
+
+    javax.swing.GroupLayout deletePanelLayout = new javax.swing.GroupLayout(deletePanel);
+    deletePanel.setLayout(deletePanelLayout);
+    deletePanelLayout.setHorizontalGroup(
+      deletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(DeleteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+    );
+    deletePanelLayout.setVerticalGroup(
+      deletePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(DeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+    );
+
+    EditPanel.add(deletePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 520, 100, 50));
+
+    clearPanel.setBackground(new java.awt.Color(0, 129, 211));
+
+    clear.setFont(new java.awt.Font("VIP Rawy Regular", 0, 20)); // NOI18N
+    clear.setForeground(new java.awt.Color(255, 255, 255));
+    clear.setText("Clear");
+    clear.setBorderPainted(false);
+    clear.setContentAreaFilled(false);
+    clear.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+    {
+      public void mouseMoved(java.awt.event.MouseEvent evt)
+      {
+        clearMouseMoved(evt);
+      }
+    });
+    clear.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseExited(java.awt.event.MouseEvent evt)
+      {
+        clearMouseExited(evt);
+      }
+    });
+    clear.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        clearActionPerformed(evt);
+      }
+    });
+
+    javax.swing.GroupLayout clearPanelLayout = new javax.swing.GroupLayout(clearPanel);
+    clearPanel.setLayout(clearPanelLayout);
+    clearPanelLayout.setHorizontalGroup(
+      clearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(clearPanelLayout.createSequentialGroup()
+        .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(0, 1, Short.MAX_VALUE))
+    );
+    clearPanelLayout.setVerticalGroup(
+      clearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(clear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+    );
+
+    EditPanel.add(clearPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 520, 100, 50));
+
+    add(EditPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 120, 590, 750));
+
+    jLabel8.setBackground(new java.awt.Color(231, 78, 123));
+    jLabel8.setFont(new java.awt.Font("VIP Rawy Regular", 0, 36)); // NOI18N
+    jLabel8.setForeground(new java.awt.Color(231, 78, 123));
+    jLabel8.setText("Role");
+    add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 50, 240, 80));
+    add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 110, 620, 20));
+
+    refreshPanel.setBackground(new java.awt.Color(0, 129, 211));
+
+    RefreshButton.setFont(new java.awt.Font("VIP Rawy Regular", 0, 20)); // NOI18N
+    RefreshButton.setForeground(new java.awt.Color(255, 255, 255));
+    RefreshButton.setText("Refresh ");
+    RefreshButton.setBorderPainted(false);
+    RefreshButton.setContentAreaFilled(false);
+    RefreshButton.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+    {
+      public void mouseMoved(java.awt.event.MouseEvent evt)
+      {
+        RefreshButtonMouseMoved(evt);
+      }
+    });
+    RefreshButton.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseExited(java.awt.event.MouseEvent evt)
+      {
+        RefreshButtonMouseExited(evt);
+      }
+    });
+    RefreshButton.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        RefreshButtonActionPerformed(evt);
+      }
+    });
+
+    javax.swing.GroupLayout refreshPanelLayout = new javax.swing.GroupLayout(refreshPanel);
+    refreshPanel.setLayout(refreshPanelLayout);
+    refreshPanelLayout.setHorizontalGroup(
+      refreshPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(RefreshButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+    );
+    refreshPanelLayout.setVerticalGroup(
+      refreshPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(RefreshButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+    );
+
+    add(refreshPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 890, 120, 50));
+
+    searchPanel.setBackground(new java.awt.Color(0, 129, 211));
+
+    SearchButton.setFont(new java.awt.Font("VIP Rawy Regular", 0, 20)); // NOI18N
+    SearchButton.setForeground(new java.awt.Color(255, 255, 255));
+    SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/fym/lta/Images/icons8_search_26px.png"))); // NOI18N
+    SearchButton.setBorderPainted(false);
+    SearchButton.setContentAreaFilled(false);
+    SearchButton.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+    {
+      public void mouseMoved(java.awt.event.MouseEvent evt)
+      {
+        SearchButtonMouseMoved(evt);
+      }
+    });
+    SearchButton.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseExited(java.awt.event.MouseEvent evt)
+      {
+        SearchButtonMouseExited(evt);
+      }
+    });
+    SearchButton.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        SearchButtonActionPerformed(evt);
+      }
+    });
+
+    javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+    searchPanel.setLayout(searchPanelLayout);
+    searchPanelLayout.setHorizontalGroup(
+      searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(SearchButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+    );
+    searchPanelLayout.setVerticalGroup(
+      searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
+        .addGap(0, 0, Short.MAX_VALUE)
+        .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+    );
+
+    add(searchPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 30, 80, -1));
+  }//GEN-END:initComponents
 
 
     RoleDto role = new RoleDto();
     
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         // TODO add your handling code here:
-       // String Search = search.getText();
+    try
+      {
+
+        List<RoleDto> search_list = null;
+        RoleDto roles = new RoleDto(search.getText());
+        search_list = business.searchFor(roles);
+
+        if(search_list!=null)
+          {
+            setTableModel(search_list);
+            roleTable.repaint();
+          }
+        else
+          {
+            //if there is no result show message tell user that their is no search for this text
+            JOptionPane.showMessageDialog(null,
+              "There is no search result for: "+search.getText(),
+              "Invalid search", 1);
+          }
+
+
+      }
+    catch(Exception e)
+      {
+        e.printStackTrace();
+      }
     }//GEN-LAST:event_searchActionPerformed
 
-    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+    private void IdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdTextActionPerformed
         // TODO add your handling code here:
         //String Id = id.getText();
-    }//GEN-LAST:event_idActionPerformed
+    }//GEN-LAST:event_IdTextActionPerformed
 
-    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
+    private void NameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameTextActionPerformed
         // TODO add your handling code here:
        // String Name = name.getText();
-    }//GEN-LAST:event_nameActionPerformed
+    }//GEN-LAST:event_NameTextActionPerformed
 
-    private void descripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descripActionPerformed
+    private void DesTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesTextActionPerformed
         // TODO add your handling code here:
        // String describ = .getText();
-    }//GEN-LAST:event_descripActionPerformed
+    }//GEN-LAST:event_DesTextActionPerformed
 
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
         // TODO add your handling code here:
         
         try{
      
-            
-             RoleDao r = new DaoFactory().createRoleDao();
-             //RoleBao Rolee = new BaoFactory().createRoleBao();
-    
             List<RoleDto> search_list = null;
             RoleDto roles = new RoleDto(search.getText());
             search_list = business.searchFor(roles);
             
              if( search_list !=null){
-                     JOptionPane.showMessageDialog(this, "Result Found");
                      setTableModel( search_list );
                      roleTable.repaint();
              }
              else{
-                     JOptionPane.showMessageDialog(this, "Result is not Exist");
-                     this.setTableModel(r.viewAll());
-                     roleTable.repaint();
+            //if there is no result show message tell user that their is no search for this text
+            JOptionPane.showMessageDialog(null,
+              "There is no search result for: "+search.getText(),
+              "Invalid search", 1);
                  }
+            
              
              }catch(Exception e){
                  e.printStackTrace();
@@ -326,70 +634,104 @@ public class RolePanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_SearchButtonActionPerformed
 
-    private void NewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewButtonActionPerformed
+    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
+      
+        if(Save.getText().equalsIgnoreCase("Update"))
+          update();
+
+        else{
+          
         try{       
                    if (checkValidity()){
-                  RoleDao r = new DaoFactory().createRoleDao();
-                   role.setId(Integer.parseInt(id.getText()));
-                   role.setName(name.getText());
-                   role.setDescription(descrip.getText());
+                   RoleDao r = new DaoFactory().createRoleDao();
+                   role.setId(Integer.parseInt(IdText.getText()));
+                   role.setName(NameText.getText());
+                   role.setDescription(DesText.getText());
                    
-                   if(business.add(role)){
-                       JOptionPane.showMessageDialog(this, "Role Inserted Successfully");
+                   if(business.add(role,user_data)){
+                       JOptionPane.showMessageDialog(this, "Role Inserted Successfully","done",1);
                        setTableModel(r.viewAll());
                        roleTable.repaint();
-                   }else
-                   {
-                   roleTable.repaint();
-               }}
-                  id.setText("Enter Role ID");
-                   name.setText("Enter Role Name");
-                  descrip.setText("Enter Role Description");
-                  
+                       IdText.setEnabled(false);
+                       Save.setText("Update");
+
+                  }
+                else
+                  {
+                    int reply =
+                      JOptionPane.showConfirmDialog(null,
+                        "This Employee is already exist!\n\n"+
+                        "Do you want update it?", "Warning",
+                        JOptionPane.YES_NO_OPTION);
+
+                    //update object if user choose yes
+                    if(reply==JOptionPane.YES_OPTION)
+                      {
+                        update();
+                        Save.setText("Update");
+                        IdText.setEnabled(false);
+                      }
+                  }
+              }
+
                }
                catch(Exception e){
+        JOptionPane.showMessageDialog(this, "Someting went Wrong!", "Error",
+          0);
                    e.printStackTrace();
                }
-           
-    }//GEN-LAST:event_NewButtonActionPerformed
+        }
+    }//GEN-LAST:event_SaveActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         // TODO add your handling code here:
         try{
+                   int reply =
+                     JOptionPane.showConfirmDialog(null,
+                       "Are you sure to delete this role?\n"+
+                       "All things depend on it will be deleted!", "Warning",
+                       JOptionPane.YES_NO_OPTION);
+
+                   //delete object if user choose yes
+                   if(reply==JOptionPane.YES_OPTION)
+                     {
                  RoleDao r = new DaoFactory().createRoleDao();
-                 int row = roleTable.getSelectedRow();
-                 role.setId(Integer.parseInt(roleTable.getModel().getValueAt(row,0).toString()));
-                 role.setName(roleTable.getModel().getValueAt(row,1).toString());
-                 role.setDescription(roleTable.getModel().getValueAt(row,2).toString());
+                
+                 role.setId(Integer.parseInt(IdText.getText()));
                  if(business.delete(role)){
-                     JOptionPane.showMessageDialog(this, "Result Deleted Successfully");
+                     JOptionPane.showMessageDialog(this, "Role Deleted Successfully!","Done",1);
                      setTableModel(r.viewAll());
                      roleTable.repaint();
+                     IdText.setEnabled(true);
+                     Save.setText("Save");
                  }else{
-                     JOptionPane.showMessageDialog(this, "select to delete");
-                     roleTable.repaint();
+                JOptionPane.showMessageDialog(this,
+                  "Can't delete object!", "Error", 0);
                  }
-                 }
-             catch(java.lang.ArrayIndexOutOfBoundsException e){
-                 JOptionPane.showMessageDialog(this, "Please select row from table to delete");
-                 }
+                 }}
+            
              catch(Exception e){
-                 e.printStackTrace();
-             }
-
-           
-        
-        
+               JOptionPane.showMessageDialog(this,
+                 "something went wrong!", "Error", 0);
+                  e.printStackTrace();
+                }
+                 
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void RefreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshButtonActionPerformed
         // TODO add your handling code here:
         
         try{
+                   Save.setText("Save");
+
                   RoleDao r = new DaoFactory().createRoleDao();
                   setTableModel(r.viewAll());
                   roleTable.repaint();
+                  IdText.setText("Enter Role ID");
+                  IdText.setEnabled(true);
+                  DesText.setText("Enter Role Description");
+                  NameText.setText("Enter Role Name");
               }
               catch(Exception e)
               { e.printStackTrace();}
@@ -397,108 +739,406 @@ public class RolePanel extends javax.swing.JPanel {
           
     }//GEN-LAST:event_RefreshButtonActionPerformed
 
-    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        // TODO add your handling code here:
+    private void IdTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IdTextFocusGained
+    if (IdText.getText().equalsIgnoreCase("Enter Role ID"))
+    IdText.setText("");
+
+    IdText.setBorder(new LineBorder(Color.decode("#0081D3"), 2));
+
+
+    }//GEN-LAST:event_IdTextFocusGained
+
+    private void IdTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IdTextFocusLost
+    if (IdText.getText().trim().equalsIgnoreCase(""))
+    IdText.setText("Enter Role ID");
+    
+    
+    IdText.setBorder(new LineBorder(Color.decode("#CCCCCC"), 2));
+
+
+    }//GEN-LAST:event_IdTextFocusLost
+
+    private void searchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFocusGained
+    if (search.getText().equalsIgnoreCase("Enter Text To Search For"))
+    search.setText("");
+
+    search.setBorder(new LineBorder(Color.decode("#0081D3"), 2));
+
+    }//GEN-LAST:event_searchFocusGained
+
+    private void searchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFocusLost
+    if (search.getText().trim().equalsIgnoreCase(""))
+    search.setText("Enter Text To Search For");
+
+    search.setBorder(new LineBorder(Color.decode("#CCCCCC"), 2));
+
+    }//GEN-LAST:event_searchFocusLost
+
+    private void NameTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTextFocusGained
+    if (NameText.getText().equalsIgnoreCase("Enter Role Name"))
+    NameText.setText("");
+
+    NameText.setBorder(new LineBorder(Color.decode("#0081D3"), 2));
+
+    }//GEN-LAST:event_NameTextFocusGained
+
+    private void NameTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTextFocusLost
+    if (NameText.getText().trim().equalsIgnoreCase(""))
+    NameText.setText("Enter Role Name");
+
+    NameText.setBorder(new LineBorder(Color.decode("#CCCCCC"), 2));
+
+    }//GEN-LAST:event_NameTextFocusLost
+
+    private void DesTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesTextFocusGained
+    if (DesText.getText().equalsIgnoreCase("Enter Role Description"))
+    DesText.setText("");
+
+    DesText.setBorder(new LineBorder(Color.decode("#0081D3"), 2));
+
+    }//GEN-LAST:event_DesTextFocusGained
+
+    private void DesTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesTextFocusLost
+    if (DesText.getText().trim().equalsIgnoreCase(""))
+    DesText.setText("Enter Role Description");
+
+    DesText.setBorder(new LineBorder(Color.decode("#CCCCCC"), 2));
+
+    }//GEN-LAST:event_DesTextFocusLost
+
+    private void roleTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roleTableMouseClicked
+    
+    int row = roleTable.getSelectedRow();
+    Save.setText("Update");
+    
+    IdText.setEnabled(false);
+    IdText.setText(roleTable.getValueAt(row, 0).toString());
+    NameText.setText(roleTable.getValueAt(row, 1).toString());
+    DesText.setText(roleTable.getValueAt(row, 2).toString());
+        
+    }//GEN-LAST:event_roleTableMouseClicked
+
+    private void roleTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_roleTableKeyPressed
+   
+   
+    if(evt.getExtendedKeyCode()==KeyEvent.VK_UP||
+      evt.getExtendedKeyCode()==KeyEvent.VK_DOWN)
+      {
+        int row = roleTable.getSelectedRow();
+        if(evt.getExtendedKeyCode()==KeyEvent.VK_UP)
+          row--; //for up key decrement
+        else if(evt.getExtendedKeyCode()==KeyEvent.VK_DOWN)
+          row++; // down key increment       
+        
+        IdText.setEnabled(false);
+        Save.setText("Update");
+
+        IdText.setText(roleTable.getValueAt(row, 0).toString());
+        NameText.setText(roleTable.getValueAt(row, 1).toString());
+        DesText.setText(roleTable.getValueAt(row, 2).toString());
+    }
+
+
+    //delete selected object when press delete
+    if(evt.getExtendedKeyCode()==KeyEvent.VK_DELETE)
+      {
+
         try
-            {   
-                if(checkValidity()){
-                RoleDao r = new DaoFactory().createRoleDao();
-                role.setId(Integer.parseInt(id.getText()));
-                role.setName(name.getText());
-                role.setDescription(descrip.getText());
-               
-                if(business.update(role)){
-                    JOptionPane.showMessageDialog(this, "Role Updated Successfully");
-                    setTableModel(r.viewAll());
-                    roleTable.repaint();
-                }else{
-                    roleTable.repaint();
-                }
-            }
-                id.setText("Enter Role ID");
-                 name.setText("Enter Role Name");
-                descrip.setText("Enter Role Description");
-                
-            
-            }
-            catch(Exception e){
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error!");
-            }
-            
-    }//GEN-LAST:event_SaveButtonActionPerformed
+          {
 
-    private void idFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_idFocusGained
-    if (id.getText().equalsIgnoreCase("Enter Role ID"))
-    id.setText("");
+            //For one selected row in table
 
-    }//GEN-LAST:event_idFocusGained
+            if(roleTable.getSelectedRowCount()==1)
+              { //Show confirm message
+                int reply =
+                  JOptionPane.showConfirmDialog(null,
+                    "Are you sure to delete this role?\n"+
+                    "All things depend on it will be deleted!", "Warning",
+                    JOptionPane.YES_NO_OPTION);
 
-    private void idFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_idFocusLost
-    if (id.getText().trim().equalsIgnoreCase(""))
-    id.setText("Enter Role ID");
+                //delete object if user choose yes
+                if(reply==JOptionPane.YES_OPTION)
+                  {
 
-    }//GEN-LAST:event_idFocusLost
+                    //get selected role id from table
+                    int s =
+                      Integer.parseInt(roleTable.getValueAt(roleTable.getSelectedRow(),
+                          0).toString());
+                    RoleDto role = new RoleDto();
+                    role.setId(s); //set it to role object
+
+                    //delete it using bao delete method
+                    if(business.delete(role)) //if it deleted sucessfilly show message to tell user that
+                      {
+                        JOptionPane.showMessageDialog(this,
+                          "Role Deleted Successfully", "Done", 1);
+                        setTableModel(business.listAll());
+                        roleTable.repaint();
+                        IdText.setEnabled(true);
+                        Save.setText("Save");
+                      }
+
+                    else
+                      //if bao method return false (staff not be deleted)
+                      JOptionPane.showMessageDialog(this,
+                        "Can't delete object", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                  }
+
+              }
+            else if(roleTable.getSelectedRowCount()==0)
+              {
+                // if there is no selected row show message to ask user to select a row
+                JOptionPane.showMessageDialog(this,
+                  "There is no selected row in the table\n\n", "Error",
+                  JOptionPane.WARNING_MESSAGE);
+              }
+            else
+              {
+                // if there are more than one row selected show message to ask user to select one row
+                JOptionPane.showMessageDialog(this,
+                  "Please, Select only one row\n\n", "Error",
+                  JOptionPane.WARNING_MESSAGE);
+              }
+          }
+        catch(Exception e)
+          {
+            e.printStackTrace();
+          }
+      }
+    }//GEN-LAST:event_roleTableKeyPressed
+
+  private void clearActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_clearActionPerformed
+  {//GEN-HEADEREND:event_clearActionPerformed
+    // TODO add your handling code here:
+
+    Save.setText("Save");
+    IdText.setText("Enter Role ID");
+    IdText.setEnabled(true);
+    DesText.setText("Enter Role Description");
+    NameText.setText("Enter Role Name");
+  }//GEN-LAST:event_clearActionPerformed
+
+  private void SearchButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_SearchButtonMouseExited
+  {//GEN-HEADEREND:event_SearchButtonMouseExited
+    // TODO add your handling code here:
+    searchPanel.setBackground(Color.decode("#0081D3"));
+
+  }//GEN-LAST:event_SearchButtonMouseExited
+
+  private void SaveMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_SaveMouseExited
+  {//GEN-HEADEREND:event_SaveMouseExited
+    // TODO add your handling code here:
+    savePanel.setBackground(Color.decode("#0081D3"));
+
+  }//GEN-LAST:event_SaveMouseExited
+
+  private void DeleteButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_DeleteButtonMouseExited
+  {//GEN-HEADEREND:event_DeleteButtonMouseExited
+    // TODO add your handling code here:
+    deletePanel.setBackground(Color.decode("#0081D3"));
+
+  }//GEN-LAST:event_DeleteButtonMouseExited
+
+  private void clearMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_clearMouseExited
+  {//GEN-HEADEREND:event_clearMouseExited
+    // TODO add your handling code here:
+    clearPanel.setBackground(Color.decode("#0081D3"));
+
+  }//GEN-LAST:event_clearMouseExited
+
+  private void RefreshButtonMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_RefreshButtonMouseExited
+  {//GEN-HEADEREND:event_RefreshButtonMouseExited
+    // TODO add your handling code here:
+    refreshPanel.setBackground(Color.decode("#0081D3"));
+
+  }//GEN-LAST:event_RefreshButtonMouseExited
+
+  private void RefreshButtonMouseMoved(java.awt.event.MouseEvent evt)//GEN-FIRST:event_RefreshButtonMouseMoved
+  {//GEN-HEADEREND:event_RefreshButtonMouseMoved
+    // TODO add your handling code here:
+    refreshPanel.setBackground(Color.decode("#0051D2"));
+
+  }//GEN-LAST:event_RefreshButtonMouseMoved
+
+  private void SearchButtonMouseMoved(java.awt.event.MouseEvent evt)//GEN-FIRST:event_SearchButtonMouseMoved
+  {//GEN-HEADEREND:event_SearchButtonMouseMoved
+    // TODO add your handling code here:
+    searchPanel.setBackground(Color.decode("#0051D2"));
+
+  }//GEN-LAST:event_SearchButtonMouseMoved
+
+  private void SaveMouseMoved(java.awt.event.MouseEvent evt)//GEN-FIRST:event_SaveMouseMoved
+  {//GEN-HEADEREND:event_SaveMouseMoved
+    // TODO add your handling code here:
+    savePanel.setBackground(Color.decode("#0051D2"));
+
+  }//GEN-LAST:event_SaveMouseMoved
+
+  private void DeleteButtonMouseMoved(java.awt.event.MouseEvent evt)//GEN-FIRST:event_DeleteButtonMouseMoved
+  {//GEN-HEADEREND:event_DeleteButtonMouseMoved
+    // TODO add your handling code here:
+    deletePanel.setBackground(Color.decode("#0051D2"));
+
+  }//GEN-LAST:event_DeleteButtonMouseMoved
+
+  private void clearMouseMoved(java.awt.event.MouseEvent evt)//GEN-FIRST:event_clearMouseMoved
+  {//GEN-HEADEREND:event_clearMouseMoved
+    // TODO add your handling code here:
+    clearPanel.setBackground(Color.decode("#0051D2"));
+
+  }//GEN-LAST:event_clearMouseMoved
 
 
 
     private boolean checkValidity(){
+      
+      try{           //check for if id is empty
+                if(IdText.getText().equalsIgnoreCase("Enter Role ID"))
+                  {
+                    JOptionPane.showMessageDialog(null, "Please, enter role id",
+                      "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                    throw new IllegalArgumentException("id text is empry");
+                  }
 
-            // check input 1
-            try{
-                if(id.getText().equalsIgnoreCase("Enter The ID")){
-                    JOptionPane.showMessageDialog(this, "Please, enter id number","",JOptionPane.ERROR_MESSAGE);
-                    return false;            
-                }
-                Integer.parseInt(id.getText());
-               // return true;
-            }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(this, "ID is invalid! \n (please enter a number)");
-                         // own implemented dialog
-                return false;
-            }
-            try{
-                if(name.getText().equalsIgnoreCase("Enter The Name")){
-                    JOptionPane.showMessageDialog(this, "Please, enter name");
+                //Check validity of id
+                try
+                  {
+                    int id_role = Integer.parseInt(IdText.getText());
+                    //Check for the entered id is a positive number
+                    if(id_role<1)
+                      {
+                        JOptionPane.showMessageDialog(null,
+                          "Invalid Id \n\n(ID is only Positive Numbers)",
+                          "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        throw new IllegalArgumentException("ID is only Positive Numbers");
+                      }
+                  }
+                catch(java.lang.NumberFormatException e2)
+                  {
+                    e2.printStackTrace();
+                    JOptionPane.showMessageDialog(null,
+                      "Please enter number for user ID", "Invalid Input",
+                      JOptionPane.ERROR_MESSAGE);
                     return false;
-                }
-                    Integer.parseInt(name.getText());
-                    JOptionPane.showMessageDialog(this, "Name is invalid! \n (please enter a string)");
-                    return false;
-                }catch (NumberFormatException e){
-                             // own implemented dialog
-                    
-            try{
-                if(descrip.getText().equalsIgnoreCase("Enter The Description")){
-                    JOptionPane.showMessageDialog(this, "Please, enter description");
-                    return false;
-                }
-                    Integer.parseInt(descrip.getText());
-                    JOptionPane.showMessageDialog(this, "Description is invalid! \n (please enter a string)");
-                    return false;
-                }catch (NumberFormatException es){
-                             // own implemented dialog
-                  //  return true;
-            return true;
-        }}}
+                  }
         
+    //check for if name is empty
+    if(NameText.getText().equalsIgnoreCase("Enter Role Name"))
 
+      {
+        JOptionPane.showMessageDialog(null, "Please, enter role name.",
+          "Invalid Input", JOptionPane.ERROR_MESSAGE);
+        throw new IllegalArgumentException("name text is empty");
+      }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DeleteButton;
-    private javax.swing.JButton NewButton;
-    private javax.swing.JButton RefreshButton;
-    private javax.swing.JButton SaveButton;
-    private javax.swing.JButton SearchButton;
-    private javax.swing.JTextField descrip;
-    private javax.swing.JTextField id;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField name;
-    private javax.swing.JTable roleTable;
-    private javax.swing.JTextField search;
-    // End of variables declaration//GEN-END:variables
+    //check validity of name
+
+    //Username can't start with number or symbol
+    if(!Character.isAlphabetic(NameText.getText().charAt(0)))
+      {
+        JOptionPane.showMessageDialog(null,
+          "Invalid role name format\n\n(role name can't start with number or symbol)",
+          "Invalid Input", JOptionPane.ERROR_MESSAGE);
+        throw new IllegalArgumentException("role name can't start with number or symbol");
+
+      }
+    //check for all chars
+    for(int i = 1; i<NameText.getText().length(); i++)
+      {
+
+        //code contain only letters/numbers ane '_'
+        if(!Character.isLetterOrDigit(NameText.getText().charAt(i))&&
+          NameText.getText().charAt(i)!='_' && NameText.getText().charAt(i)!=' ')
+          {
+            JOptionPane.showMessageDialog(null,
+              "Invalid role name format\n\n(name can only be a sequence of Unicode letters and digits separated by underscore)",
+              "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            throw new IllegalArgumentException("name can't contain stranger symbols");
+
+          }
+      }
+         return true;  
+      }
+         
+   catch(IllegalArgumentException e1)
+   {
+   e1.printStackTrace();
+   return false;
+   }
+
+   catch(Exception e)
+   {
+   // TODO: Add catch code
+   e.printStackTrace();
+
+   //if there is any other non expecting error
+   JOptionPane.showMessageDialog(null,
+     "Some Thing went wrong!\n\nPlease check your entered data. ",
+     "Invalid Input", JOptionPane.ERROR_MESSAGE);
+     return false;
+   }
+ }
+        
+/**Update*/
+private void update()
+{
+    try
+      {
+        if(checkValidity())
+          {
+            RoleDao r = new DaoFactory().createRoleDao();
+            role.setId(Integer.parseInt(IdText.getText()));
+            role.setName(NameText.getText());
+            role.setDescription(DesText.getText());
+
+            if(business.update(role, user_data))
+              {
+                JOptionPane.showMessageDialog(this,
+                  "Role Updated Successfully!", "Done", 1);
+                setTableModel(r.viewAll());
+                roleTable.repaint();
+              }
+            else
+              {
+                JOptionPane.showMessageDialog(this, "Role does'nt exist!",
+                  "Error", 0);
+              }
+          }
+
+      }
+    catch(Exception e)
+      {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Something went wrong!",
+          "Error", 0);
+      }}
+
+  // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton DeleteButton;
+  private javax.swing.JTextField DesText;
+  private javax.swing.JPanel EditPanel;
+  private javax.swing.JTextField IdText;
+  private javax.swing.JTextField NameText;
+  private javax.swing.JButton RefreshButton;
+  private javax.swing.JButton Save;
+  private javax.swing.JButton SearchButton;
+  private javax.swing.JButton clear;
+  private javax.swing.JPanel clearPanel;
+  private javax.swing.JPanel deletePanel;
+  private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel jLabel15;
+  private javax.swing.JLabel jLabel2;
+  private javax.swing.JLabel jLabel3;
+  private javax.swing.JLabel jLabel8;
+  private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JSeparator jSeparator2;
+  private java.awt.Label no_of_rows;
+  private javax.swing.JPanel refreshPanel;
+  private javax.swing.JTable roleTable;
+  private javax.swing.JPanel savePanel;
+  private javax.swing.JTextField search;
+  private javax.swing.JPanel searchPanel;
+  // End of variables declaration//GEN-END:variables
 
 }

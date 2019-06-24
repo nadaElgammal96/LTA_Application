@@ -5,20 +5,39 @@ package com.fym.lta.BAO;
  */
 import com.fym.lta.DTO.BuildingDto;
 
+import com.fym.lta.DTO.UserDto;
+
 import java.util.List;
 
 public abstract interface BuildingBao {
-    public abstract void ListEmptyLocations(BuildingDto build);
+  
 
+  /**
+   * @return all buildings in data base
+   */
     public abstract List<BuildingDto> ListAll();
 
-    public abstract void ListAllLocations(BuildingDto build);
 
-    public abstract Boolean insert(BuildingDto build);
+  /**
+   * @param - dto building object which would be inserted
+   * @return true if success - false if not
+   */
+    public abstract Boolean insert(BuildingDto build , UserDto user);
 
-    public abstract Boolean update(BuildingDto build);
+  /**
+   * @param dto object for selected building which would be updated
+   * @return true if success - false if not
+   */
+    public abstract Boolean update(BuildingDto build,UserDto user);
 
+  /**
+   * @param dto building object which would be deleted
+   * @return true if success - false if not
+   */
     public abstract Boolean delete(BuildingDto build);
 
+  /**
+   * @return building have attribute value inserted in search
+   */
     public abstract List<BuildingDto> searchFor(BuildingDto build);
 }

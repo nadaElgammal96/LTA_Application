@@ -1,15 +1,73 @@
 package com.fym.lta.DTO;
 
+
 public class UserDto {
 
     private int id;
-    private String usernsme;
-    private int role_id;
+    private String username;
+    private RoleDto role;
     private String password;
     private String email;
-    private RoleDto user_role;
-    private EmployeeUserDto emplACC;
-    private StaffUserDto staffAcc;
+    private String search;
+    private int keep_login;
+    private StaffDto staffAcc;
+    private String screen_name;
+    private int screen_id;
+
+  public void setScreen_name(String screen_name)
+  {
+    this.screen_name = screen_name;
+  }
+
+  public String getScreen_name()
+  {
+    return screen_name;
+  }
+
+  public void setScreen_id(int Screen_id)
+  {
+    this.screen_id = Screen_id;
+  }
+
+  public int getScreen_id()
+  {
+    return screen_id;
+  }
+
+  public void setStaffAcc(StaffDto staffAcc)
+  {
+    this.staffAcc = staffAcc;
+  }
+
+  public StaffDto getStaffAcc()
+  {
+    return staffAcc;
+  }
+
+  public void setEmployeeAcc(EmployeeDto employeeAcc)
+  {
+    this.employeeAcc = employeeAcc;
+  }
+
+  public EmployeeDto getEmployeeAcc()
+  {
+    return employeeAcc;
+  }
+  private EmployeeDto employeeAcc;
+
+ 
+
+
+  public void setKeep_login(int keep_login)
+  {
+    this.keep_login = keep_login;
+  }
+
+  public int getKeep_login()
+  {
+    return keep_login;
+  }
+ 
     
     public UserDto(){
         super();
@@ -23,23 +81,26 @@ public class UserDto {
         return id;
     }
 
-    public void setUsernsme(String usernsme) {
-        this.usernsme = usernsme;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUsernsme() {
-        return usernsme;
+    public String getUsername() {
+        return username;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
-    }
 
-    public int getRole_id() {
-        return role_id;
-    }
+  public void setRole(RoleDto role)
+  {
+    this.role = role;
+  }
 
-    public void setPassword(String password) {
+  public RoleDto getRole()
+  {
+    return role;
+  }
+
+  public void setPassword(String password) {
         this.password = password;
     }
 
@@ -53,5 +114,16 @@ public class UserDto {
 
     public String getEmail() {
         return email;
+    }
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public UserDto(String search) {
+        this.search = search;
     }
 }

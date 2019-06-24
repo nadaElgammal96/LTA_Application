@@ -9,12 +9,14 @@ import com.fym.lta.DTO.EquipmentDto;
 import com.fym.lta.DTO.EquipmentTypeDto;
 import com.fym.lta.DTO.LocationDto;
 
+import com.fym.lta.DTO.UserDto;
+
 import java.util.List;
 
 public abstract interface EquipmentBao {
-       public abstract boolean insert(EquipmentDto equip);
+       public abstract boolean insert(EquipmentDto equip , UserDto user);
        
-       public abstract boolean update(EquipmentDto equip);
+       public abstract boolean update(EquipmentDto equip , UserDto user);
 
        public abstract boolean delete(EquipmentDto equip);
        

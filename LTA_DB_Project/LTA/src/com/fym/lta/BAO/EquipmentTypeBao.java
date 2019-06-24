@@ -7,13 +7,15 @@ package com.fym.lta.BAO;
 
 import com.fym.lta.DTO.EquipmentDto;
 import com.fym.lta.DTO.EquipmentTypeDto;
+import com.fym.lta.DTO.UserDto;
+
 import java.util.List;
 
 public abstract interface EquipmentTypeBao {
     
-    public abstract boolean add(EquipmentTypeDto equip_type);
+    public abstract boolean add(EquipmentTypeDto equip_type , UserDto user);
 
-    public abstract boolean update(EquipmentTypeDto equip_type);
+    public abstract boolean update(EquipmentTypeDto equip_type , UserDto user);
     
     public abstract List<EquipmentTypeDto> viewAll();
 

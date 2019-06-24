@@ -4,9 +4,29 @@ public class BaoFactory {
     public BuildingBao createBuildingBao() {
         return new BuildingBaoImpl();
     }
-
+    
+     public StageScheduleBao createSatgeScheduleBao()
+    {
+       return new StageScheduleBaoImpl();
+    }
+    public ScheduleSlotBao  createScheduleSlotBao()
+    {
+      return new ScheduleSlotBaoImpl();
+    }
     public FloorBao createFloorBao() {
         return new FloorBaoImpl();
+    }
+
+   public SlotBao createSLotBao()
+   {
+     return new SlotBaoImpl();
+   }
+   
+ 
+
+  public RoleScreenBao createRoleScreenBao()
+    {
+      return new RoleScreenBaoImpl();  
     }
 
     public LocationBao createLocationBao() {
@@ -38,9 +58,7 @@ public class BaoFactory {
         return new CourseBaoImpl();
     }
 
-    public SlotBao createSLotBao() {
-        return new SlotBaoImpl();
-    }
+  
 
     public ScheduleBao createScheduleBao() {
         return new ScheduleBaoImpl();
@@ -50,7 +68,7 @@ public class BaoFactory {
         return new StageBaoImpl();
     }
 
-    public StafffBao createStuffBao() {
+    public StaffBao createStuffBao() {
         return new StaffBaoImpl();
     }
 
@@ -76,4 +94,18 @@ public class BaoFactory {
     public EqTypeSpecBao createEqTypeSpecBao(){
         return new EqTypeSpecBaoImpl();
     }
+    public StaffUserBao createStaffUserBao(){
+        return new StaffUserBaoImpl();
+    }
+    public EmpUserBao createEmpUserBao(){
+        return new EmpUserBaoImpl();
+    }
+    public StaffCourseBao createStaffCourseBao(){
+        return new StaffCourseBaoImpl();
+    }
+
+  static SlotBao createSlotBao()
+  {
+    return null;
+  }
 }

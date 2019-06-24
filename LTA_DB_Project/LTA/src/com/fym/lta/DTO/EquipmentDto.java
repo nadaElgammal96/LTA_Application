@@ -14,6 +14,7 @@ public class EquipmentDto {
     private String code;
     private String country;
     private EquipmentTypeDto type;
+    private LocationDto location;
     private String search;
 
     public EquipmentDto(){
@@ -62,5 +63,13 @@ public class EquipmentDto {
 
     public String getSearch() {
         return search;
+    }
+
+    public void setLocation(LocationDto location) {
+        this.location = location;
+    }
+
+    public LocationDto getLocation() {
+        return location;
     }
 }

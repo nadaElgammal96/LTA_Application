@@ -2,13 +2,10 @@ package com.fym.lta.DTO;
 
 public class StaffDto {   
     
-    private int ssn;
-    private String description;
-    private String mname;
+    private int id;
+    private String name;
     private String position;
-    private int department_id;
-    private String fname;
-    private String lname;
+    private DepartmentDto department;
     private String Search; 
     private StaffUserDto account;
     private WorkOnDto courses;
@@ -18,29 +15,26 @@ public class StaffDto {
     public StaffDto(){
         super();
     }
-
-    public void setSsn(int ssn) {
-        this.ssn = ssn;
+    public void setSearch(String search) {
+        this.Search = search;
     }
 
-    public int getSsn() {
-        return ssn;
+
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public int getId() {
+        return id;
     }
 
-    public String getDescription() {
-        return description;
+
+    public void setName(String mname) {
+        this.name = mname;
     }
 
-    public void setMname(String mname) {
-        this.mname = mname;
-    }
-
-    public String getMname() {
-        return mname;
+    public String getName() {
+        return name;
     }
 
     public void setPosition(String position) {
@@ -51,38 +45,27 @@ public class StaffDto {
         return position;
     }
 
-    public void setDepartment_id(int department_id) {
-        this.department_id = department_id;
+    public void setDepartment(DepartmentDto department) {
+        this.department = department;
     }
 
-    public int getDepartment_id() {
-        return department_id;
+    public DepartmentDto getDepartment() {
+        return department;
     }
-
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    public String getFname() {
-        return fname;
-    }
-
-    public void setLname(String lname) {
-        this.lname = lname;
-    }
-
-    public String getLname() {
-        return lname;
-    }
-
-    public void setSearch(String Search) {
-        this.Search = Search;
-    }
+ 
 
     public String getSearch() {
         return Search;
     }
 
     public void Add(StaffDto s) {
+    }
+
+    public void setWorkHours(int WorkHours) {
+        this.WorkHours = WorkHours;
+    }
+
+    public int getWorkHours() {
+        return WorkHours;
     }
 }

@@ -74,8 +74,9 @@ public class EquipmentTypeDto {
         return Specifications;
     }
 
-    public EquipmentTypeDto(String search) {
-        this.search = search;
+
+    public EquipmentTypeDto(String name) {
+        this.name = name;
     }
 
     public EquipmentTypeDto(String code, int no_of_equip, String name, int id) {
@@ -84,6 +85,7 @@ public class EquipmentTypeDto {
         this.name = name;
         this.id = id;
     }
+    
 
     public EquipmentTypeDto(int id) {
         this.id = id;

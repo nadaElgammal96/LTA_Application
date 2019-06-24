@@ -1,5 +1,8 @@
 package com.fym.lta.DAO;
 
+import com.fym.lta.BAO.ScheduleSlotBao;
+import com.fym.lta.BAO.ScheduleSlotBaoImpl;
+
 public class DaoFactory {
     public EmployeeDao createEmployeeDao() {
         return new EmployeeDaoImpl();
@@ -8,16 +11,32 @@ public class DaoFactory {
     public UserDao createUserDao() {
         return new UserDaoImpl();
     }
+    
+    public StageScheduleDao createStageScheduleDao()
+    {
+      return new StageScheduleDaoImpl();  
+    }
 
-    public LocationDao createLocationDao() {
+  public ScheduleSlotDao createScheduleSlotDao()
+  {
+    return new ScheduleSlotDaoImpl();
+
+  }
+
+
+  public LocationDao createLocationDao() {
         return new LocationDaoImpl();
     }
+    
+    public RoleScreenDao createRoleScreenDao() {
+        return new RoleScreenDaoImpl();
+      }
 
     public LocationTypeDao createLocationTypeDao() {
      return new LocationTypeDaoImpl();
      }
 
-    public StaffDao createStuffDao() {
+    public StaffDao createStaffDao() {
         return new StaffDaoImpl();
     }
 
@@ -71,5 +90,17 @@ public class DaoFactory {
     
     public EqTypeSpecDao createEqTypeSpecDao(){
         return new EqTypeSpecDaoImpl();
+    }
+    public CourseDao createCourseDao() {
+        return new CourseDaoImpl();
+    }
+    public StaffUSerDao createStaffUserDao(){
+        return new StaffUserDaoImpl();
+    }
+    public EmpUserDao createEmpUserDao(){
+        return new EmpUserDaoImpl();
+    }
+    public StaffCourseDao createStaffCourseDao(){
+        return new StaffCourseDaoImpl();
     }
 }

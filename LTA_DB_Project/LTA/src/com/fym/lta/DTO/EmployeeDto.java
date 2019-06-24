@@ -4,7 +4,7 @@ public class EmployeeDto {
     
     
     private String name;
-    private String ssn;
+    private int id;
     private String job;
     private String search;
 
@@ -30,12 +30,12 @@ public class EmployeeDto {
         return name;
     }
 
-    public void setSsn(String ssn) {
-        this.ssn = ssn;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getSsn() {
-        return ssn;
+    public int getId() {
+        return id;
     }
 
     public void setJob(String job) {

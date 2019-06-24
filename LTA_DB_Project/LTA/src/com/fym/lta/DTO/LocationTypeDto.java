@@ -23,6 +23,10 @@ public class LocationTypeDto {
         return search;
     }
 
+    public LocationTypeDto(int id) {
+        this.id = id;
+    }
+
     public LocationTypeDto(){
         super();
     }

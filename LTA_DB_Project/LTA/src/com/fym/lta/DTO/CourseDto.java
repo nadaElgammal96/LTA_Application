@@ -6,13 +6,59 @@ public class CourseDto {
     
     private String description;
     private String name;
-    private int id;
     private String code;
+    private int id;
     private Float no_of_hrs;
-    private List<LocationTypeDto> plt;
-    private  CourseDepartDto depart;
+    private LocationTypeDto plt_lecture, plt_section;
+    private List<DepartmentDto> departs;
+
+  public CourseDto(int id)
+  {
+    this.id = id;
+  }
+
+  public void setDeparts(List<DepartmentDto> departs)
+  {
+    this.departs = departs;
+  }
+
+  public List<DepartmentDto> getDeparts()
+  {
+    return departs;
+  }
+  private  CourseDepartDto depart;
     private WorkOnDto staff;
-    
+    private String search;
+
+
+  public void setPlt_lecture(LocationTypeDto plt_lecture)
+  {
+    this.plt_lecture = plt_lecture;
+  }
+
+  public LocationTypeDto getPlt_lecture()
+  {
+    return plt_lecture;
+  }
+
+  public void setPlt_section(LocationTypeDto plt_section)
+  {
+    this.plt_section = plt_section;
+  }
+
+  public LocationTypeDto getPlt_section()
+  {
+    return plt_section;
+  }
+
+
+  public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getSearch() {
+        return search;
+    }
     
     public CourseDto(){
         super();
@@ -58,11 +104,9 @@ public class CourseDto {
         return no_of_hrs;
     }
 
-    public void setPlt(List<LocationTypeDto> plt) {
-        this.plt = plt;
-    }
 
-    public List<LocationTypeDto> getPlt() {
-        return plt;
+  public CourseDto(String search) {
+        this.search = search;
     }
+  
 }

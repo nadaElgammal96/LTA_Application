@@ -12,6 +12,8 @@ import com.fym.lta.DTO.EquipmentDto;
 import com.fym.lta.DTO.EquipmentTypeDto;
 import com.fym.lta.DTO.LocationDto;
 
+import com.fym.lta.DTO.UserDto;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -19,17 +21,25 @@ import javax.swing.JOptionPane;
 
 public class EquipmentBaoImpl implements EquipmentBao {
     
+    // create object from EquipmentDaoImpl through dao factory createEquipmentDao method 
     private  EquipmentDao db = new DaoFactory().createEquipmentDao();
+ 
+    // create object from EuipmentTypeDaoImpl through dao factory createEquipmentTypeDao method
     private EquipmentTypeDao typedao = new DaoFactory().createEquipmentTypeDao();
     
-    public boolean insert(EquipmentDto equip) {
-        boolean insertFlag = true;
+    /* method to insert new equipment passed from ui, check the record then pass it to dao layer to 
+     insert it in database tables */
+    public boolean insert(EquipmentDto equip , UserDto user) {
+      
+        boolean insertFlag = false;
         try{
-             if(db.isExist(equip)){
-                    JOptionPane.showMessageDialog(null, "Record is already EXIST");
-                    return false;}
-                else
-                       insertFlag = db.createNew(equip);
+            /* check if the object already exists in databas by using isExist method implemented in dao
+             then show message if it exists and return */
+             if(!db.isExist(equip))
+             {    // call insert method in dao and pass the object parameter to it then return
+             insertFlag = db.createNew(equip , user);
+             }
+          
             return insertFlag;
         }
             catch(Exception e){
@@ -38,6 +48,7 @@ public class EquipmentBaoImpl implements EquipmentBao {
                }
     }
 
+//delete record passed from ui, check if record exists then call delete method from dao to delete it from database
     public boolean delete(EquipmentDto equip) {
         boolean deleteFlag = true;
         try{
@@ -51,9 +62,9 @@ public class EquipmentBaoImpl implements EquipmentBao {
                    e.printStackTrace();
                    return false;
                }
-
     }
 
+//method to search for equipments by calling searchFor method implemented in dao
     public List<EquipmentDto> searchFor(EquipmentDto equip){
                 List<EquipmentDto> eq =null;
         try{ eq=db.searchFor(equip);
@@ -64,6 +75,7 @@ public class EquipmentBaoImpl implements EquipmentBao {
         return eq;
             }
 
+//method to view all equipments stored in database calling viewAll method in dao 
     public List<EquipmentDto> listAll() {
             List<EquipmentDto> eq = null;
             try{
@@ -74,15 +86,16 @@ public class EquipmentBaoImpl implements EquipmentBao {
             }
             return eq;
         }
-    public boolean update(EquipmentDto equip){
-        boolean updateFlag = true;
+    
+    //method to update equipment passed form ui, check if it already exists then call update method in dao 
+    public boolean update(EquipmentDto equip , UserDto user){
+        boolean updateFlag = false;
         try{ 
                 if(db.isExist(equip))
                 {
-                    updateFlag = db.update(equip);
+                    updateFlag = db.update(equip , user);
                  }
                 else{
-                    JOptionPane.showMessageDialog(null,"NO EQUIPMENT FOUND TO UPDATE");
                     updateFlag = false;
                     }       
             return updateFlag;
@@ -93,6 +106,7 @@ public class EquipmentBaoImpl implements EquipmentBao {
            }
 }
     
+    //method to count equipments of specific equipment type passed from ui, check if it exists then call count method in dao
     public boolean countEquips(EquipmentTypeDto et){
         boolean flag = false;
         try{

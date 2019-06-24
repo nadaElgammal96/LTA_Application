@@ -3,36 +3,36 @@ package com.fym.lta.DTO;
 public class WorkOnDto {
     
    
-        private String course_id;
-        private Float work_hrs;
-        private String ssn;
+        private int course_id;
+        private int work_hrs;
+        private int staff_id;
         
         
         public WorkOnDto(){
             super();
         }
 
-        public void setCourse_id(String course_id) {
+        public void setCourse_id(int course_id) {
             this.course_id = course_id;
         }
 
-        public String getCourse_id() {
+        public int getCourse_id() {
             return course_id;
         }
 
-        public void setWork_hrs(Float work_hrs) {
+        public void setWork_hrs(int work_hrs) {
             this.work_hrs = work_hrs;
         }
 
-        public Float getWork_hrs() {
+        public int getWork_hrs() {
             return work_hrs;
         }
 
-        public void setSsn(String ssn) {
-            this.ssn = ssn;
+        public void setStaff_id(int staff_id) {
+            this.staff_id = staff_id;
         }
 
-        public String getSsn() {
-            return ssn;
+        public int getStaff_id() {
+            return staff_id;
         }
 }

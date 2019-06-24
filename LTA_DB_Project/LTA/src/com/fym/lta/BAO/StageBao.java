@@ -2,19 +2,25 @@ package com.fym.lta.BAO;
 
 import com.fym.lta.DTO.StageDto;
 
+import com.fym.lta.DTO.UserDto;
+
+import java.util.List;
+
 
 public abstract interface StageBao {
-    public abstract boolean update(StageDto S);
+  
+  
+    public abstract boolean update(StageDto S , UserDto user);
 
-    public abstract void viewAll();
+    public abstract List<StageDto> viewAll();
 
-    public abstract void viewCourses();
+    public abstract boolean add(StageDto s , UserDto user) ;
 
-    public abstract boolean add(StageDto s);
-
-    public abstract void viewDepartment();
-
-    public abstract void searchFor(String code);
+    public abstract List<StageDto> searchFor(StageDto s);
 
     public abstract boolean delete(StageDto s);
+    
+    public abstract boolean isExist(StageDto s);
+    
+
 }

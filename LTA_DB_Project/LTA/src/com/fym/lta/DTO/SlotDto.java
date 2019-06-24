@@ -1,18 +1,111 @@
 package com.fym.lta.DTO;
 
+import java.util.List;
+
 public class SlotDto {
     
-    private String code;
-    private int course_id;
-    private Float end_time;
-    private Float start_time;
-    private int occupancy;
-    private int location_id;
-    private int num;
-    private String day;
-    private ScheduleSlotDto schedule;
-    private CourseDto course;
-    private LocationDto location;
+    private String code;    
+    private String end_time;   
+    private String start_time;    
+
+    private int num;              
+    private String day;           
+    private ScheduleSlotDto schedule;              
+
+    private CourseDto course;   //schedule input     
+    private List<StaffDto> staff;    //schedule input            
+    private LocationTypeDto plt;  //schedule input             
+    private int student_number;  //schedule input               
+    private String slot_type;    //schedule input               
+    
+    private LocationDto location; //schedule output
+
+    private String search;
+    private List<UserDto> users;
+    private int term;
+
+  public void setTerm(int term)
+  {
+    this.term = term;
+  }
+
+  public int getTerm()
+  {
+    return term;
+  }
+
+  public void setUser(List<UserDto> user)
+  {
+    this.users = user;
+  }
+
+  public List<UserDto> getUser()
+  {
+    return users;
+  }
+
+  public void setSearch(String search)
+  {
+    this.search = search;
+  }
+
+  public String getSearch()
+  {
+    return search;
+  }
+
+
+  public void setSchedule(ScheduleSlotDto schedule)
+  {
+    this.schedule = schedule;
+  }
+
+  public ScheduleSlotDto getSchedule()
+  {
+    return schedule;
+  }
+
+  public void setStaff(List<StaffDto> staff)
+  {
+    this.staff = staff;
+  }
+
+  public List<StaffDto> getStaff()
+  {
+    return staff;
+  }
+
+
+  public void setPlt(LocationTypeDto plt)
+  {
+    this.plt = plt;
+  }
+
+  public LocationTypeDto getPlt()
+  {
+    return plt;
+  }
+
+  public void setStudent_number(int student_number)
+  {
+    this.student_number = student_number;
+  }
+
+  public int getStudent_number()
+  {
+    return student_number;
+  }
+
+  public void setSlot_type(String slot_type)
+  {
+    this.slot_type = slot_type;
+  }
+
+  public String getSlot_type()
+  {
+    return slot_type;
+  }
+
 
     public void setCourse(CourseDto course) {
         this.course = course;
@@ -42,45 +135,22 @@ public class SlotDto {
         return code;
     }
 
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
-    }
-
-    public int getCourse_id() {
-        return course_id;
-    }
-
-    public void setEnd_time(Float end_time) {
+    public void setEnd_time(String end_time) {
         this.end_time = end_time;
     }
 
-    public Float getEnd_time() {
+    public String getEnd_time() {
         return end_time;
     }
 
-    public void setStart_time(Float start_time) {
+    public void setStart_time(String start_time) {
         this.start_time = start_time;
     }
 
-    public Float getStart_time() {
+    public String getStart_time() {
         return start_time;
     }
 
-    public void setOccupancy(int occupancy) {
-        this.occupancy = occupancy;
-    }
-
-    public int getOccupancy() {
-        return occupancy;
-    }
-
-    public void setLocation_id(int location_id) {
-        this.location_id = location_id;
-    }
-
-    public int getLocation_id() {
-        return location_id;
-    }
 
     public void setNum(int num) {
         this.num = num;

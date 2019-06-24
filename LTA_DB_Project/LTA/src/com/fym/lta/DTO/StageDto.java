@@ -4,13 +4,31 @@ public class StageDto {
     
     private String code;
     private int num_of_std;
-    private int number;
+    private String number;
     private StageScheduleDto schedule;
+    private DepartmentDto department;
+    private String search;
    
     
     public StageDto(){
        super();
        }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setDepartment(DepartmentDto department) {
+        this.department = department;
+    }
+
+    public DepartmentDto getDepartment() {
+        return department;
+    }
 
     public void setCode(String code) {
         this.code = code;
@@ -28,11 +46,11 @@ public class StageDto {
         return num_of_std;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 }

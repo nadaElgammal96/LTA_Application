@@ -5,6 +5,8 @@ package com.fym.lta.BAO;
 import com.fym.lta.DAO.LocationTypeDaoImpl;
 import com.fym.lta.DTO.LocationTypeDto;
 
+import com.fym.lta.DTO.UserDto;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +23,15 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
 
     /**
      * @param dto object for selected location type which would be updated
-     * @return ture if success - false if not
+     * @return true if success - false if not
      */
-    public boolean update(LocationTypeDto lt) {
+    public boolean update(LocationTypeDto lt,UserDto user) {
         
         LocationTypeDaoImpl dao= new  LocationTypeDaoImpl();
         boolean saveFlage = false;
         try{
             if(dao.isExist(lt))
-                saveFlage = dao.update(lt);
+                saveFlage = dao.update(lt,user);
   
         }catch(Exception e){
             e.printStackTrace();
@@ -43,9 +45,9 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
 
     /**
      * @param - dto location type object which would be inserted 
-     * @return ture if success - false if not
+     * @return true if success - false if not
      */
-    public boolean add(LocationTypeDto lt) {
+    public boolean add(LocationTypeDto lt,UserDto user) {
         
         LocationTypeDaoImpl dao=null;
         dao=new LocationTypeDaoImpl();
@@ -54,7 +56,7 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
         try{
             
             if(!dao.isExist(lt))
-                saveFlage = dao.createNew(lt);
+                saveFlage = dao.createNew(lt,user);
             return saveFlage;
 
         }catch(Exception e){
@@ -101,7 +103,7 @@ public class LocationTypeBaoImpl implements LocationTypeBao {
 
     /**
      * @param dto location type object which would be deleted
-     * @return ture if success - false if not
+     * @return true if success - false if not
      */
     public boolean delete(LocationTypeDto lt) {
         

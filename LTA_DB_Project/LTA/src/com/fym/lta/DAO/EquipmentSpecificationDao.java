@@ -7,12 +7,14 @@ package com.fym.lta.DAO;
 
 import com.fym.lta.DTO.EquipSpecificationDto;
 
+import com.fym.lta.DTO.UserDto;
+
 import java.util.List;
 
 public abstract interface EquipmentSpecificationDao {
-    public abstract Boolean update(EquipSpecificationDto es);
+    public abstract Boolean update(EquipSpecificationDto es , UserDto user);
 
-    public abstract Boolean createNew(EquipSpecificationDto es);
+    public abstract Boolean createNew(EquipSpecificationDto es , UserDto user);
 
     public abstract Boolean delete(EquipSpecificationDto es);
 

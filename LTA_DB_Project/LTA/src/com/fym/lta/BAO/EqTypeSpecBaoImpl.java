@@ -12,18 +12,26 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class EqTypeSpecBaoImpl implements EqTypeSpecBao {
+    
+    // create object from EqTypeSpecDaoImpl through dao factory createEqTypeSpecDao method 
     private EqTypeSpecDao dao = new DaoFactory().createEqTypeSpecDao();
+   
     public EqTypeSpecBaoImpl() {
         super();
     }
 
+    /* method to insert new record passed from ui, check the record then pass it to dao layer to 
+     insert it in database tables */
     public boolean add(EquipTypeSpecDetailsDto type_spec) {
         boolean addFlag = false;
         try{
+            /* check if the object already exists in databas by using isExist method implemented in dao
+             then show message if it exists and return */
             if(dao.isExist(type_spec)){
-                JOptionPane.showMessageDialog(null,"Record Already Exists");
+               
             }
             else{
+                // call insert method in dao and pass the object parameter to it then return
                 addFlag=dao.insert(type_spec);
             }
         }
@@ -33,6 +41,7 @@ public class EqTypeSpecBaoImpl implements EqTypeSpecBao {
     return addFlag;
     }
 
+//delete record passed from ui, check if record exists then call delete method from dao to delete it from database
     public boolean delete(EquipTypeSpecDetailsDto type_spec) {
         boolean deleteFlag = false;
         try{
@@ -44,7 +53,8 @@ public class EqTypeSpecBaoImpl implements EqTypeSpecBao {
         }
         return deleteFlag;
     }
-
+    
+    //method to view all records stored in database calling viewAll method in dao 
     public List<EquipTypeSpecDetailsDto> viewAll() {
         List<EquipTypeSpecDetailsDto> type_sp = null;
         try{
@@ -56,6 +66,7 @@ public class EqTypeSpecBaoImpl implements EqTypeSpecBao {
         return type_sp;
     }
 
+    //method to view all specifications of given type stored in database calling viewAll method in dao 
     public List<EquipSpecificationDto> viewAllSpecif(EquipmentTypeDto type) {
         List<EquipSpecificationDto> eq_sp = null;
         try{

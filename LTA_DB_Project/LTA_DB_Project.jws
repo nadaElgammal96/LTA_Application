@@ -26,5 +26,6 @@
    </list>
    <list n="listOfChildren">
       <hash><url n="URL" path="LTA/LTA.jpr"/></hash>
+      <hash><url n="URL" protocol="file" path="/G:/3rd year/Second Term/Data Base/Projects/JavaApplication3/LTA_project/LTA_project.jpr"/></hash>
    </list>
 </jws:workspace>

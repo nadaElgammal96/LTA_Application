@@ -5,14 +5,25 @@ public class EmployeeUserDto {
     
  
     private int user_id;
-
-    private String employee_ssn;
+   
+    private EmployeeDto employee;
+    
     
     public EmployeeUserDto(){
        super();
        }
 
-    public void setUser_id(int user_id) {
+  public void setEmployee(EmployeeDto employee)
+  {
+    this.employee = employee;
+  }
+
+  public EmployeeDto getEmployee()
+  {
+    return employee;
+  }
+
+  public void setUser_id(int user_id) {
        this.user_id = user_id;
     }
 
@@ -20,11 +31,5 @@ public class EmployeeUserDto {
        return user_id;
     }
 
-    public void setEmployee_ssn(String employee_ssn) {
-       this.employee_ssn = employee_ssn;
-    }
-
-    public String getEmployee_ssn() {
-       return employee_ssn;
-    }
+  
 }

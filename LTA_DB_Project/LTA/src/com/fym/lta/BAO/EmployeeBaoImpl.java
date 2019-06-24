@@ -5,7 +5,11 @@ import com.fym.lta.DAO.EmployeeDao;
 import com.fym.lta.DAO.EquipmentDao;
 import com.fym.lta.DTO.EmployeeDto;
 
+import com.fym.lta.DTO.UserDto;
+
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 public class EmployeeBaoImpl implements EmployeeBao {
     private  EmployeeDao db = new DaoFactory().createEmployeeDao();
@@ -17,12 +21,12 @@ public class EmployeeBaoImpl implements EmployeeBao {
         
     }
 
-    public boolean update(EmployeeDto emp) {
+    public boolean update(EmployeeDto emp,UserDto user) {
         boolean saveFlage = true;
                try{
                      //data is valid
                     if(db.isExist(emp)){
-                        saveFlage = db.update(emp);
+                        saveFlage = db.update(emp , user);
                     }         else{
                               saveFlage = false;
                                    }
@@ -63,7 +67,7 @@ public class EmployeeBaoImpl implements EmployeeBao {
       
     }
 
-    public boolean add(EmployeeDto emp) {
+    public boolean add(EmployeeDto emp ,UserDto user) {
         
         boolean saveFlage = true;
                try{
@@ -71,7 +75,7 @@ public class EmployeeBaoImpl implements EmployeeBao {
                     if(db.isExist(emp)){
                                saveFlage = false;
                     }         else{
-                              saveFlage = db.createNew(emp);
+                              saveFlage = db.createNew(emp ,user);
                                    }
                    
                }
@@ -81,4 +85,20 @@ public class EmployeeBaoImpl implements EmployeeBao {
                       }
                       return saveFlage;
     }
+    
+    public UserDto viewUser(EmployeeDto emp){
+        UserDto user = null;
+        try {
+            if (db.isExist(emp)){
+                user=db.viewUserOfStaff(emp);
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Employee Does Not Exist");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return user;
+    }
+    
 }

@@ -11,8 +11,19 @@ public class DepartmentDto {
     private List<StaffDto> depart_staff;
     private List<StageDto> Stages;
     private CourseDepartDto courses;
-    
-    
+    private int id;
+    private String search;
+    private List<BuildingDto> buildings;
+
+    public DepartmentDto(String name) {
+        this.name = name;
+    }
+
+
+    public DepartmentDto(int id) {
+        this.id = id;
+    }
+
     public void setSearch(String search) {
         this.search = search;
     }
@@ -20,9 +31,7 @@ public class DepartmentDto {
     public String getSearch() {
         return search;
     }
-    private int id;
-    private String search;
-    private List<BuildingDto> buildings;
+
 
 
     public void setFaculty(FacultyDto faculty) {

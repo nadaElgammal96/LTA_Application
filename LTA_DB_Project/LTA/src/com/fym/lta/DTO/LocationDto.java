@@ -6,12 +6,68 @@ public class LocationDto {
     
     private String code;
     private int id;
-    private int locationType_id;
     private int capacity;
-    private String floor_code;
+    private FloorDto floor;
     private String name;
     private List<EquipmentDto> Equipments;
     private LocationTypeDto type;
+    private BuildingDto build;
+    private String search;
+    private int freeSlots;
+    private int reserved_number;
+
+  public void setReserved_number(int reserved_number)
+  {
+    this.reserved_number = reserved_number;
+  }
+
+  public int getReserved_number()
+  {
+    return reserved_number;
+  }
+
+  public void setFreeSlots(int freeSlots)
+  {
+    this.freeSlots = freeSlots;
+  }
+
+  public int getFreeSlots()
+  {
+    return freeSlots;
+  }
+
+
+  public LocationDto(String name) {
+        this.name = name;
+    }
+
+    public LocationDto(int id) {
+        this.id = id;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setBuild(BuildingDto build) {
+        this.build = build;
+    }
+
+    public BuildingDto getBuild() {
+        return build;
+    }
+
+    public void setFloor(FloorDto floor) {
+        this.floor = floor;
+    }
+
+    public FloorDto getFloor() {
+        return floor;
+    }
 
     public void setEquipments(List<EquipmentDto> Equipments) {
         this.Equipments = Equipments;
@@ -49,13 +105,7 @@ public class LocationDto {
         return id;
     }
 
-    public void setLocationType_id(int locationType_id) {
-        this.locationType_id = locationType_id;
-    }
-
-    public int getLocationType_id() {
-        return locationType_id;
-    }
+  
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
@@ -65,13 +115,6 @@ public class LocationDto {
         return capacity;
     }
 
-    public void setFloor_code(String floor_code) {
-        this.floor_code = floor_code;
-    }
-
-    public String getFloor_code() {
-        return floor_code;
-    }
 
     public void setName(String name) {
         this.name = name;

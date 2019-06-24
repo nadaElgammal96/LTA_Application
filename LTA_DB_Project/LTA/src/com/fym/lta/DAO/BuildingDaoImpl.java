@@ -13,6 +13,10 @@ import com.fym.lta.DTO.BuildingDto;
 import com.fym.lta.DTO.DepartmentDto;
 import com.fym.lta.DTO.EmployeeDto;
 
+import com.fym.lta.DTO.FloorDto;
+import com.fym.lta.DTO.LocationDto;
+import com.fym.lta.DTO.UserDto;
+
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
@@ -24,37 +28,75 @@ import javax.sql.rowset.RowSetProvider;
 import javax.swing.JOptionPane;
 
 public class BuildingDaoImpl implements BuildingDao {
-    
-    public List<BuildingDto> SearchFor(BuildingDto b)
+
+
+  /**search for building/s
+   * @param type
+   * @return types that their attribute value match with search field
+   */
+    public List<BuildingDto> SearchFor(BuildingDto building)
     {
-        List<BuildingDto> buildss = null;
+        List<BuildingDto> build = null;
         try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet())
         {
+          
+            //start database connection
             jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
             jdbc.setUsername("lta");
             jdbc.setPassword("lta");
-            jdbc.setCommand("select ID_BUILD,CODE_BUILD,DESCRIPTION_BUILD from BUILDING where ID_BUILD=? OR CODE_BUILD =? OR DESCRIPTION_BUILD=? ");
+          
+            //search in database
+            jdbc.setCommand("select ID_BUILD,CODE_BUILD,DESCRIPTION_BUILD from BUILDING where ID_BUILD=? OR CODE_BUILD =? OR DESCRIPTION_BUILD=? order by id_build");
             try{
-                 jdbc.setInt(1,Integer.parseInt(b.getSearch()));
+                 jdbc.setInt(1,Integer.parseInt(building.getSearch()));
             }catch(NumberFormatException e){                 
                 jdbc.setInt(1,-1);
             }
-            jdbc.setString(2, b.getSearch());
-            jdbc.setString(3, b.getSearch());
+            jdbc.setString(2, building.getSearch());
+            jdbc.setString(3, building.getSearch());
             jdbc.execute();
-            BuildingDto buil = null;
-            while(jdbc.next()){
-                if(buil == null){
-                    buildss = new ArrayList<>();
-                }
-                buil = new BuildingDto();
-                buil.setId(jdbc.getInt("id_build"));
-                buil.setCode(jdbc.getString("code_build"));
-                buil.setDescription(jdbc.getString("description_build"));
-                
-                buildss.add(buil);
-                buil= null;
-            }
+            
+          
+          //start get result
+        BuildingDto b = null;
+        while(jdbc.next())
+          {
+            if(build==null)
+              {
+                build = new ArrayList<>();
+              }
+            b = new BuildingDto();
+            b.setId(jdbc.getInt("ID_build"));
+            b.setCode(jdbc.getString("CODE_BUILD"));
+            b.setDescription(jdbc.getString("DESCRIPTION_build"));
+            build.add(b);
+            b = null;
+          }
+
+
+        //get floors no for each building
+
+        if(build!=null&&!build.isEmpty())
+          {
+            for(int i = 0; i<build.size(); i++)
+              {
+
+                jdbc.setCommand("SELECT ID_FLOOR,CODE_FLOOR,DESCRIPTION_FLOOR FROM FLOOR WHERE ID_BUILD=?");
+                jdbc.setInt(1, build.get(i).getId());
+                jdbc.execute();
+
+                int floot_no = 0;
+
+                while(jdbc.next())
+                  {
+                    floot_no++;
+                  }
+
+                build.get(i).setFloorsNo(floot_no);
+
+
+              }
+          }
             
         }catch(SQLException e){
              e.printStackTrace();
@@ -63,21 +105,30 @@ public class BuildingDaoImpl implements BuildingDao {
             catch(Exception e){
             e.printStackTrace();
         }
-        return buildss;
+        return build;
 
     }
 
-
+  /**
+   * @return List of all existing buildings in db
+   */
     public List<BuildingDto> viewAll() {
         List<BuildingDto> build = null;
         try{
+          
+            //srart db connection
             JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();
             jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
             jdbc.setUsername("lta");
             jdbc.setPassword("lta");
+          
+            //get all building found in db
             jdbc.setCommand("select id_build, code_build, description_build " + 
             "from building order by id_build ");
             jdbc.execute();
+          
+           
+          
             BuildingDto b = null;
             while(jdbc.next()){
                 if(build == null){
@@ -85,29 +136,61 @@ public class BuildingDaoImpl implements BuildingDao {
                 }
                 b= new BuildingDto();
                 b.setId(jdbc.getInt("ID_build"));
-                b.setCode(jdbc.getString("CODE_build"));
+                b.setCode(jdbc.getString("CODE_BUILD"));
                 b.setDescription(jdbc.getString("DESCRIPTION_build"));
                 build.add(b);
                 b= null;
             }
 
             
-        }catch(Exception e){
+          //get floors no for each building
+          
+          if(build!=null && !build.isEmpty())
+          {  
+          for(int i=0 ; i<build.size(); i++)
+          {
+            
+            jdbc.setCommand("SELECT ID_FLOOR,CODE_FLOOR,DESCRIPTION_FLOOR FROM FLOOR WHERE ID_BUILD=?");
+            jdbc.setInt(1, build.get(i).getId());
+            jdbc.execute();
+
+            int floot_no =0;
+            
+            while(jdbc.next())
+            {
+                    floot_no ++;
+            }
+            
+            build.get(i).setFloorsNo(floot_no);
+           
+            
+        }}}
+        
+        catch(Exception e){
             e.printStackTrace();
         }
         return build;
     }
 
-    public Boolean createNew(BuildingDto b) {
+  /**add new building
+   * @param building
+   * @param user
+   * @return true if it inserted successfuly, false if not
+   */
+    public Boolean createNew(BuildingDto b,UserDto user) {
         try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();)
         {
+            //start database connection
             jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
             jdbc.setUsername("lta");
             jdbc.setPassword("lta");
-            jdbc.setCommand("insert into BUILDING (ID_BUILD,CODE_BUILD,DESCRIPTION_BUILD) values(?,?,?)");
+          
+            //insert new buiding 
+            jdbc.setCommand("insert into BUILDING (ID_BUILD,CODE_BUILD,DESCRIPTION_BUILD,INSERTED_BY,INSERTED_AT) values(?,?,?,?,sysdate)");
             jdbc.setInt(1,b.getId());
             jdbc.setString(2,b.getCode());
             jdbc.setString(3,b.getDescription());
+            jdbc.setInt(4,user.getId());
             jdbc.execute();
             return true;
         }catch(SQLIntegrityConstraintViolationException e){
@@ -120,15 +203,53 @@ public class BuildingDaoImpl implements BuildingDao {
         }
         }
 
+  /**delete building
+   * @param  building object
+   * @return true if it deleted successfuly, false if not
+   */
     public Boolean delete(BuildingDto b) {
         try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();)
                 {
+
+                    //start database connection
                     jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
                     jdbc.setUsername("lta");
                     jdbc.setPassword("lta");
-                    jdbc.setCommand("delete from building where CODE_BUILD=?");
-                    jdbc.setString(1,b.getCode());
-                    jdbc.execute();
+
+
+        //delete assigned building_department
+        jdbc.setCommand("DELETE FROM DEPARTMENT_BUILDING  WHERE ID_BUILD=?");
+        jdbc.setInt(1, b.getId());
+        jdbc.execute();
+          
+        
+        //delete locations in this builing
+        LocationDao location_dao =
+          new DaoFactory().createLocationDao(); //location dao object
+        List<LocationDto> locations =
+          location_dao.searchBuilding(b.getId()); //search about location in this building
+
+        //delete the result locations
+        if(locations!=null&&!locations.isEmpty())
+          {
+            for(int i = 0; i<locations.size(); i++)
+              {
+                if(location_dao.delete(locations.get(i)))
+                  System.out.println("true");
+              }
+          }
+           
+        //delete floors in this  building
+        jdbc.setCommand("delete from floor where ID_BUILD=?");
+        jdbc.setInt(1, b.getId());
+        jdbc.execute(); 
+          
+        //delete this building
+        jdbc.setCommand("delete from building where ID_BUILD=?");
+        jdbc.setInt(1,b.getId());
+        jdbc.execute();
+        
+                    System.out.println("a");
                     return true;
                 }catch(java.sql.SQLException e){
                     return false;
@@ -139,18 +260,25 @@ public class BuildingDaoImpl implements BuildingDao {
             }
     }
 
+  /**check if building exist or not
+   * @param building object
+   * @return true if it found in db, false if not
+   */
     public Boolean isExist(BuildingDto b) {
         boolean flag = false;
                 try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();) 
                 {
+                   //start database 
                     jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
                     jdbc.setUsername("lta");
                     jdbc.setPassword("lta"); 
-                    jdbc.setCommand("SELECT CODE_BUILD FROM BUILDING WHERE CODE_BUILD = ?");
-                    jdbc.setString(1, b.getCode());
+                  
+                    //search for buiding
+                    jdbc.setCommand("SELECT ID_BUILD FROM BUILDING WHERE ID_BUILD = ?");
+                    jdbc.setInt(1, b.getId());
                     jdbc.execute();
                     while(jdbc.next()){
-                        flag = true;
+                        flag = true;  //return true if it found
                         break;
                         }
                     return flag;
@@ -161,24 +289,36 @@ public class BuildingDaoImpl implements BuildingDao {
                     }
     }
 
-    public Boolean update(BuildingDto b) {
+
+  /**
+   * @param  Building
+   * @param  user
+   * @return true for success false for not
+   */
+  
+    public Boolean update(BuildingDto b,UserDto user) {
         try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();)
          {
+          
+            //Start database connection
              jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
              jdbc.setUsername("lta");
              jdbc.setPassword("lta");
             
-            
-             jdbc.setCommand("UPDATE BUILDING " +
-                        "SET ID_BUILD = ? , DESCRIPTION_BUILD = ? " +
-                        "WHERE CODE_BUILD = ?");
+             //update building info
+             jdbc.setCommand("UPDATE BUILDING "+
+          " SET CODE_BUILD = ? , DESCRIPTION_BUILD = ?, UPDATED_BY=? ,"+
+          " UPDATED_AT =SYSDATE WHERE ID_BUILD =? ");
           
-             jdbc.setInt(3,b.getId());
-             jdbc.setString(2,b.getDescription());
-             jdbc.setString(1,b.getCode());
+             jdbc.setString(1, b.getCode());
+             jdbc.setString(2, b.getDescription());
+             jdbc.setInt(3, user.getId());
+             jdbc.setInt(4,b.getId());
+                  
              jdbc.execute();
             
              return true;
+          
          }catch(java.sql.SQLException e){
              return false;
          }

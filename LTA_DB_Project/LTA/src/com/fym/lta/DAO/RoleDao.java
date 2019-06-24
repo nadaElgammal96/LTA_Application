@@ -3,13 +3,15 @@ package com.fym.lta.DAO;
 
 import com.fym.lta.DTO.RoleDto;
 
+import com.fym.lta.DTO.UserDto;
+
 import java.util.List;
 
 public abstract interface RoleDao {
     
-    public abstract Boolean update(RoleDto r);
+    public abstract Boolean update(RoleDto r, UserDto user );
 
-    public abstract Boolean createNew(RoleDto r);
+    public abstract Boolean createNew(RoleDto r , UserDto user);
 
     public abstract Boolean isExist(RoleDto r);
 

@@ -4,12 +4,14 @@ package com.fym.lta.DAO;
 import com.fym.lta.DTO.DepartmentDto;
 import com.fym.lta.DTO.EmployeeDto;
 
+import com.fym.lta.DTO.RoleDto;
+import com.fym.lta.DTO.UserDto;
+
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.sql.rowset.JdbcRowSet;
 import javax.sql.rowset.RowSetProvider;
@@ -19,16 +21,17 @@ import javax.swing.JOptionPane;
 public class EmployeeDaoImpl implements EmployeeDao {
     UserDaoImpl endUserDaoImpl;
 
-    public Boolean createNew(EmployeeDto emp) {
+    public Boolean createNew(EmployeeDto emp , UserDto user) {
         try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();)
                 {
                     jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
                     jdbc.setUsername("lta");
                     jdbc.setPassword("lta");
-                    jdbc.setCommand("insert into EMPLOYEE (SSN_EMPLOYEE,NAME_EMPLOYEE,JOP_EMPLOYEE) values(?,?,?)");
-                    jdbc.setString(1,emp.getSsn());
+                    jdbc.setCommand("insert into EMPLOYEE (ID_EMPLOYEE,NAME_EMPLOYEE,JOP_EMPLOYEE,INSERTED_BY,INSERTED_AT) values(?,?,?,?,SYSDATE)");
+                    jdbc.setInt(1,emp.getId());
                     jdbc.setString(2,emp.getName());
                     jdbc.setString(3,emp.getJob());
+                    jdbc.setInt(4,user.getId());
                     jdbc.execute();
                     return true;
                 }
@@ -46,8 +49,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
                     jdbc.setUsername("lta");
                     jdbc.setPassword("lta");
-                    jdbc.setCommand("delete from EMPLOYEE where SSN_EMPLOYEE=?");
-                    jdbc.setString(1,emp.getSsn());
+                    jdbc.setCommand("delete from EMPLOYEE where ID_EMPLOYEE=?");
+                    jdbc.setInt(1,emp.getId());
 
                     jdbc.execute();
                     return true;
@@ -61,19 +64,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
         
     }
 
-    public Boolean update(EmployeeDto emp) {
+    public Boolean update(EmployeeDto emp ,UserDto user) {
         try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();)
          {
              jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
              jdbc.setUsername("lta");
              jdbc.setPassword("lta");
              jdbc.setCommand("UPDATE EMPLOYEE " + 
-             "SET NAME_EMPLOYEE = ? ,JOP_EMPLOYEE = ? " + 
-             "WHERE SSN_EMPLOYEE = ?");
+             "SET NAME_EMPLOYEE = ? ,JOP_EMPLOYEE = ? , UPDATED_BY = ? , UPDATED_AT = SYSDATE " + 
+             "WHERE ID_EMPLOYEE = ?");
             
              jdbc.setString(1,emp.getName());
              jdbc.setString(2,emp.getJob());
-             jdbc.setString(3,emp.getSsn());
+             jdbc.setInt(3,user.getId());
+             jdbc.setInt(4,emp.getId());
              jdbc.execute();
              return true;
          }catch(java.sql.SQLException e){
@@ -87,15 +91,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     public List<EmployeeDto> searchFor(EmployeeDto emp) {
         List<EmployeeDto> emps = null;
-       // EmployeeDto emp = null;
         try (JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet())
         {
             jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
             jdbc.setUsername("lta");
             jdbc.setPassword("lta");
             
-            jdbc.setCommand("select SSN_EMPLOYEE , NAME_EMPLOYEE , JOP_EMPLOYEE from EMPLOYEE where EMPLOYEE.SSN_EMPLOYEE=? OR EMPLOYEE.NAME_EMPLOYEE=? OR EMPLOYEE.JOP_EMPLOYEE=? ");
-            jdbc.setString(1,emp.getSearch());
+            jdbc.setCommand("select ID_EMPLOYEE , NAME_EMPLOYEE , JOP_EMPLOYEE from EMPLOYEE where EMPLOYEE.ID_EMPLOYEE=? OR EMPLOYEE.NAME_EMPLOYEE=? OR EMPLOYEE.JOP_EMPLOYEE=? ");
+            try{jdbc.setInt(1,Integer.parseInt(emp.getSearch()));
+            }catch(NumberFormatException e){
+                jdbc.setInt(1,-1); 
+            }
             jdbc.setString(2,emp.getSearch());
             jdbc.setString(3,emp.getSearch());
             jdbc.execute();
@@ -106,7 +112,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                     emps = new ArrayList<>();
                 }
                 employee= new EmployeeDto();
-                employee .setSsn(jdbc.getString("SSN_EMPLOYEE"));
+                employee .setId(jdbc.getInt("ID_EMPLOYEE"));
                 employee .setName(jdbc.getString("NAME_EMPLOYEE"));
                 employee .setJob(jdbc.getString("JOP_EMPLOYEE"));
                 
@@ -133,7 +139,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
             jdbc.setUsername("lta");
             jdbc.setPassword("lta");
-            jdbc.setCommand("select SSN_EMPLOYEE,NAME_EMPLOYEE,JOP_EMPLOYEE from EMPLOYEE order by SSN_EMPLOYEE ");
+            jdbc.setCommand("select ID_EMPLOYEE,NAME_EMPLOYEE,JOP_EMPLOYEE from EMPLOYEE order by ID_EMPLOYEE ");
             jdbc.execute();
             
             EmployeeDto temp = null;
@@ -142,7 +148,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 employees = new ArrayList <>();
                 }
                 temp = new EmployeeDto ();
-                temp.setSsn(jdbc.getString("SSN_EMPLOYEE"));
+                temp.setId(jdbc.getInt("ID_EMPLOYEE"));
                 temp.setName(jdbc.getString("NAME_EMPLOYEE"));
                 temp.setJob(jdbc.getString("JOP_EMPLOYEE"));
                 employees.add(temp);
@@ -167,8 +173,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
                            jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
                            jdbc.setUsername("lta");
                            jdbc.setPassword("lta"); 
-                           jdbc.setCommand("SELECT SSN_EMPLOYEE FROM EMPLOYEE WHERE SSN_EMPLOYEE = ?");
-                           jdbc.setString(1, emp.getSsn());
+                           jdbc.setCommand("SELECT ID_EMPLOYEE FROM EMPLOYEE WHERE ID_EMPLOYEE = ?");
+                           jdbc.setInt(1, emp.getId());
                            jdbc.execute();
                           
                          while(jdbc.next()){
@@ -187,7 +193,37 @@ public class EmployeeDaoImpl implements EmployeeDao {
                        return false;}
                        }
     
+    public UserDto viewUserOfStaff(EmployeeDto emp){
+
+        UserDto user = null;
+        try(JdbcRowSet jdbc = RowSetProvider.newFactory() .createJdbcRowSet();) {
+            jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
+            jdbc.setUsername("lta");
+            jdbc.setPassword("lta");
+            jdbc.setCommand("select USER_TABLE.ID_USER , USER_TABLE.NAME_USER_ , USER_TABLE.EMAIL_USER , USER_TABLE.ID_ROLE " +
+                "FROM EMPLOYEE JOIN EMP_ACC ON (EMPLOYEE.ID_EMPLOYEE = EMP_ACC.ID_EMPLOYEE) " +
+                "JOIN USER_TABLE ON (USER_TABLE.ID_USER=EMP_ACC.ID_USER) " +
+                "WHERE EMPLOYEE.ID_EMPLOYEE=?");
+            jdbc.setInt(1,emp.getId());
+            jdbc.execute();
+            
+            while(jdbc.next()){
+                user = new UserDto();
+                user.setId(jdbc.getInt("ID_USER"));
+                user.setEmail(jdbc.getString("EMAIL_USER"));
+                user.setUsername(jdbc.getString("NAME_USER_"));
+                user.setRole(new RoleDto());
+                user.getRole().setId(jdbc.getInt("ID_ROLE"));
+            }
+        }
+        catch(java.sql.SQLException e){
+            JOptionPane.showMessageDialog(null,"No User Assigned To This Employee");
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+        return user;
     
-    }
     
-                    
+    }                   
+}

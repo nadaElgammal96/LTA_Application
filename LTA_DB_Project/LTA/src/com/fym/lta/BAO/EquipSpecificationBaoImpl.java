@@ -11,22 +11,31 @@ import com.fym.lta.DTO.EquipSpecificationDto;
 
 import com.fym.lta.DTO.EquipmentTypeDto;
 
+import com.fym.lta.DTO.UserDto;
+
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
 public class EquipSpecificationBaoImpl implements EquipSpecificationBao {
-   
+    
+    // create object from EquipmentSpecificationImpl through dao factory createEquipmentSpecificayionDao method
     private  EquipmentSpecificationDao db = new DaoFactory().createEquipmentSpecificationDao();
    
-    public boolean insert(EquipSpecificationDto eq_spec) {
+    /* method to insert new specification passed from ui, check the record then pass it to dao layer to 
+     insert it in database tables */
+    public boolean insert(EquipSpecificationDto eq_spec ,UserDto user) {
         boolean insertFlag = false;
         try{
-                if(db.isExist(eq_spec))
-                    JOptionPane.showMessageDialog(null, "Specification already EXISTS");
-                else
-                    insertFlag = db.createNew(eq_spec);
+            /* check if the object already exists in databas by using isExist method implemented in dao
+             then show message if it exists and return */ 
+                if(!db.isExist(eq_spec))
+                    
+                {  // call insert method in dao and pass the object parameter to it then return
+                  insertFlag = db.createNew(eq_spec, user);
+                }
+                   
         }
             catch(Exception e){
                    e.printStackTrace();
@@ -34,12 +43,13 @@ public class EquipSpecificationBaoImpl implements EquipSpecificationBao {
             return insertFlag;
 
         }
-    
-    public boolean update(EquipSpecificationDto eq_spec){
+
+    //method to update specification passed form ui, check if it already exists then call update method in dao      
+    public boolean update(EquipSpecificationDto eq_spec ,UserDto user){
             boolean updateFlag = false;
             try{
                     if(db.isExist(eq_spec))
-                         updateFlag = db.update(eq_spec);
+                         updateFlag = db.update(eq_spec,user);
                     else{
                          JOptionPane.showMessageDialog(null,"NO Specification FOUND TO UPDATE");
                         }
@@ -51,6 +61,7 @@ public class EquipSpecificationBaoImpl implements EquipSpecificationBao {
                }
         }
 
+//delete record passed from ui, check if record exists then call delete method from dao to delete it from database
     public boolean delete(EquipSpecificationDto eq_spec) {
         boolean deleteFlag = false;
         try{
@@ -66,7 +77,8 @@ public class EquipSpecificationBaoImpl implements EquipSpecificationBao {
         return deleteFlag;
 
     }
-
+    
+//method to search for specifications by calling searchFor method implemented in dao
     public List<EquipSpecificationDto> searchFor(EquipSpecificationDto eq_spec) {
         List<EquipSpecificationDto> eq_spc = null;
         try{
@@ -78,8 +90,9 @@ public class EquipSpecificationBaoImpl implements EquipSpecificationBao {
         return eq_spc;
 
     }
-    
-    public List<EquipSpecificationDto> listall() {
+  
+    //method to view all specifications stored in database calling viewAll method in dao   
+    public List<EquipSpecificationDto> listAll() {
         List<EquipSpecificationDto> eq_spec = null;
         try{
             eq_spec=db.viewAll();

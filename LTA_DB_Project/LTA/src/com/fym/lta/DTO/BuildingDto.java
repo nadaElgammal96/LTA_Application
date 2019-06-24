@@ -4,19 +4,35 @@ import java.util.List;
 
 public class BuildingDto {
     
-   
+    
     private int id;
+    private int floorsNo;
     private String code;
     private String description;
     private List<FloorDto> Floors;
     private DepartBuildingDto departments;
     private String search;
 
-    /**
-     * @param search
-     */
+
+  public void setFloorsNo(int floorsNo)
+  {
+    this.floorsNo = floorsNo;
+  }
+
+  public int getFloorsNo()
+  {
+    return floorsNo;
+  }
+
+  /**
+   * @param search
+   */
     public BuildingDto(String search) {
         this.search = search;
+    }
+
+    public BuildingDto(int id) {
+        this.id = id;
     }
 
     public void setSearch(String search) {

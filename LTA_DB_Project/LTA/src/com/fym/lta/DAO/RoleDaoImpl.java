@@ -20,18 +20,19 @@ import javax.sql.rowset.RowSetProvider;
 import javax.swing.JOptionPane;
 
 public class RoleDaoImpl implements RoleDao {
-    public Boolean update(RoleDto r) {
+    public Boolean update(RoleDto r , UserDto user ) {
         try(JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();) {
             jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
             jdbc.setUsername("lta");
             jdbc.setPassword("lta");
-            jdbc.setCommand("update ROLE " + "set NAME_ROLE=?, DESCRIPTION_ROLE=? "
+            jdbc.setCommand("update ROLE " + "set NAME_ROLE=?, DESCRIPTION_ROLE=? , UPDATED_BY=? , UPDATED_AT=SYSDATE "
                             + "where ID_ROLE = ? ");
             jdbc.setString(1,r.getName());
             jdbc.setString(2,r.getDescription());
-            try{jdbc.setInt(3,r.getId());}
+            jdbc.setInt(3,user.getId());
+            try{jdbc.setInt(4,r.getId());}
             catch(NumberFormatException e){                 
-                            jdbc.setInt(3,-1);
+                            jdbc.setInt(4,-1);
             }
             jdbc.execute();
             return true;
@@ -46,19 +47,20 @@ public class RoleDaoImpl implements RoleDao {
         }
     }
 
-    public Boolean createNew(RoleDto r) {
+    public Boolean createNew(RoleDto r ,UserDto user) {
         try{JdbcRowSet jdbc = RowSetProvider.newFactory().createJdbcRowSet();
     
                   jdbc.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
                   jdbc.setUsername("lta");
                   jdbc.setPassword("lta");
-                  jdbc.setCommand(" insert into ROLE ( ROLE.ID_ROLE, ROLE.NAME_ROLE, ROLE.DESCRIPTION_ROLE ) values(?, ?, ?) ");
+                  jdbc.setCommand(" insert into ROLE ( ID_ROLE, NAME_ROLE, DESCRIPTION_ROLE ,INSERTED_BY, INSERTED_AT ) values(?, ?, ? , ? , SYSDATE ) ");
             try{jdbc.setInt(1,r.getId());}
             catch(NumberFormatException e){
                     jdbc.setInt(1,-1);
                 }
                   jdbc.setString(2,r.getName());
                   jdbc.setString(3,r.getDescription());
+                  jdbc.setInt(4,user.getId());
                   jdbc.execute();
                   return true;
         }
@@ -175,7 +177,7 @@ public class RoleDaoImpl implements RoleDao {
                    return true;
                }
     catch(java.sql.SQLException e){
-        JOptionPane.showConfirmDialog(null, "Error Deleting Role");
+        JOptionPane.showMessageDialog(null, "Can't Delete this Role\n There Exist Users Having This Role\n Delete them first");
         return false;
         }
                catch(Exception e){
